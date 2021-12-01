@@ -199,6 +199,7 @@ BITCOIN_CORE_H = \
   rpc/server.h \
   rpc/util.h \
   rpc/contract_util.h \
+  rx2_helper.h \
   scheduler.h \
   script/descriptor.h \
   script/keyorigin.h \
@@ -332,6 +333,7 @@ libbitcoin_server_a_SOURCES = \
   rpc/net.cpp \
   rpc/rawtransaction.cpp \
   rpc/server.cpp \
+  rx2_helper.cpp \
   script/sigcache.cpp \
   shutdown.cpp \
   timedata.cpp \
@@ -426,6 +428,34 @@ crypto_libbitcoin_crypto_base_a_SOURCES = \
   crypto/sha512.h \
   crypto/siphash.cpp \
   crypto/siphash.h \
+  crypto/RandomX/aes_hash.cpp \
+  crypto/RandomX/argon2_ref.c \
+  crypto/RandomX/argon2_ssse3.c \
+  crypto/RandomX/argon2_avx2.c \
+  crypto/RandomX/bytecode_machine.cpp \
+  crypto/RandomX/cpu.cpp \
+  crypto/RandomX/dataset.cpp \
+  crypto/RandomX/soft_aes.cpp \
+  crypto/RandomX/virtual_memory.cpp \
+  crypto/RandomX/vm_interpreted.cpp \
+  crypto/RandomX/allocator.cpp \
+  crypto/RandomX/assembly_generator_x86.cpp \
+  crypto/RandomX/instruction.cpp \
+  crypto/RandomX/randomx.cpp \
+  crypto/RandomX/superscalar.cpp \
+  crypto/RandomX/vm_compiled.cpp \
+  crypto/RandomX/vm_interpreted_light.cpp \
+  crypto/RandomX/argon2_core.c \
+  crypto/RandomX/blake2_generator.cpp \
+  crypto/RandomX/instructions_portable.cpp \
+  crypto/RandomX/reciprocal.c \
+  crypto/RandomX/virtual_machine.cpp \
+  crypto/RandomX/vm_compiled_light.cpp \
+  crypto/RandomX/blake2/blake2b.c \
+  crypto/RandomX/jit_compiler_x86.cpp \
+  crypto/RandomX/jit_compiler_x86_static.S \
+  crypto/rx2.h \
+  crypto/rx2.cpp \
   cpp-ethereum/utils/libscrypt/b64.c \
   cpp-ethereum/utils/libscrypt/b64.h \
   cpp-ethereum/utils/libscrypt/crypto-mcf.c \

@@ -20,6 +20,7 @@
 #include <rpc/blockchain.h>
 #include <rpc/server.h>
 #include <rpc/util.h>
+#include <rx2_helper.h>
 #include <script/descriptor.h>
 #include <script/script.h>
 #include <script/signingprovider.h>
@@ -130,7 +131,8 @@ static UniValue generateBlocks(const CTxMemPool& mempool, const CScript& coinbas
             LOCK(cs_main);
             IncrementExtraNonce(pblock, ::ChainActive().Tip(), nExtraNonce);
         }
-        while (nMaxTries > 0 && pblock->nNonce < std::numeric_limits<uint32_t>::max() && !CheckProofOfWork(pblock->GetHash(), pblock->nBits, Params().GetConsensus()) && !ShutdownRequested()) {
+        uint256 seed = GetRandomXSeed(nHeight);
+        while (nMaxTries > 0 && pblock->nNonce < std::numeric_limits<uint32_t>::max() && !CheckProofOfWork(pblock->GetHash(&seed, true), pblock->nBits, Params().GetConsensus()) && !ShutdownRequested()) {
             ++pblock->nNonce;
             --nMaxTries;
         }
@@ -699,7 +701,7 @@ static UniValue getblocktemplate(const JSONRPCRequest& request)
 
         // Create new block
         CScript scriptDummy = CScript() << OP_TRUE;
-        pblocktemplate = BlockAssembler(mempool, Params()).CreateNewBlock(scriptDummy, true, ::ChainActive().Tip()->nHeight>=Params().GetConsensus().nLastPOWBlock?true:false);
+        pblocktemplate = BlockAssembler(mempool, Params()).CreateNewBlock(scriptDummy, true, false);
         if (!pblocktemplate)
             throw JSONRPCError(RPC_OUT_OF_MEMORY, "Out of memory");
 

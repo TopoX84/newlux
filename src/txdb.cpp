@@ -699,9 +699,6 @@ bool CBlockTreeDB::LoadBlockIndexGuts(const Consensus::Params& consensusParams, 
                 pindexNew->prevoutStake   = diskindex.prevoutStake;
                 pindexNew->vchBlockSigDlgt    = diskindex.vchBlockSigDlgt; // qtum
 
-                if (!CheckIndexProof(*pindexNew, Params().GetConsensus()))
-                    return error("%s: CheckIndexProof failed: %s", __func__, pindexNew->ToString());
-
                 // NovaCoin: build setStakeSeen
                 if (pindexNew->IsProofOfStake())
                     ::ChainstateActive().setStakeSeen.insert(std::make_pair(pindexNew->prevoutStake, pindexNew->nTime));
