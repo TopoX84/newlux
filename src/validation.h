@@ -447,8 +447,6 @@ bool ReadRawBlockFromDisk(std::vector<uint8_t>& block, const CBlockIndex* pindex
 
 bool UndoReadFromDisk(CBlockUndo& blockundo, const CBlockIndex* pindex);
 
-bool CheckIndexProof(const CBlockIndex& block, const Consensus::Params& consensusParams);
-
 /** Functions for validating blocks and updating the block tree */
 
 /** Context-independent validity checks */

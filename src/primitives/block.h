@@ -72,9 +72,9 @@ public:
         return (nBits == 0);
     }
 
-    uint256 GetHash() const;
+    uint256 GetHash(uint256* seedptr = nullptr, bool fMiner = false) const;
 
-    uint256 GetHashWithoutSign() const;
+    uint256 GetHashWithoutSign(uint256* seedptr = nullptr, bool fMiner = false) const;
 
     std::string GetWithoutSign() const;
 

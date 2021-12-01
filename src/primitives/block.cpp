@@ -12,9 +12,13 @@
 #include <pubkey.h>
 #include <streams.h>
 
+//RX2
+#include "crypto/rx2.h"
+
+
 // Used to serialize the header without signature
 // Workaround due to removing serialization templates in Bitcoin Core 0.18
-class CBlockHeaderSign
+class CBlockHeaderSign: public CBlockHeader
 {
 public:
     CBlockHeaderSign(const CBlockHeader& header)
@@ -67,14 +71,39 @@ private:
     std::vector<unsigned char> vchBlockDlgt;
 };
 
-uint256 CBlockHeader::GetHash() const
+uint256 CBlockHeader::GetHash(uint256 *seedptr, bool fMiner) const
 {
-    return SerializeHash(*this);
+    uint256 thash;
+    if (seedptr) {
+        if (fMiner) {    
+            rx_slow_hash((char*)this,(char*)&thash, 144, *seedptr);
+            return thash;
+        } else {
+            rx_slow_hash2((char*)this,(char*)&thash, 144, *seedptr);
+            return thash;
+        }
+    } else {
+        return SerializeHash(*this);
+    }
 }
 
-uint256 CBlockHeader::GetHashWithoutSign() const
+uint256 CBlockHeader::GetHashWithoutSign(uint256 *seedptr, bool fMiner) const
 {
-    return SerializeHash(CBlockHeaderSign(*this), SER_GETHASH);
+    uint256 thash;
+    CBlockHeaderSign *ptrBlock;
+    CBlockHeaderSign block = CBlockHeaderSign(*this);
+    ptrBlock = &block;
+    if (seedptr) {
+        if (fMiner) {    
+            rx_slow_hash((char*)ptrBlock, (char*)&thash, 144, *seedptr);
+            return thash;
+        } else {
+            rx_slow_hash2((char*)ptrBlock, (char*)&thash, 144, *seedptr);
+            return thash;
+        }
+    } else {
+        return SerializeHash(CBlockHeader(*this), SER_GETHASH);
+    }
 }
 
 std::string CBlockHeader::GetWithoutSign() const

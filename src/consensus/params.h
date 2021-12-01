@@ -101,17 +101,20 @@ struct Params {
     int64_t nRBTPowTargetTimespan;
     uint256 nMinimumChainWork;
     uint256 defaultAssumeValid;
-    int nLastPOWBlock;
     int nFirstMPoSBlock;
     int nMPoSRewardRecipients;
     int nFixUTXOCacheHFHeight;
     int nEnableHeaderSignatureHeight;
+    /** RX2 related variables */
+    uint32_t RX2SeedHeight;
+    uint32_t RX2SeedInterval;
+    /** LWMA variables */
+    int64_t lwmaAveragingWindow;
     /** Block sync-checkpoint span*/
     int nCheckpointSpan;
     int nRBTCheckpointSpan;
     uint160 delegationsAddress;
     int nLastMPoSBlock;
-    int nLastBigReward;
     uint32_t nStakeTimestampMask;
     uint32_t nRBTStakeTimestampMask;
     int64_t nBlocktimeDownscaleFactor;
@@ -142,12 +145,10 @@ struct Params {
     }
     int SubsidyHalvingWeight(int height) const
     {
-        if(height <= nLastBigReward)
-            return 0;
 
         int blocktimeDownscaleFactor = BlocktimeDownscaleFactor(height);
-        int blockCount = height - nLastBigReward;
-        int beforeDownscale = blocktimeDownscaleFactor == 1 ? 0 : nReduceBlocktimeHeight - nLastBigReward - 1;
+        int blockCount = height;
+        int beforeDownscale = blocktimeDownscaleFactor == 1 ? 0 : nReduceBlocktimeHeight - 1;
         int subsidyHalvingWeight = blockCount - beforeDownscale + beforeDownscale * blocktimeDownscaleFactor;
         return subsidyHalvingWeight;
     }
