@@ -411,11 +411,11 @@
         <translation type="unfinished">거래 기록 조회</translation>
     </message>
     <message>
-        <source>&amp;QRC Tokens</source>
+        <source>&amp;LRC Tokens</source>
         <translation type="unfinished">QRC 토큰</translation>
     </message>
     <message>
-        <source>QRC Tokens (send, receive or add Tokens in list)</source>
+        <source>LRC Tokens (send, receive or add Tokens in list)</source>
         <translation type="unfinished">QRC 토큰 (입출금 또는 리스트에 추가)</translation>
     </message>
     <message>
@@ -1375,7 +1375,7 @@
         <translation type="unfinished">가스 상한액. 디폴트 = %1, 최고 = %2.</translation>
     </message>
     <message>
-        <source>Gas price: QTUM price per gas unit. Default = %1, Min = %2</source>
+        <source>Gas price: LUX price per gas unit. Default = %1, Min = %2</source>
         <translation type="unfinished">가스 단가: 가스 유닛에 대한 QTUM 가격. 디폴트 = %1, 최저 = %2.</translation>
     </message>
 </context>
@@ -3960,7 +3960,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of &quot;100 satos
         <translation type="unfinished">가스 상한액. 디폴트 = %1, 최고 = %2.</translation>
     </message>
     <message>
-        <source>Gas price: QTUM price per gas unit. Default = %1, Min = %2</source>
+        <source>Gas price: LUX price per gas unit. Default = %1, Min = %2</source>
         <translation type="unfinished">가스 단가: 가스 유닛에 대한 QTUM 가격. 디폴트 = %1, 최저 = %2.</translation>
     </message>
 </context>
@@ -4019,7 +4019,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of &quot;100 satos
         <translation type="unfinished">가스 상한액. 디폴트 = %1, 최고 = %2.</translation>
     </message>
     <message>
-        <source>Gas price: QTUM price per gas unit. Default = %1, Min = %2</source>
+        <source>Gas price: LUX price per gas unit. Default = %1, Min = %2</source>
         <translation type="unfinished">가스 단가: 가스 유닛에 대한 QTUM 가격. 디폴트 = %1, 최저 = %2.</translation>
     </message>
     <message>

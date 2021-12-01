@@ -407,11 +407,11 @@
         <translation type="unfinished">查看交易历史</translation>
     </message>
     <message>
-        <source>&amp;QRC Tokens</source>
+        <source>&amp;LRC Tokens</source>
         <translation type="unfinished">QRCtoken</translation>
     </message>
     <message>
-        <source>QRC Tokens (send, receive or add Tokens in list)</source>
+        <source>LRC Tokens (send, receive or add Tokens in list)</source>
         <translation type="unfinished">QRCtoken（在列表内发送、接收或添加token）</translation>
     </message>
     <message>
@@ -1321,7 +1321,7 @@
         <translation type="unfinished">Gas Limit。默认 = %1，最高 = %2.</translation>
     </message>
     <message>
-        <source>Gas price: QTUM price per gas unit. Default = %1, Min = %2</source>
+        <source>Gas price: LUX price per gas unit. Default = %1, Min = %2</source>
         <translation type="unfinished">Gas Price：每个Gas单位的QTUM价格。默认 = %1， 最低 = %2.</translation>
     </message>
 </context>
@@ -3949,7 +3949,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of &quot;100 satos
         <translation type="unfinished">Gas Limit。默认 = %1，最高 = %2</translation>
     </message>
     <message>
-        <source>Gas price: QTUM price per gas unit. Default = %1, Min = %2</source>
+        <source>Gas price: LUX price per gas unit. Default = %1, Min = %2</source>
         <translation type="unfinished">Gas Price：每个Gas单位的QTUM价格。默认 = %1， 最低 = %2.</translation>
     </message>
 </context>
@@ -4008,7 +4008,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of &quot;100 satos
         <translation type="unfinished">Gas Limit。默认 = %1，最高 = %2</translation>
     </message>
     <message>
-        <source>Gas price: QTUM price per gas unit. Default = %1, Min = %2</source>
+        <source>Gas price: LUX price per gas unit. Default = %1, Min = %2</source>
         <translation type="unfinished">Gas Price：每个Gas单位的QTUM价格。默认 = %1， 最低 = %2.</translation>
     </message>
     <message>
