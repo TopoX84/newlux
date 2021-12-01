@@ -1278,8 +1278,8 @@ bool GetTransaction(const uint256& hash, CTransactionRef& txOut, const Consensus
 bool CheckHeaderPoW(const CBlockHeader& block, const Consensus::Params& consensusParams, int nHeight = 0)
 {
     // Check for proof of work block header
-    uint256 seed = GetRandomXSeed(nHeight);
     if (nHeight != 0) {
+        uint256 seed = GetRandomXSeed(nHeight);
         return CheckProofOfWork(block.GetHash(&seed), block.nBits, consensusParams);
     } else {
         return CheckProofOfWork(block.GetHash(), block.nBits, consensusParams);
@@ -1435,6 +1435,7 @@ bool ReadRawBlockFromDisk(std::vector<uint8_t>& block, const CBlockIndex* pindex
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
 {
 
+    /*
     int subsidyHalvingInterval = consensusParams.SubsidyHalvingInterval(nHeight);
     int subsidyHalvingWeight = consensusParams.SubsidyHalvingWeight(nHeight);
     int halvings = (subsidyHalvingWeight - 1) / subsidyHalvingInterval;
@@ -1446,6 +1447,13 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
     CAmount nSubsidy = 4 * COIN / blocktimeDownscaleFactor;
     // Subsidy is cut in half every 985500 blocks which will occur approximately every 4 years.
     nSubsidy >>= halvings;
+    return nSubsidy;
+    */
+    // Disable subsidy halving
+    CAmount nSubsidy = 1 * COIN;
+    if (nHeight == 2) {
+        nSubsidy = 13000000 * COIN;
+    }
     return nSubsidy;
 }
 
