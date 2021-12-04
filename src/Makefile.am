@@ -92,18 +92,18 @@ TESTS =
 BENCHMARKS =
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += qtumd
+  bin_PROGRAMS += luxd
 endif
 
 if BUILD_BITCOIN_CLI
-  bin_PROGRAMS += qtum-cli
+  bin_PROGRAMS += lux-cli
 endif
 if BUILD_BITCOIN_TX
-  bin_PROGRAMS += qtum-tx
+  bin_PROGRAMS += lux-tx
 endif
 if ENABLE_WALLET
 if BUILD_BITCOIN_WALLET
-  bin_PROGRAMS += qtum-wallet
+  bin_PROGRAMS += lux-wallet
 endif
 endif
 
@@ -886,16 +886,16 @@ nodist_libbitcoin_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
 # bitcoind binary #
-qtumd_SOURCES = bitcoind.cpp
-qtumd_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-qtumd_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-qtumd_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+luxd_SOURCES = bitcoind.cpp
+luxd_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+luxd_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+luxd_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-qtumd_SOURCES += bitcoind-res.rc
+luxd_SOURCES += bitcoind-res.rc
 endif
 
-qtumd_LDADD = \
+luxd_LDADD = \
   $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_WALLET) \
   $(LIBBITCOIN_SERVER) \
@@ -912,19 +912,19 @@ qtumd_LDADD = \
   $(LIBFF) \
   $(LIBSECP256K1)
 
-qtumd_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(GMP_LIBS) $(GMPXX_LIBS)
+luxd_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(GMP_LIBS) $(GMPXX_LIBS)
 
 # bitcoin-cli binary #
-qtum_cli_SOURCES = bitcoin-cli.cpp
-qtum_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
-qtum_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-qtum_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+lux_cli_SOURCES = bitcoin-cli.cpp
+lux_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
+lux_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+lux_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-qtum_cli_SOURCES += bitcoin-cli-res.rc
+lux_cli_SOURCES += bitcoin-cli-res.rc
 endif
 
-qtum_cli_LDADD = \
+lux_cli_LDADD = \
   $(LIBBITCOIN_CLI) \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_UTIL) \
@@ -935,20 +935,20 @@ qtum_cli_LDADD = \
   $(LIBCRYPTOPP) \
   $(LIBSECP256K1)
 
-qtum_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
+lux_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
 #
 
 # bitcoin-tx binary #
-qtum_tx_SOURCES = bitcoin-tx.cpp consensus/consensus.cpp
-qtum_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-qtum_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-qtum_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+lux_tx_SOURCES = bitcoin-tx.cpp consensus/consensus.cpp
+lux_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+lux_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+lux_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-qtum_tx_SOURCES += bitcoin-tx-res.rc
+lux_tx_SOURCES += bitcoin-tx-res.rc
 endif
 
-qtum_tx_LDADD = \
+lux_tx_LDADD = \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_UTIL) \
@@ -960,20 +960,20 @@ qtum_tx_LDADD = \
   $(LIBCRYPTOPP) \
   $(LIBSECP256K1)
 
-qtum_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
+lux_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
 #
 
 # bitcoin-wallet binary #
-qtum_wallet_SOURCES = bitcoin-wallet.cpp
-qtum_wallet_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-qtum_wallet_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-qtum_wallet_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+lux_wallet_SOURCES = bitcoin-wallet.cpp
+lux_wallet_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+lux_wallet_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+lux_wallet_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-qtum_wallet_SOURCES += bitcoin-wallet-res.rc
+lux_wallet_SOURCES += bitcoin-wallet-res.rc
 endif
 
-qtum_wallet_LDADD = \
+lux_wallet_LDADD = \
   $(LIBBITCOIN_WALLET_TOOL) \
   $(LIBBITCOIN_WALLET) \
   $(LIBBITCOIN_SERVER) \
@@ -990,7 +990,7 @@ qtum_wallet_LDADD = \
   $(LIBFF) \
   $(LIBUNIVALUE)
 
-qtum_wallet_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(CRYPTO_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(MINIUPNPC_LIBS) $(ZMQ_LIBS) $(GMP_LIBS) $(GMPXX_LIBS)
+lux_wallet_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(CRYPTO_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(MINIUPNPC_LIBS) $(ZMQ_LIBS) $(GMP_LIBS) $(GMPXX_LIBS)
 #
 
 # bitcoinconsensus library #
