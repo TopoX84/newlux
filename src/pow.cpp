@@ -118,7 +118,7 @@ unsigned int Lwma3CalculateNextWorkRequired(const CBlockIndex* pindexLast, const
     const arith_uint256 ProofLimit = UintToArith256(fProofOfStake ? params.posLimit : params.powLimit);
 
     // New coins should just give away first N blocks before using this algorithm.
-    if (height < N) { return ProofLimit.GetCompact(); }
+    if (height < N + 1) { return ProofLimit.GetCompact(); }
 
     // Since we have hybrid consensus, lookup the last N blocks of the same proof, and index them as a context for diff calculations.
     std::map<int, int> mapContext = GetContextLWMA(pindexLast, N + 1, fProofOfStake);
@@ -228,7 +228,7 @@ inline arith_uint256 GetLimit(int nHeight, const Consensus::Params& params, bool
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params, bool fProofOfStake)
 {
 
-    unsigned int  nTargetLimit = GetLimit(pindexLast ? pindexLast->nHeight+1 : 0, params, fProofOfStake).GetCompact();
+    unsigned int  nTargetLimit = GetLimit(pindexLast ? pindexLast->nHeight + 1 : 0, params, fProofOfStake).GetCompact();
 
     // genesis block
     if (pindexLast == NULL)

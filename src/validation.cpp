@@ -5045,7 +5045,7 @@ bool CheckBlockSignature(const CBlock& block)
 static bool CheckBlockHeader(const CBlockHeader& block, BlockValidationState& state, const Consensus::Params& consensusParams, bool fCheckPOW = true, bool fCheckPOS = true, int nHeight = 0)
 {
     // Check proof of work matches claimed amount
-    if (fCheckPOW && block.IsProofOfWork() && !CheckHeaderPoW(block, consensusParams, nHeight))
+    if (fCheckPOW && !::ChainstateActive().IsInitialBlockDownload() && block.IsProofOfWork() && !CheckHeaderPoW(block, consensusParams, nHeight))
         return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "high-hash", "proof of work failed");
 
     // Check proof of stake matches claimed amount
@@ -5249,8 +5249,9 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, BlockValidatio
 
     // Check proof of work
     const Consensus::Params& consensusParams = params.GetConsensus();
-    if (block.nBits != GetNextWorkRequired(pindexPrev, &block, consensusParams,block.IsProofOfStake()))
-        return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "bad-diffbits", "incorrect difficulty value");
+    unsigned int nextWork = GetNextWorkRequired(pindexPrev, &block, consensusParams,block.IsProofOfStake());
+    if (block.nBits != nextWork)
+        return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "bad-diffbits", strprintf("%s: incorrect difficulty value %s (expected %s)", __func__, block.nBits, nextWork));
 
     // Check against checkpoints
     if (fCheckpointsEnabled) {
@@ -5377,9 +5378,14 @@ bool CChainState::UpdateHashProof(const CBlock& block, BlockValidationState& sta
     if (block.IsProofOfStake() && !CheckCoinStakeTimestamp(block.GetBlockTime(), nHeight, consensusParams))
         return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "timestamp-invalid", strprintf("UpdateHashProof() : coinstake timestamp violation nTimeBlock=%d", block.GetBlockTime()));
 
-    // Check proof-of-work or proof-of-stake
-    if (block.nBits != GetNextWorkRequired(pindex->pprev, &block, consensusParams,block.IsProofOfStake()))
-        return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "bad-diffbits", strprintf("UpdateHashProof() : incorrect %s", block.IsProofOfWork() ? "proof-of-work" : "proof-of-stake"));
+    // Check proof-of-work or proof-of-stake (not for genesis as genesis isn't rx2)
+    unsigned int nextWork = GetNextWorkRequired(pindex->pprev, &block, consensusParams,block.IsProofOfStake());
+    if (nHeight != 0) {
+        if (block.nBits != nextWork) {
+            LogPrintf("ERROR: %s: wrong diff %s expected %s for block height %s\n", __func__, block.nBits, nextWork, nHeight);
+            return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "bad-diffbits", strprintf("UpdateHashProof() : incorrect %s", block.IsProofOfWork() ? "proof-of-work" : "proof-of-stake"));
+        }
+    }
 
     uint256 hashProof;
     // Verify hash target and signature of coinstake tx
