@@ -193,7 +193,7 @@ public:
 
         if(!toolExists)
         {
-            LogPrintf("QtumLedger(): HWI tool not found %s\n", toolPath);
+            LogPrintf("luxLedger(): HWI tool not found %s\n", toolPath);
         }
     }
 
@@ -521,7 +521,7 @@ bool QtumLedger::endEnumerate(std::vector<LedgerDevice> &devices, bool stake)
         device.model = json_get_key_string(data, "model");
         device.code = json_get_key_string(data, "code");
         device.app_name = json_get_key_string(data, "app_name");
-        bool isStakeApp = device.app_name == "Qtum Stake" || device.app_name == "Qtum Stake Test";
+        bool isStakeApp = device.app_name == "lux Stake" || device.app_name == "lux Stake Test";
         if(isStakeApp == stake)
         {
             devices.push_back(device);

@@ -134,7 +134,7 @@ Intro::Intro(QWidget *parent, int64_t blockchain_size_gb, int64_t chain_state_si
         .arg(PACKAGE_NAME)
         .arg(m_blockchain_size_gb)
         .arg(2017)
-        .arg(tr("Qtum"))
+        .arg(tr("lux"))
     );
     ui->lblExplanation2->setText(ui->lblExplanation2->text().arg(PACKAGE_NAME));
 
@@ -314,7 +314,7 @@ void Intro::on_dataDirCustom_clicked()
     ui->dataDirectory->setEnabled(true);
     ui->ellipsisButton->setEnabled(true);
     #ifdef MAC_OSX
-    setDataDirectory(QDir::homePath()+"/Qtum");
+    setDataDirectory(QDir::homePath()+"/lux");
     #endif
 }
 

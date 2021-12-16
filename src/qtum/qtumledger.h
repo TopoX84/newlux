@@ -23,18 +23,18 @@ struct LedgerDevice
 };
 
 /**
- * @brief The QtumLedger class Communicate with the qtum ledger
+ * @brief The luxLedger class Communicate with the lux ledger
  */
 class QtumLedger {
     
 public:
     /**
-     * @brief QtumLedger Constructor
+     * @brief luxLedger Constructor
      */
     QtumLedger();
 
     /**
-     * @brief ~QtumLedger Destructor
+     * @brief ~luxLedger Destructor
      */
     virtual ~QtumLedger();
 

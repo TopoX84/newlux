@@ -33,7 +33,7 @@
 
 #include <consensus/consensus.h>
 
-/////////////////////////////////////////// qtum
+/////////////////////////////////////////// lux
 class CWalletTx;
 
 #include <qtum/qtumstate.h>
@@ -169,7 +169,7 @@ static const uint64_t DEFAULT_GAS_LIMIT_OP_SEND=250000;
 static const CAmount DEFAULT_GAS_PRICE=0.00000040*COIN;
 static const CAmount MAX_RPC_GAS_PRICE=0.00000100*COIN;
 
-static const size_t MAX_CONTRACT_VOUTS = 1000; // qtum
+static const size_t MAX_CONTRACT_VOUTS = 1000; // lux
 
 //! -stakingminutxovalue default
 static const CAmount DEFAULT_STAKING_MIN_UTXO_VALUE = 100 * COIN;
@@ -420,7 +420,7 @@ public:
 /** Initializes the script-execution cache */
 void InitScriptExecutionCache();
 
-///////////////////////////////////////////////////////////////// // qtum
+///////////////////////////////////////////////////////////////// // lux
 bool GetAddressIndex(uint256 addressHash, int type,
                      std::vector<std::pair<CAddressIndexKey, CAmount> > &addressIndex,
                      int start = 0, int end = 0);
@@ -491,7 +491,7 @@ bool CheckReward(const CBlock& block, BlockValidationState& state, int nHeight, 
 
 bool RemoveStateBlockIndex(CBlockIndex *pindex);
 
-//////////////////////////////////////////////////////// qtum
+//////////////////////////////////////////////////////// lux
 bool GetSpentCoinFromBlock(const CBlockIndex* pindex, COutPoint prevout, Coin* coin);
 
 bool GetSpentCoinFromMainChain(const CBlockIndex* pforkPrev, COutPoint prevoutStake, Coin* coin);

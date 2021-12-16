@@ -216,7 +216,7 @@
     </message>
 </context>
 <context>
-    <name>QtumGUI</name>
+    <name>LUXGUI</name>
     <message>
         <source>Sign &amp;message...</source>
         <translation>Teken &amp;Boodskap</translation>
@@ -2065,7 +2065,7 @@ word die fooi eweredig verdeel.</translation>
     </message>
     </context>
 <context>
-    <name>qtum-core</name>
+    <name>lux-core</name>
     <message>
         <source>Error loading %s</source>
         <translation>Fout met laai %s</translation>

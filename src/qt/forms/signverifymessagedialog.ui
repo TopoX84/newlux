@@ -358,7 +358,7 @@
            <item>
             <widget class="QValidatedLineEdit" name="addressIn_VM">
              <property name="toolTip">
-              <string>The Qtum address the message was signed with</string>
+              <string>The lux address the message was signed with</string>
              </property>
             </widget>
            </item>

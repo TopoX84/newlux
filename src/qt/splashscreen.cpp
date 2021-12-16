@@ -45,7 +45,6 @@ SplashScreen::SplashScreen(interfaces::Node& node, Qt::WindowFlags f, const Netw
     QString titleText        = PACKAGE_NAME;
     QString versionText      = QString("%1").arg(QString::fromStdString(FormatFullVersion()));
     QString copyrightText    = QString::fromUtf8(CopyrightHolders(strprintf("\xc2\xA9 %u ", COPYRIGHT_YEAR)).c_str());
-    QString copyrightLuxText = QString::fromUtf8(CopyrightHolders(strprintf("\xc2\xA9 %u ", COPYRIGHT_YEAR)).c_str());
     QString titleAddText     = networkStyle->getTitleAddText();
 
     QString font             = QApplication::font().toString();
@@ -83,17 +82,12 @@ SplashScreen::SplashScreen(interfaces::Node& node, Qt::WindowFlags f, const Netw
     statusColor.setAlphaF(0.1);
     pixPaint.fillRect(statusRect, statusColor);
     pixPaint.drawText(statusRect.adjusted(10, 0, -10, 0), Qt::AlignRight | Qt::AlignVCenter, versionText);
-	
+
     // draw copyright stuff
     pixPaint.setFont(QFont("Decorative", 9 * fontFactor, QFont::Medium));
-    QRect copyrightRect(225 - splashSize.width(), mainRect.height() - versionTextHeight - copyrightHeight, splashSize.width() - 20, copyrightHeight);
+    QRect copyrightRect(10, mainRect.height() - versionTextHeight - copyrightHeight - 20, 200, 50);
     pixPaint.setPen(foreground_color_statusbar);
-    pixPaint.drawText(copyrightRect, Qt::AlignRight | Qt::AlignVCenter, copyrightText);
-
-    pixPaint.setFont(QFont("Decorative", 9 * fontFactor, QFont::Medium));
-    QRect copyrightRectLux(225 - splashSize.width(), mainRect.height() - versionTextHeight - copyrightHeight - copyrightHeight2, splashSize.width() - 20, copyrightHeight2);
-    pixPaint.setPen(foreground_color_statusbar);
-    pixPaint.drawText(copyrightRectLux, Qt::AlignRight | Qt::AlignVCenter, copyrightLuxText);
+    pixPaint.drawText(copyrightRect, Qt::AlignLeft | Qt::AlignVCenter, copyrightText);
 
     pixPaint.end();
 
