@@ -145,7 +145,7 @@ Lahla YONKE IQTUM YAKHO!</translation>
     <name>BanTableModel</name>
     </context>
 <context>
-    <name>QtumGUI</name>
+    <name>LUXGUI</name>
     </context>
 <context>
     <name>CoinControlDialog</name>
@@ -286,6 +286,6 @@ Lahla YONKE IQTUM YAKHO!</translation>
     </message>
     </context>
 <context>
-    <name>qtum-core</name>
+    <name>lux-core</name>
     </context>
 </TS>

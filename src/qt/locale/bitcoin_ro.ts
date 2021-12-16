@@ -236,7 +236,7 @@
     </message>
 </context>
 <context>
-    <name>QtumGUI</name>
+    <name>LUXGUI</name>
     <message>
         <source>Sign &amp;message...</source>
         <translation>Semnează &amp;mesaj...</translation>
@@ -3085,7 +3085,7 @@ Nota: Cum taxa este calculata per byte, o taxa de "100 satoshi per kB" pentru o 
     </message>
 </context>
 <context>
-    <name>qtum-core</name>
+    <name>lux-core</name>
     <message>
         <source>Distributed under the MIT software license, see the accompanying file %s or %s</source>
         <translation>Distribuit sub licenţa de programe MIT, vezi fişierul însoţitor %s sau %s</translation>

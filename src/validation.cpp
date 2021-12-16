@@ -73,7 +73,7 @@
 #define MICRO 0.000001
 #define MILLI 0.001
 
- ////////////////////////////// qtum
+ ////////////////////////////// lux
 #include <iostream>
 #include <bitset>
 #include "pubkey.h"
@@ -139,7 +139,7 @@ uint256 g_best_block;
 bool g_parallel_script_checks{false};
 std::atomic_bool fImporting(false);
 std::atomic_bool fReindex(false);
-bool fAddressIndex = false; // qtum
+bool fAddressIndex = false; // lux
 bool fLogEvents = false;
 bool fHavePruned = false;
 bool fPruneMode = false;
@@ -733,7 +733,7 @@ bool MemPoolAccept::PreChecks(ATMPArgs& args, Workspace& ws)
 
     dev::u256 txMinGasPrice = 0;
 
-    //////////////////////////////////////////////////////////// // qtum
+    //////////////////////////////////////////////////////////// // lux
     if(!CheckOpSender(tx, chainparams, GetSpendHeight(m_view))){
         return state.Invalid(TxValidationResult::TX_CONSENSUS, "bad-txns-invalid-sender");
     }
@@ -1119,7 +1119,7 @@ bool MemPoolAccept::Finalize(ATMPArgs& args, Workspace& ws)
     // Remove conflicting transactions from the mempool
     for (CTxMemPool::txiter it : allConflicting)
     {
-        LogPrint(BCLog::MEMPOOL, "replacing tx %s with %s for %s QTUM additional fees, %d delta bytes\n",
+        LogPrint(BCLog::MEMPOOL, "replacing tx %s with %s for %s lux additional fees, %d delta bytes\n",
                 it->GetTx().GetHash().ToString(),
                 hash.ToString(),
                 FormatMoney(nModifiedFees - nConflictingFees),
@@ -1136,7 +1136,7 @@ bool MemPoolAccept::Finalize(ATMPArgs& args, Workspace& ws)
     // - the transaction is not dependent on any other transactions in the mempool
     bool validForFeeEstimation = !fReplacementTransaction && !bypass_limits && IsCurrentForFeeEstimation() && m_pool.HasNoInputsOf(tx);
 
-    //////////////////////////////////////////////////////////////// // qtum
+    //////////////////////////////////////////////////////////////// // lux
     // Add memory address index
     if (fAddressIndex)
     {
@@ -1954,7 +1954,7 @@ DisconnectResult CChainState::DisconnectBlock(const CBlock& block, const CBlockI
         return DISCONNECT_FAILED;
     }
 
-    /////////////////////////////////////////////////////////// // qtum
+    /////////////////////////////////////////////////////////// // lux
     std::vector<std::pair<CAddressIndexKey, CAmount> > addressIndex;
     std::vector<std::pair<CAddressUnspentKey, CAddressUnspentValue> > addressUnspentIndex;
     ///////////////////////////////////////////////////////////
@@ -1979,7 +1979,7 @@ DisconnectResult CChainState::DisconnectBlock(const CBlock& block, const CBlockI
             }
         }
 
-        /////////////////////////////////////////////////////////// // qtum
+        /////////////////////////////////////////////////////////// // lux
         if (pfClean == NULL && fAddressIndex) {
 
             for (unsigned int k = tx.vout.size(); k-- > 0;) {
@@ -2043,8 +2043,8 @@ DisconnectResult CChainState::DisconnectBlock(const CBlock& block, const CBlockI
     // move best block pointer to prevout block
     view.SetBestBlock(pindex->pprev->GetBlockHash());
 
-    globalState->setRoot(uintToh256(pindex->pprev->hashStateRoot)); // qtum
-    globalState->setRootUTXO(uintToh256(pindex->pprev->hashUTXORoot)); // qtum
+    globalState->setRoot(uintToh256(pindex->pprev->hashStateRoot)); // lux
+    globalState->setRootUTXO(uintToh256(pindex->pprev->hashUTXORoot)); // lux
 
     if(pfClean == NULL && fLogEvents){
         pstorageresult->deleteResults(block.vtx);
@@ -2060,7 +2060,7 @@ DisconnectResult CChainState::DisconnectBlock(const CBlock& block, const CBlockI
             pblocktree->EraseDelegateIndex(pindex->nHeight);
     }
 
-    //////////////////////////////////////////////////// // qtum
+    //////////////////////////////////////////////////// // lux
     if (pfClean == NULL && fAddressIndex) {
         if (!pblocktree->EraseAddressIndex(addressIndex)) {
             error("Failed to delete address index");
@@ -2244,7 +2244,7 @@ static int64_t nTimeCallbacks = 0;
 static int64_t nTimeTotal = 0;
 static int64_t nBlocksTotal = 0;
 
-/////////////////////////////////////////////////////////////////////// qtum
+/////////////////////////////////////////////////////////////////////// lux
 bool GetSpentCoinFromBlock(const CBlockIndex* pindex, COutPoint prevout, Coin* coin) {
     std::shared_ptr<CBlock> pblock = std::make_shared<CBlock>();
     CBlock& block = *pblock;
@@ -2922,7 +2922,7 @@ bool CChainState::ConnectBlock(const CBlock& block, BlockValidationState& state,
     assert(*pindex->phashBlock == block.GetHash());
     int64_t nTimeStart = GetTimeMicros();
 
-    ///////////////////////////////////////////////// // qtum
+    ///////////////////////////////////////////////// // lux
     QtumDGP qtumDGP(globalState.get(), fGettingValuesDGP);
     globalSealEngine->setQtumSchedule(qtumDGP.getGasSchedule(pindex->nHeight + (pindex->nHeight+1 >= chainparams.GetConsensus().QIP7Height ? 0 : 1) ));
     uint32_t sizeBlockDGP = qtumDGP.getBlockSize(pindex->nHeight + (pindex->nHeight+1 >= chainparams.GetConsensus().QIP7Height ? 0 : 1));
@@ -2941,7 +2941,7 @@ bool CChainState::ConnectBlock(const CBlock& block, BlockValidationState& state,
 
 
     // Move this check from CheckBlock to ConnectBlock as it depends on DGP values
-    if (block.vtx.empty() || block.vtx.size() > dgpMaxBlockSize || ::GetSerializeSize(block, PROTOCOL_VERSION | SERIALIZE_TRANSACTION_NO_WITNESS) > dgpMaxBlockSize) // qtum
+    if (block.vtx.empty() || block.vtx.size() > dgpMaxBlockSize || ::GetSerializeSize(block, PROTOCOL_VERSION | SERIALIZE_TRANSACTION_NO_WITNESS) > dgpMaxBlockSize) // lux
         return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "bad-blk-length", "size limits failed");
 
     // Move this check from ContextualCheckBlock to ConnectBlock as it depends on DGP values
@@ -3147,7 +3147,7 @@ bool CChainState::ConnectBlock(const CBlock& block, BlockValidationState& state,
     int64_t nSigOpsCost = 0;
     blockundo.vtxundo.reserve(block.vtx.size() - 1);
 
-    ///////////////////////////////////////////////////////// // qtum
+    ///////////////////////////////////////////////////////// // lux
     std::vector<std::pair<CAddressIndexKey, CAmount> > addressIndex;
     std::vector<std::pair<CAddressUnspentKey, CAddressUnspentValue> > addressUnspentIndex;
     std::vector<std::pair<CSpentIndexKey, CSpentIndexValue> > spentIndex;
@@ -3206,7 +3206,7 @@ bool CChainState::ConnectBlock(const CBlock& block, BlockValidationState& state,
                 return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "bad-txns-nonfinal");
             }
 
-            ////////////////////////////////////////////////////////////////// // qtum
+            ////////////////////////////////////////////////////////////////// // lux
             if (fAddressIndex)
             {
                 for (size_t j = 0; j < tx.vin.size(); j++) {
@@ -3282,7 +3282,7 @@ bool CChainState::ConnectBlock(const CBlock& block, BlockValidationState& state,
             nValueOut += nTxValueOut;
         }
 
-///////////////////////////////////////////////////////////////////////////////////////// qtum
+///////////////////////////////////////////////////////////////////////////////////////// lux
         if(!CheckOpSender(tx, chainparams, pindex->nHeight)){
             return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "bad-txns-invalid-sender");
         }
@@ -3433,7 +3433,7 @@ bool CChainState::ConnectBlock(const CBlock& block, BlockValidationState& state,
         }
 /////////////////////////////////////////////////////////////////////////////////////////
 
-        /////////////////////////////////////////////////////////////////////////////////// // qtum
+        /////////////////////////////////////////////////////////////////////////////////// // lux
         if (fAddressIndex) {
 
             for (unsigned int k = 0; k < tx.vout.size(); k++) {
@@ -3479,7 +3479,7 @@ bool CChainState::ConnectBlock(const CBlock& block, BlockValidationState& state,
     int64_t nTime4 = GetTimeMicros(); nTimeVerify += nTime4 - nTime2;
     LogPrint(BCLog::BENCH, "    - Verify %u txins: %.2fms (%.3fms/txin) [%.2fs (%.2fms/blk)]\n", nInputs - 1, MILLI * (nTime4 - nTime2), nInputs <= 1 ? 0 : MILLI * (nTime4 - nTime2) / (nInputs-1), nTimeVerify * MICRO, nTimeVerify * MILLI / nBlocksTotal);
 
-////////////////////////////////////////////////////////////////// // qtum
+////////////////////////////////////////////////////////////////// // lux
     if(pindex->nHeight == chainparams.GetConsensus().nOfflineStakeHeight){
         globalState->deployDelegationsContract();
     }
@@ -3608,7 +3608,7 @@ bool CChainState::ConnectBlock(const CBlock& block, BlockValidationState& state,
     }
 
     assert(pindex->phashBlock);
-    ///////////////////////////////////////////////////////////// // qtum
+    ///////////////////////////////////////////////////////////// // lux
     if (fAddressIndex) {
         if (!pblocktree->WriteAddressIndex(addressIndex)) {
             return AbortNode(state, "Failed to write address index");
@@ -4033,8 +4033,8 @@ bool CChainState::ConnectTip(BlockValidationState& state, const CChainParams& ch
     {
         CCoinsViewCache view(&CoinsTip());
 
-        dev::h256 oldHashStateRoot(globalState->rootHash()); // qtum
-        dev::h256 oldHashUTXORoot(globalState->rootHashUTXO()); // qtum
+        dev::h256 oldHashStateRoot(globalState->rootHash()); // lux
+        dev::h256 oldHashUTXORoot(globalState->rootHashUTXO()); // lux
 
         bool rv = ConnectBlock(blockConnecting, state, pindexNew, view, chainparams);
         GetMainSignals().BlockChecked(blockConnecting, state);
@@ -4042,8 +4042,8 @@ bool CChainState::ConnectTip(BlockValidationState& state, const CChainParams& ch
             if (state.IsInvalid())
                 InvalidBlockFound(pindexNew, state);
 
-            globalState->setRoot(oldHashStateRoot); // qtum
-            globalState->setRootUTXO(oldHashUTXORoot); // qtum
+            globalState->setRoot(oldHashStateRoot); // lux
+            globalState->setRootUTXO(oldHashUTXORoot); // lux
             pstorageresult->clearCacheResult();
             return error("%s: ConnectBlock %s failed, %s", __func__, pindexNew->GetBlockHash().ToString(), state.ToString());
         }
@@ -5844,13 +5844,13 @@ bool TestBlockValidity(BlockValidationState& state, const CChainParams& chainpar
     if (!ContextualCheckBlock(block, state, chainparams.GetConsensus(), pindexPrev))
         return error("%s: Consensus::ContextualCheckBlock: %s", __func__, state.ToString());
 
-    dev::h256 oldHashStateRoot(globalState->rootHash()); // qtum
-    dev::h256 oldHashUTXORoot(globalState->rootHashUTXO()); // qtum
+    dev::h256 oldHashStateRoot(globalState->rootHash()); // lux
+    dev::h256 oldHashUTXORoot(globalState->rootHashUTXO()); // lux
     
     if (!::ChainstateActive().ConnectBlock(block, state, &indexDummy, viewNew, chainparams, true)){
         
-        globalState->setRoot(oldHashStateRoot); // qtum
-        globalState->setRootUTXO(oldHashUTXORoot); // qtum
+        globalState->setRoot(oldHashStateRoot); // lux
+        globalState->setRootUTXO(oldHashUTXORoot); // lux
         pstorageresult->clearCacheResult();
         return false;
     }
@@ -6185,7 +6185,7 @@ bool static LoadBlockIndexDB(const CChainParams& chainparams) EXCLUSIVE_LOCKS_RE
     pblocktree->ReadReindexing(fReindexing);
     if(fReindexing) fReindex = true;
 
-    ///////////////////////////////////////////////////////////// // qtum
+    ///////////////////////////////////////////////////////////// // lux
     pblocktree->ReadFlag("addrindex", fAddressIndex);
     LogPrintf("LoadBlockIndexDB(): address index %s\n", fAddressIndex ? "enabled" : "disabled");
     /////////////////////////////////////////////////////////////
@@ -6252,7 +6252,7 @@ bool CVerifyDB::VerifyDB(const CChainParams& chainparams, CCoinsView *coinsview,
     BlockValidationState state;
     int reportDone = 0;
 
-////////////////////////////////////////////////////////////////////////// // qtum
+////////////////////////////////////////////////////////////////////////// // lux
     dev::h256 oldHashStateRoot(globalState->rootHash());
     dev::h256 oldHashUTXORoot(globalState->rootHashUTXO());
     QtumDGP qtumDGP(globalState.get(), fGettingValuesDGP);
@@ -6276,7 +6276,7 @@ bool CVerifyDB::VerifyDB(const CChainParams& chainparams, CCoinsView *coinsview,
             break;
         }
 
-        ///////////////////////////////////////////////////////////////////// // qtum
+        ///////////////////////////////////////////////////////////////////// // lux
         uint32_t sizeBlockDGP = qtumDGP.getBlockSize(pindex->nHeight);
         dgpMaxBlockSize = sizeBlockDGP ? sizeBlockDGP : dgpMaxBlockSize;
         updateBlockSizeParams(dgpMaxBlockSize);
@@ -6339,20 +6339,20 @@ bool CVerifyDB::VerifyDB(const CChainParams& chainparams, CCoinsView *coinsview,
             if (!ReadBlockFromDisk(block, pindex, chainparams.GetConsensus()))
                 return error("VerifyDB(): *** ReadBlockFromDisk failed at %d, hash=%s", pindex->nHeight, pindex->GetBlockHash().ToString());
 
-            dev::h256 oldHashStateRoot(globalState->rootHash()); // qtum
-            dev::h256 oldHashUTXORoot(globalState->rootHashUTXO()); // qtum
+            dev::h256 oldHashStateRoot(globalState->rootHash()); // lux
+            dev::h256 oldHashUTXORoot(globalState->rootHashUTXO()); // lux
 
             if (!::ChainstateActive().ConnectBlock(block, state, pindex, coins, chainparams)){
 
-                globalState->setRoot(oldHashStateRoot); // qtum
-                globalState->setRootUTXO(oldHashUTXORoot); // qtum
+                globalState->setRoot(oldHashStateRoot); // lux
+                globalState->setRootUTXO(oldHashUTXORoot); // lux
                 pstorageresult->clearCacheResult();
                 return error("VerifyDB(): *** found unconnectable block at %d, hash=%s (%s)", pindex->nHeight, pindex->GetBlockHash().ToString(), state.ToString());
             }
         }
     } else {
-        globalState->setRoot(oldHashStateRoot); // qtum
-        globalState->setRootUTXO(oldHashUTXORoot); // qtum
+        globalState->setRoot(oldHashStateRoot); // lux
+        globalState->setRootUTXO(oldHashUTXORoot); // lux
     }
 
     LogPrintf("[DONE].\n");
@@ -6649,7 +6649,7 @@ bool LoadBlockIndex(const CChainParams& chainparams)
         // Use the provided setting for -logevents in the new database
         fLogEvents = gArgs.GetBoolArg("-logevents", DEFAULT_LOGEVENTS);
         pblocktree->WriteFlag("logevents", fLogEvents);
-        /////////////////////////////////////////////////////////////// // qtum
+        /////////////////////////////////////////////////////////////// // lux
         fAddressIndex = gArgs.GetBoolArg("-addrindex", DEFAULT_ADDRINDEX);
         pblocktree->WriteFlag("addrindex", fAddressIndex);
         ///////////////////////////////////////////////////////////////
@@ -7264,7 +7264,7 @@ public:
 };
 static CMainCleanup instance_of_cmaincleanup;
 
-////////////////////////////////////////////////////////////////////////////////// // qtum
+////////////////////////////////////////////////////////////////////////////////// // lux
 bool GetAddressIndex(uint256 addressHash, int type, std::vector<std::pair<CAddressIndexKey, CAmount> > &addressIndex, int start, int end)
 {
     if (!fAddressIndex)

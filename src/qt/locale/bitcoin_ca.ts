@@ -252,7 +252,7 @@
     </message>
 </context>
 <context>
-    <name>QtumGUI</name>
+    <name>LUXGUI</name>
     <message>
         <source>Sign &amp;message...</source>
         <translation>Signa el &amp;missatge...</translation>
@@ -3318,7 +3318,7 @@ Nota: Com que la comissió es calcula en funció dels bytes, una comissió de "1
     </message>
 </context>
 <context>
-    <name>qtum-core</name>
+    <name>lux-core</name>
     <message>
         <source>Distributed under the MIT software license, see the accompanying file %s or %s</source>
         <translation>Distribuït sota la llicència del programari MIT, consulteu el fitxer d'acompanyament %s o %s</translation>

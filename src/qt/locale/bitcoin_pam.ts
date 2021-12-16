@@ -192,7 +192,7 @@
     <name>BanTableModel</name>
     </context>
 <context>
-    <name>QtumGUI</name>
+    <name>LUXGUI</name>
     <message>
         <source>Sign &amp;message...</source>
         <translation>I-sign ing &amp;mensayi</translation>
@@ -1281,7 +1281,7 @@
     <name>WalletView</name>
     </context>
 <context>
-    <name>qtum-core</name>
+    <name>lux-core</name>
     <message>
         <source>Corrupted block database detected</source>
         <translation>Mekapansin lang me-corrupt a block database</translation>

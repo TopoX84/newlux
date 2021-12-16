@@ -253,7 +253,7 @@ Försök igen.</translation>
     </message>
 </context>
 <context>
-    <name>QtumGUI</name>
+    <name>LUXGUI</name>
     <message>
         <source>Sign &amp;message...</source>
         <translation>Signera &amp;meddelande...</translation>
@@ -3270,7 +3270,7 @@ Notera: Då avgiften beräknas per byte kommer en avgift på 50 satoshi tas ut f
     </message>
 </context>
 <context>
-    <name>qtum-core</name>
+    <name>lux-core</name>
     <message>
         <source>Distributed under the MIT software license, see the accompanying file %s or %s</source>
         <translation>Distribuerad under MIT mjukvarulicens, se den bifogade filen %s eller %s</translation>

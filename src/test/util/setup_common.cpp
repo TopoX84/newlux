@@ -112,7 +112,7 @@ TestingSetup::TestingSetup(const std::string& chainName) : BasicTestingSetup(cha
     threadGroup.create_thread([&]{ m_node.scheduler->serviceQueue(); });
     GetMainSignals().RegisterBackgroundSignalScheduler(*g_rpc_node->scheduler);
 
-////////////////////////////////////////////////////////////// qtum
+////////////////////////////////////////////////////////////// lux
     fRequireStandard = !gArgs.GetBoolArg("-acceptnonstdtxn", !chainparams.RequireStandard());
     dev::eth::NoProof::init();		
     boost::filesystem::path pathTemp = fs::temp_directory_path() / strprintf("test_qtum_%lu_%i", (unsigned long)GetTime(), (int)(GetRand(100000)));
@@ -184,7 +184,7 @@ TestingSetup::~TestingSetup()
     g_chainstate.reset();
     pblocktree.reset();
 
-/////////////////////////////////////////////// // qtum
+/////////////////////////////////////////////// // lux
     delete globalState.release();
     globalSealEngine.reset();
 ///////////////////////////////////////////////

@@ -145,7 +145,7 @@
     </message>
 </context>
 <context>
-    <name>QtumGUI</name>
+    <name>LUXGUI</name>
     <message>
         <source>Send coins to a LUX address</source>
         <translation>ផ្ញើកាក់ទៅកាន់ អាសយដ្ឋាន LUX មួយ</translation>
@@ -310,6 +310,6 @@
     </message>
     </context>
 <context>
-    <name>qtum-core</name>
+    <name>lux-core</name>
     </context>
 </TS>

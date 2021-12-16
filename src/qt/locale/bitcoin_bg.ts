@@ -220,7 +220,7 @@
     </message>
 </context>
 <context>
-    <name>QtumGUI</name>
+    <name>LUXGUI</name>
     <message>
         <source>Sign &amp;message...</source>
         <translation>Подпиши съобщение...</translation>
@@ -2243,7 +2243,7 @@
     </message>
     </context>
 <context>
-    <name>qtum-core</name>
+    <name>lux-core</name>
     <message>
         <source>Do you want to rebuild the block database now?</source>
         <translation>Желаете ли да пресъздадете базата данни с блокове сега?</translation>

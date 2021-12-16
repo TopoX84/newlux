@@ -168,7 +168,7 @@
     <name>BanTableModel</name>
     </context>
 <context>
-    <name>QtumGUI</name>
+    <name>LUXGUI</name>
     <message>
         <source>E&amp;xit</source>
         <translation>నిష్క్రమించు</translation>
@@ -445,6 +445,6 @@
     </message>
     </context>
 <context>
-    <name>qtum-core</name>
+    <name>lux-core</name>
     </context>
 </TS>
