@@ -17,7 +17,7 @@ static const int DEVICE_UPDATE_DELAY = 10000;
 static const int MAX_PASSPHRASE_SIZE = 1024;
 
 /* BitcoinGUI -- Size of icons in status bar */
-static const int STATUSBAR_ICONSIZE = 16;
+static const int STATUSBAR_ICONSIZE = 23;
 
 static const bool DEFAULT_SPLASHSCREEN = true;
 
@@ -46,11 +46,11 @@ static const int TOOLTIP_WRAP_THRESHOLD = 80;
 /* Number of frames in spinner animation */
 #define SPINNER_FRAMES 36
 
-#define QAPP_ORG_NAME "Qtum"
-#define QAPP_ORG_DOMAIN "qtum.org"
-#define QAPP_APP_NAME_DEFAULT "Qtum-Qt"
-#define QAPP_APP_NAME_TESTNET "Qtum-Qt-testnet"
-#define QAPP_APP_NAME_REGTEST "Qtum-Qt-regtest"
+#define QAPP_ORG_NAME "Lux"
+#define QAPP_ORG_DOMAIN "luxcore.io"
+#define QAPP_APP_NAME_DEFAULT "Lux-Qt"
+#define QAPP_APP_NAME_TESTNET "Lux-Qt-testnet"
+#define QAPP_APP_NAME_REGTEST "Lux-Qt-regtest"
 
 /* One gigabyte (GB) in bytes */
 static constexpr uint64_t GB_BYTES{1000000000};
@@ -58,11 +58,11 @@ static constexpr uint64_t GB_BYTES{1000000000};
 // Default prune target displayed in GUI.
 static constexpr int DEFAULT_PRUNE_TARGET_GB{2};
 
-/* Mainnet qtum explorer uri */
-#define QTUM_INFO_MAINNET "<a href='https://qtum.info/%1/%2'>%2</a>"
+/* Mainnet lux explorer uri */
+#define QTUM_INFO_MAINNET "<a href='https://explorer.luxcore.io/%1/%2'>%2</a>"
 
-/* Testnet qtum explorer uri */
-#define QTUM_INFO_TESTNET "<a href='https://testnet.qtum.info/%1/%2'>%2</a>"
+/* Testnet lux explorer uri */
+#define QTUM_INFO_TESTNET "<a href=''>%2</a>"
 
 /* Hardware wallet interface uri */
 #define QTUM_HWI_TOOL "<a href='https://github.com/qtumproject/HWI/tags'>HWI Tool</a>"

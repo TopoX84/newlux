@@ -16,7 +16,7 @@
     <name>BanTableModel</name>
     </context>
 <context>
-    <name>QtumGUI</name>
+    <name>LUXGUI</name>
     <message>
         <source>Open Wallet</source>
         <translation>sii apamowo</translation>
@@ -201,6 +201,6 @@
     <name>WalletView</name>
     </context>
 <context>
-    <name>qtum-core</name>
+    <name>lux-core</name>
     </context>
 </TS>

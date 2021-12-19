@@ -77,7 +77,7 @@ struct DelegationEvent
 };
 
 /**
- * @brief The IQtumStaker class Delegation filter
+ * @brief The IluxStaker class Delegation filter
  */
 class IDelegationFilter
 {
@@ -86,18 +86,18 @@ public:
 };
 
 /**
- * @brief The QtumDelegation class Communicate with the qtum delegation contract
+ * @brief The luxDelegation class Communicate with the lux delegation contract
  */
 class QtumDelegation {
     
 public:
     /**
-     * @brief QtumDelegation Constructor
+     * @brief luxDelegation Constructor
      */
     QtumDelegation();
 
     /**
-     * @brief ~QtumDelegation Destructor
+     * @brief ~luxDelegation Destructor
      */
     virtual ~QtumDelegation();
 

@@ -87,8 +87,6 @@ double GetDifficulty(const CBlockIndex* blockindex)
 
 double GetPoWMHashPS()
 {
-    if (pindexBestHeader->nHeight >= Params().GetConsensus().nLastPOWBlock)
-        return 0;
 
     int nPoWInterval = 72;
     int64_t nTargetSpacingWorkMin = 30, nTargetSpacingWork = 30;
@@ -213,12 +211,12 @@ UniValue blockheaderToJSON(const CBlockIndex* tip, const CBlockIndex* blockindex
     result.pushKV("difficulty", GetDifficulty(blockindex));
     result.pushKV("chainwork", blockindex->nChainWork.GetHex());
     result.pushKV("nTx", (uint64_t)blockindex->nTx);
-    result.pushKV("hashStateRoot", blockindex->hashStateRoot.GetHex()); // qtum
-    result.pushKV("hashUTXORoot", blockindex->hashUTXORoot.GetHex()); // qtum
+    result.pushKV("hashStateRoot", blockindex->hashStateRoot.GetHex()); // lux
+    result.pushKV("hashUTXORoot", blockindex->hashUTXORoot.GetHex()); // lux
 
     if(blockindex->IsProofOfStake()){
-        result.pushKV("prevoutStakeHash", blockindex->prevoutStake.hash.GetHex()); // qtum
-        result.pushKV("prevoutStakeVoutN", (int64_t)blockindex->prevoutStake.n); // qtum
+        result.pushKV("prevoutStakeHash", blockindex->prevoutStake.hash.GetHex()); // lux
+        result.pushKV("prevoutStakeVoutN", (int64_t)blockindex->prevoutStake.n); // lux
     }
 
     if (blockindex->pprev)
@@ -250,12 +248,12 @@ UniValue blockToJSON(const CBlock& block, const CBlockIndex* tip, const CBlockIn
     result.pushKV("version", block.nVersion);
     result.pushKV("versionHex", strprintf("%08x", block.nVersion));
     result.pushKV("merkleroot", block.hashMerkleRoot.GetHex());
-    result.pushKV("hashStateRoot", block.hashStateRoot.GetHex()); // qtum
-    result.pushKV("hashUTXORoot", block.hashUTXORoot.GetHex()); // qtum
+    result.pushKV("hashStateRoot", block.hashStateRoot.GetHex()); // lux
+    result.pushKV("hashUTXORoot", block.hashUTXORoot.GetHex()); // lux
 
     if(blockindex->IsProofOfStake()){
-        result.pushKV("prevoutStakeHash", blockindex->prevoutStake.hash.GetHex()); // qtum
-        result.pushKV("prevoutStakeVoutN", (int64_t)blockindex->prevoutStake.n); // qtum
+        result.pushKV("prevoutStakeHash", blockindex->prevoutStake.hash.GetHex()); // lux
+        result.pushKV("prevoutStakeVoutN", (int64_t)blockindex->prevoutStake.n); // lux
     }
 
     UniValue txs(UniValue::VARR);
@@ -528,7 +526,7 @@ static UniValue getdifficulty(const JSONRPCRequest& request)
 
 static std::vector<RPCResult> MempoolEntryDescription() { return {
     RPCResult{RPCResult::Type::NUM, "vsize", "virtual transaction size as defined in BIP 141. This is different from actual serialized size for witness transactions as witness data is discounted."},
-    RPCResult{RPCResult::Type::NUM, "size", "(DEPRECATED) same as vsize. Only returned if qtumd is started with -deprecatedrpc=size\n"
+    RPCResult{RPCResult::Type::NUM, "size", "(DEPRECATED) same as vsize. Only returned if luxd is started with -deprecatedrpc=size\n"
                                             "size will be completely removed in v0.20."},
     RPCResult{RPCResult::Type::NUM, "weight", "transaction weight as defined in BIP 141."},
     RPCResult{RPCResult::Type::STR_AMOUNT, "fee", "transaction fee in " + CURRENCY_UNIT + " (DEPRECATED)"},
@@ -1187,7 +1185,7 @@ static UniValue getblock(const JSONRPCRequest& request)
     return blockToJSON(block, tip, pblockindex, verbosity >= 2);
 }
 
-////////////////////////////////////////////////////////////////////// // qtum
+////////////////////////////////////////////////////////////////////// // lux
 UniValue callcontract(const JSONRPCRequest& request)
 {
             RPCHelpMan{"callcontract",
@@ -1547,7 +1545,7 @@ UniValue getdelegationinfoforaddress(const JSONRPCRequest& request)
             RPCHelpMan{"getdelegationinfoforaddress",
                 "\nGet delegation information for an address.\n",
                 {
-                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The qtum address string"},
+                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The lux address string"},
                 },
                 RPCResult{
                     RPCResult::Type::OBJ, "", "",
@@ -1640,7 +1638,7 @@ UniValue getdelegationsforstaker(const JSONRPCRequest& request)
                 "requires -logevents to be enabled\n"
                 "\nGet the current list of delegates for a super staker.\n",
                 {
-                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The qtum address string for staker"},
+                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The lux address string for staker"},
                 },
                RPCResult{
             RPCResult::Type::ARR, "", "",
@@ -1889,8 +1887,8 @@ UniValue gettxout(const JSONRPCRequest& request)
                                 {RPCResult::Type::STR_HEX, "hex", ""},
                                 {RPCResult::Type::NUM, "reqSigs", "Number of required signatures"},
                                 {RPCResult::Type::STR_HEX, "type", "The type, eg pubkeyhash"},
-                                {RPCResult::Type::ARR, "addresses", "array of qtum addresses",
-                                    {{RPCResult::Type::STR, "address", "qtum address"}}},
+                                {RPCResult::Type::ARR, "addresses", "array of lux addresses",
+                                    {{RPCResult::Type::STR, "address", "lux address"}}},
                             }},
                         {RPCResult::Type::BOOL, "coinbase", "Coinbase or not"},
                     }},
@@ -3224,8 +3222,8 @@ static UniValue qrc20name(const JSONRPCRequest& request)
                 RPCResult{
                     RPCResult::Type::STR, "name", "The name of the token"},
                 RPCExamples{
-                    HelpExampleCli("qrc20name", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
-            + HelpExampleRpc("qrc20name", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
+                    HelpExampleCli("lrc20name", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
+            + HelpExampleRpc("lrc20name", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
                 },
             }.Check(request);
 
@@ -3243,7 +3241,7 @@ static UniValue qrc20name(const JSONRPCRequest& request)
 
 static UniValue qrc20symbol(const JSONRPCRequest& request)
 {
-            RPCHelpMan{"qrc20symbol",
+            RPCHelpMan{"lrc20symbol",
                 "\nReturns the symbol of the token\n",
                 {
                     {"contractaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The contract address"},
@@ -3251,8 +3249,8 @@ static UniValue qrc20symbol(const JSONRPCRequest& request)
                 RPCResult{
                     RPCResult::Type::STR, "symbol", "The symbol of the token"},
                 RPCExamples{
-                    HelpExampleCli("qrc20symbol", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
-            + HelpExampleRpc("qrc20symbol", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
+                    HelpExampleCli("lrc20symbol", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
+            + HelpExampleRpc("lrc20symbol", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
                 },
             }.Check(request);
 
@@ -3270,7 +3268,7 @@ static UniValue qrc20symbol(const JSONRPCRequest& request)
 
 static UniValue qrc20totalsupply(const JSONRPCRequest& request)
 {
-            RPCHelpMan{"qrc20totalsupply",
+            RPCHelpMan{"lrc20totalsupply",
                 "\nReturns the total supply of the token\n",
                 {
                     {"contractaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The contract address"},
@@ -3278,8 +3276,8 @@ static UniValue qrc20totalsupply(const JSONRPCRequest& request)
                 RPCResult{
                     RPCResult::Type::STR, "totalSupply", "The total supply of the token"},
                 RPCExamples{
-                    HelpExampleCli("qrc20totalsupply", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
-            + HelpExampleRpc("qrc20totalsupply", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
+                    HelpExampleCli("lrc20totalsupply", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
+            + HelpExampleRpc("lrc20totalsupply", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
                 },
             }.Check(request);
 
@@ -3307,7 +3305,7 @@ static UniValue qrc20totalsupply(const JSONRPCRequest& request)
 
 static UniValue qrc20decimals(const JSONRPCRequest& request)
 {
-            RPCHelpMan{"qrc20decimals",
+            RPCHelpMan{"lrc20decimals",
                 "\nReturns the number of decimals of the token\n",
                 {
                     {"contractaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The contract address"},
@@ -3315,8 +3313,8 @@ static UniValue qrc20decimals(const JSONRPCRequest& request)
                 RPCResult{
                     RPCResult::Type::NUM, "decimals", "The number of decimals of the token"},
                 RPCExamples{
-                    HelpExampleCli("qrc20decimals", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
-            + HelpExampleRpc("qrc20decimals", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
+                    HelpExampleCli("lrc20decimals", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
+            + HelpExampleRpc("lrc20decimals", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
                 },
             }.Check(request);
 
@@ -3334,17 +3332,17 @@ static UniValue qrc20decimals(const JSONRPCRequest& request)
 
 static UniValue qrc20balanceof(const JSONRPCRequest& request)
 {
-            RPCHelpMan{"qrc20balanceof",
+            RPCHelpMan{"lrc20balanceof",
                 "\nReturns the token balance for address\n",
                 {
                     {"contractaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The contract address"},
-                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO,  "The qtum address to check token balance"},
+                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO,  "The lux address to check token balance"},
                 },
                 RPCResult{
                     RPCResult::Type::STR, "balance", "The token balance of the chosen address"},
                 RPCExamples{
-                    HelpExampleCli("qrc20balanceof", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\"")
-            + HelpExampleRpc("qrc20balanceof", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\"")
+                    HelpExampleCli("lrc20balanceof", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\"")
+            + HelpExampleRpc("lrc20balanceof", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\"")
                 },
             }.Check(request);
 
@@ -3374,18 +3372,18 @@ static UniValue qrc20balanceof(const JSONRPCRequest& request)
 
 static UniValue qrc20allowance(const JSONRPCRequest& request)
 {
-            RPCHelpMan{"qrc20allowance",
+            RPCHelpMan{"lrc20allowance",
                 "\nReturns remaining tokens allowed to spend for an address\n",
                 {
                     {"contractaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The contract address"},
-                    {"addressFrom", RPCArg::Type::STR, RPCArg::Optional::NO,  "The qtum address of the account owning tokens"},
-                    {"addressTo", RPCArg::Type::STR, RPCArg::Optional::NO,  "The qtum address of the account able to transfer the tokens"},
+                    {"addressFrom", RPCArg::Type::STR, RPCArg::Optional::NO,  "The lux address of the account owning tokens"},
+                    {"addressTo", RPCArg::Type::STR, RPCArg::Optional::NO,  "The lux address of the account able to transfer the tokens"},
                 },
                 RPCResult{
                     RPCResult::Type::STR, "allowance", "Amount of remaining tokens allowed to spent"},
                 RPCExamples{
-                    HelpExampleCli("qrc20allowance", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\"")
-            + HelpExampleRpc("qrc20allowance", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\"")
+                    HelpExampleCli("lrc20allowance", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\"")
+            + HelpExampleRpc("lrc20allowance", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\"")
                 },
             }.Check(request);
 
@@ -3414,11 +3412,11 @@ static UniValue qrc20allowance(const JSONRPCRequest& request)
 
 static UniValue qrc20listtransactions(const JSONRPCRequest& request)
 {
-            RPCHelpMan{"qrc20listtransactions",
+            RPCHelpMan{"lrc20listtransactions",
                 "\nReturns transactions history for a specific address.\n",
                 {
                     {"contractaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The contract address."},
-                    {"addresss", RPCArg::Type::STR, RPCArg::Optional::NO,  "The qtum address to get history for."},
+                    {"addresss", RPCArg::Type::STR, RPCArg::Optional::NO,  "The lux address to get history for."},
                     {"fromBlock", RPCArg::Type::NUM, /* default */ "0", "The number of the earliest block."},
                     {"minconf", RPCArg::Type::NUM, /* default */ "6", "Minimal number of confirmations."},
                 },
@@ -3427,8 +3425,8 @@ static UniValue qrc20listtransactions(const JSONRPCRequest& request)
                 {
                     {RPCResult::Type::OBJ, "", "",
                         {
-                            {RPCResult::Type::STR, "receiver", "The receiver qtum address"},
-                            {RPCResult::Type::STR, "sender", "The sender qtum address"},
+                            {RPCResult::Type::STR, "receiver", "The receiver lux address"},
+                            {RPCResult::Type::STR, "sender", "The sender lux address"},
                             {RPCResult::Type::STR_AMOUNT, "amount", "The transferred token amount"},
                             {RPCResult::Type::NUM, "confirmations", "The number of confirmations of the most recent transaction included"},
                             {RPCResult::Type::STR_HEX, "blockHash", "The block hash"},
@@ -3439,10 +3437,10 @@ static UniValue qrc20listtransactions(const JSONRPCRequest& request)
                     }}
                 },
                 RPCExamples{
-                    HelpExampleCli("qrc20listtransactions", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\"")
-            + HelpExampleCli("qrc20listtransactions", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" 0 6")
-            + HelpExampleRpc("qrc20listtransactions", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\"")
-            + HelpExampleRpc("qrc20listtransactions", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" 0 6")
+                    HelpExampleCli("lrc20listtransactions", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\"")
+            + HelpExampleCli("lrc20listtransactions", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" 0 6")
+            + HelpExampleRpc("lrc20listtransactions", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\"")
+            + HelpExampleRpc("lrc20listtransactions", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" 0 6")
                 },
             }.Check(request);
 
@@ -3535,13 +3533,13 @@ static const CRPCCommand commands[] =
 
     { "blockchain",         "callcontract",           &callcontract,           {"address","data", "senderAddress", "gasLimit", "amount"} },
 
-    { "blockchain",         "qrc20name",              &qrc20name,              {"address"} },
-    { "blockchain",         "qrc20symbol",            &qrc20symbol,            {"address"} },
-    { "blockchain",         "qrc20totalsupply",       &qrc20totalsupply,       {"address"} },
-    { "blockchain",         "qrc20decimals",          &qrc20decimals,          {"address"} },
-    { "blockchain",         "qrc20balanceof",         &qrc20balanceof,         {"contractaddress", "address"} },
-    { "blockchain",         "qrc20allowance",         &qrc20allowance,         {"contractaddress", "addressFrom", "addressTo"} },
-    { "blockchain",         "qrc20listtransactions",  &qrc20listtransactions,  {"contractaddress", "address", "startblock", "minconf"} },
+    { "blockchain",         "lrc20name",              &qrc20name,              {"address"} },
+    { "blockchain",         "lrc20symbol",            &qrc20symbol,            {"address"} },
+    { "blockchain",         "lrc20totalsupply",       &qrc20totalsupply,       {"address"} },
+    { "blockchain",         "lrc20decimals",          &qrc20decimals,          {"address"} },
+    { "blockchain",         "lrc20balanceof",         &qrc20balanceof,         {"contractaddress", "address"} },
+    { "blockchain",         "lrc20allowance",         &qrc20allowance,         {"contractaddress", "addressFrom", "addressTo"} },
+    { "blockchain",         "lrc20listtransactions",  &qrc20listtransactions,  {"contractaddress", "address", "startblock", "minconf"} },
 
     /* Not shown in help */
     { "hidden",             "invalidateblock",        &invalidateblock,        {"blockhash"} },

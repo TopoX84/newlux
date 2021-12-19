@@ -15,19 +15,19 @@ import pprint
 pp = pprint.PrettyPrinter()
 
 """
-qrc20name
-qrc20symbol
-qrc20totalsupply
-qrc20decimals
+lrc20name
+lrc20symbol
+lrc20totalsupply
+lrc20decimals
 
-qrc20balanceof
-qrc20allowance
-qrc20approve
-qrc20transfer
-qrc20transferfrom
-qrc20burn
-qrc20burnfrom
-qrc20listtransactions
+lrc20balanceof
+lrc20allowance
+lrc20approve
+lrc20transfer
+lrc20transferfrom
+lrc20burn
+lrc20burnfrom
+lrc20listtransactions
 """
 
 
@@ -41,10 +41,10 @@ class QtumQRC20Test(BitcoinTestFramework):
         self.skip_if_no_wallet()
 
     def qrc20name_test(self):
-        assert_equal(self.node.qrc20name(self.contract_address), "QRC TEST")
+        assert_equal(self.node.qrc20name(self.contract_address), "LRC TEST")
 
     def qrc20symbol_test(self):
-        assert_equal(self.node.qrc20symbol(self.contract_address), "QTC")
+        assert_equal(self.node.qrc20symbol(self.contract_address), "LTC")
 
     def qrc20totalsupply_test(self):
         assert_equal(self.node.qrc20totalsupply(self.contract_address), f"{10**65}.00000000")
@@ -81,15 +81,15 @@ class QtumQRC20Test(BitcoinTestFramework):
 
 
             /**
-                QRC20Token Standard Token implementation
+                LRC20Token Standard Token implementation
             */
-            contract QRC20Token is SafeMath {
+            contract LRC20Token is SafeMath {
                 string public constant standard = 'Token 0.1';
-                uint8 public constant decimals = 8; // it's recommended to set decimals to 8 in QTUM
+                uint8 public constant decimals = 8; // it's recommended to set decimals to 8 in lux
 
                 // you need change the following three values
-                string public constant name = 'QRC TEST';
-                string public constant symbol = 'QTC';
+                string public constant name = 'LRC TEST';
+                string public constant symbol = 'LTC';
                 //Default assumes totalSupply can't be over max (2^256 - 1).
                 //you need multiply 10^decimals by your real total supply.
                 uint256 public totalSupply = 10**65 * 10**uint256(decimals);
@@ -196,7 +196,7 @@ class QtumQRC20Test(BitcoinTestFramework):
         assert_equal(float(self.node.qrc20balanceof(self.contract_address, self.receiver)), 0.00000001)
 
 
-        # Double spend the qrc20 transaction to clear it from the mempool and reorg to clear the state
+        # Double spend the lrc20 transaction to clear it from the mempool and reorg to clear the state
         self.double_spend_tx(self.node, tip['tx'][1], self.creator, self.reorg_node)
         self.reorg_node.generate(2)
         connect_nodes(self.node, 1)
@@ -241,7 +241,7 @@ class QtumQRC20Test(BitcoinTestFramework):
                 'transactionHash': tip['tx'][1]
             }])
 
-        # Double spend the qrc20 transaction to clear it from the mempool and reorg to clear the state
+        # Double spend the lrc20 transaction to clear it from the mempool and reorg to clear the state
         self.double_spend_tx(self.node, tip['tx'][1], self.creator, self.reorg_node)
         self.reorg_node.generate(2)
         connect_nodes(self.node, 1)

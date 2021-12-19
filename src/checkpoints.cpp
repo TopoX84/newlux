@@ -44,8 +44,11 @@ namespace Checkpoints {
         const CBlockIndex *pindexBest = ::ChainActive().Tip();
         const CBlockIndex *pindex = pindexBest;
         // Search backward for a block within max span and maturity window
-        int checkpointSpan = Params().GetConsensus().CheckpointSpan(pindexBest->nHeight);
-        while (pindex->pprev && pindex->nHeight + checkpointSpan > pindexBest->nHeight)
+        int checkpointSpan = 0;
+        if (pindexBest) {
+            checkpointSpan = Params().GetConsensus().CheckpointSpan(pindexBest->nHeight);
+        }
+        while (pindex && pindex->pprev && pindex->nHeight + checkpointSpan > pindexBest->nHeight)
             pindex = pindex->pprev;
         return pindex;
     }
@@ -57,7 +60,7 @@ namespace Checkpoints {
         if(nHeight)
             pindexSync = AutoSelectSyncCheckpoint();
 
-        if(nHeight && nHeight <= pindexSync->nHeight)
+        if(pindexSync && nHeight && nHeight <= pindexSync->nHeight)
             return false;
         return true;
     }

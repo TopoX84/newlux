@@ -109,7 +109,7 @@ static const char* DEFAULT_ASMAP_FILENAME="ip_asn.map";
 /**
  * The PID file facilities.
  */
-static const char* BITCOIN_PID_FILENAME = "qtumd.pid";
+static const char* BITCOIN_PID_FILENAME = "luxd.pid";
 
 static fs::path GetPidFile()
 {
@@ -189,7 +189,7 @@ void Shutdown(NodeContext& node)
     /// for example if the data directory was found to be locked.
     /// Be sure that anything that writes files or flushes caches only does this if the respective
     /// module was initialized.
-    util::ThreadRename("qtum-shutoff");
+    util::ThreadRename("lux-shutoff");
 
 #ifdef ENABLE_WALLET
     // Force stop the stakers before any other components
@@ -634,7 +634,7 @@ void SetupServerArgs()
 
 std::string LicenseInfo()
 {
-    const std::string URL_SOURCE_CODE = "<https://github.com/qtumproject/qtum>";
+    const std::string URL_SOURCE_CODE = "<https://github.com/LUX-Core/newlux>";
 
     return CopyrightHolders(strprintf(_("Copyright (C) %i").translated, COPYRIGHT_YEAR) + " ") + "\n" +
            "\n" +
@@ -742,7 +742,7 @@ void DeleteBlockChainData()
     // Delete block chain data paths
     fs::remove_all(GetDataDir() / "chainstate");
     fs::remove_all(GetBlocksDir());
-    fs::remove_all(GetDataDir() / "stateQtum");
+    fs::remove_all(GetDataDir() / "statelux");
     fs::remove(GetDataDir() / "banlist.dat");
     fs::remove(GetDataDir() / FEE_ESTIMATES_FILENAME);
     fs::remove(GetDataDir() / "mempool.dat");
@@ -1500,7 +1500,7 @@ bool AppInitMain(NodeContext& node)
                 LogInstance().m_file_path.string()));
     }
 
-////////////////////////////////////////////////////////////////////// // qtum
+////////////////////////////////////////////////////////////////////// // lux
     dev::g_logPost(std::string("\n\n\n\n\n\n\n\n\n\n"), NULL);
 //////////////////////////////////////////////////////////////////////
 
@@ -1916,7 +1916,7 @@ bool AppInitMain(NodeContext& node)
                 break;
             }
 
-                /////////////////////////////////////////////////////////// qtum
+                /////////////////////////////////////////////////////////// lux
                 if((gArgs.IsArgSet("-dgpstorage") && gArgs.IsArgSet("-dgpevm")) || (!gArgs.IsArgSet("-dgpstorage") && gArgs.IsArgSet("-dgpevm")) ||
                   (!gArgs.IsArgSet("-dgpstorage") && !gArgs.IsArgSet("-dgpevm"))){
                     fGettingValuesDGP = true;
@@ -1925,7 +1925,7 @@ bool AppInitMain(NodeContext& node)
                 }
 
                 dev::eth::NoProof::init();
-                fs::path qtumStateDir = GetDataDir() / "stateQtum";
+                fs::path qtumStateDir = GetDataDir() / "statelux";
                 bool fStatus = fs::exists(qtumStateDir);
                 const std::string dirQtum(qtumStateDir.string());
                 const dev::h256 hashDB(dev::sha3(dev::rlp("")));
@@ -1954,7 +1954,7 @@ bool AppInitMain(NodeContext& node)
                 fIsVMlogFile = fs::exists(GetDataDir() / "vmExecLogs.json");
                 ///////////////////////////////////////////////////////////
 
-                /////////////////////////////////////////////////////////////// // qtum
+                /////////////////////////////////////////////////////////////// // lux
                 if (fAddressIndex != gArgs.GetBoolArg("-addrindex", DEFAULT_ADDRINDEX)) {
                     strLoadError = _("You need to rebuild the database using -reindex to change -addrindex").translated;
                     break;

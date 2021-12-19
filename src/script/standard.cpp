@@ -199,7 +199,7 @@ txnouttype Solver(const CScript& scriptPubKey, std::vector<std::vector<unsigned 
                 else
                     break;
             }
-            /////////////////////////////////////////////////////////// qtum
+            /////////////////////////////////////////////////////////// lux
             else if (opcode2 == OP_VERSION)
             {
                 if(0 <= opcode1 && opcode1 <= OP_PUSHDATA4)

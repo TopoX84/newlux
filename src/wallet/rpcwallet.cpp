@@ -248,7 +248,7 @@ static UniValue getnewaddress(const JSONRPCRequest& request)
     }
 
             RPCHelpMan{"getnewaddress",
-                "\nReturns a new Qtum address for receiving payments.\n"
+                "\nReturns a new lux address for receiving payments.\n"
                 "If 'label' is specified, it is added to the address book \n"
                 "so payments received with the address will be associated with 'label'.\n",
                 {
@@ -256,7 +256,7 @@ static UniValue getnewaddress(const JSONRPCRequest& request)
                     {"address_type", RPCArg::Type::STR, /* default */ "set by -addresstype", "The address type to use. Options are \"legacy\", \"p2sh-segwit\", and \"bech32\"."},
                 },
                 RPCResult{
-                    RPCResult::Type::STR, "address", "The new qtum address"
+                    RPCResult::Type::STR, "address", "The new lux address"
                 },
                 RPCExamples{
                     HelpExampleCli("getnewaddress", "")
@@ -301,7 +301,7 @@ static UniValue getrawchangeaddress(const JSONRPCRequest& request)
     }
 
             RPCHelpMan{"getrawchangeaddress",
-                "\nReturns a new Qtum address, for receiving change.\n"
+                "\nReturns a new lux address, for receiving change.\n"
                 "This is for use with raw transactions, NOT normal use.\n",
                 {
                     {"address_type", RPCArg::Type::STR, /* default */ "set by -changetype", "The address type to use. Options are \"legacy\", \"p2sh-segwit\", and \"bech32\"."},
@@ -349,7 +349,7 @@ static UniValue setlabel(const JSONRPCRequest& request)
             RPCHelpMan{"setlabel",
                 "\nSets the label associated with the given address.\n",
                 {
-                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The qtum address to be associated with a label."},
+                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The lux address to be associated with a label."},
                     {"label", RPCArg::Type::STR, RPCArg::Optional::NO, "The label to assign to the address."},
                 },
                 RPCResult{RPCResult::Type::NONE, "", ""},
@@ -363,7 +363,7 @@ static UniValue setlabel(const JSONRPCRequest& request)
 
     CTxDestination dest = DecodeDestination(request.params[0].get_str());
     if (!IsValidDestination(dest)) {
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Qtum address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid lux address");
     }
 
     std::string label = LabelFromValue(request.params[1]);
@@ -450,7 +450,7 @@ static CTransactionRef SplitUTXOs(interfaces::Chain::Lock& locked_chain, CWallet
     if (nValue > nTotal)
         throw JSONRPCError(RPC_WALLET_INSUFFICIENT_FUNDS, "Insufficient funds");
 
-    // Parse Qtum address
+    // Parse lux address
     CScript scriptPubKey = GetScriptForDestination(address);
 
     // Split into utxos with nValue
@@ -571,7 +571,7 @@ static UniValue sendtoaddress(const JSONRPCRequest& request)
                 "\nSend an amount to a given address." +
         HELP_REQUIRING_PASSPHRASE,
                 {
-                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The qtum address to send to."},
+                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The lux address to send to."},
                     {"amount", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "The amount in " + CURRENCY_UNIT + " to send. eg 0.1"},
                     {"comment", RPCArg::Type::STR, RPCArg::Optional::OMITTED_NAMED_ARG, "A comment used to store what the transaction is for.\n"
             "                             This is not part of the transaction, just kept in your wallet."},
@@ -579,7 +579,7 @@ static UniValue sendtoaddress(const JSONRPCRequest& request)
             "                             to which you're sending the transaction. This is not part of the \n"
             "                             transaction, just kept in your wallet."},
                     {"subtractfeefromamount", RPCArg::Type::BOOL, /* default */ "false", "The fee will be deducted from the amount being sent.\n"
-            "                             The recipient will receive less qtums than you enter in the amount field."},
+            "                             The recipient will receive less luxs than you enter in the amount field."},
                     {"replaceable", RPCArg::Type::BOOL, /* default */ "wallet default", "Allow this transaction to be replaced by a transaction with higher fees via BIP 125"},
                     {"conf_target", RPCArg::Type::NUM, /* default */ "wallet default", "Confirmation target (in blocks)"},
                     {"estimate_mode", RPCArg::Type::STR, /* default */ "UNSET", "The fee estimate mode, must be one of:\n"
@@ -588,7 +588,7 @@ static UniValue sendtoaddress(const JSONRPCRequest& request)
             "       \"CONSERVATIVE\""},
                     {"avoid_reuse", RPCArg::Type::BOOL, /* default */ "true", "(only available if avoid_reuse wallet flag is set) Avoid spending from dirty addresses; addresses are considered\n"
             "                             dirty if they have previously been used in a transaction."},
-                    {"senderaddress", RPCArg::Type::STR, RPCArg::Optional::OMITTED_NAMED_ARG, "The qtum address that will be used to send money from."},
+                    {"senderaddress", RPCArg::Type::STR, RPCArg::Optional::OMITTED_NAMED_ARG, "The lux address that will be used to send money from."},
                     {"changeToSender", RPCArg::Type::BOOL, /* default */ "false", "Return the change to the sender."},
                 },
                 RPCResult{
@@ -613,7 +613,7 @@ static UniValue sendtoaddress(const JSONRPCRequest& request)
 
     CTxDestination dest = DecodeDestination(request.params[0].get_str());
     if (!IsValidDestination(dest)) {
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Qtum address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid lux address");
     }
 
     // Amount
@@ -658,7 +658,7 @@ static UniValue sendtoaddress(const JSONRPCRequest& request)
     if (request.params.size() > 9 && !request.params[9].isNull()){
     senderAddress = DecodeDestination(request.params[9].get_str());
         if (!IsValidDestination(senderAddress))
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Qtum address to send from");
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid lux address to send from");
         else
             fHasSender=true;
     }
@@ -720,7 +720,7 @@ static UniValue splitutxosforaddress(const JSONRPCRequest& request)
                 "\nSplit an address coins into utxo between min and max value." +
                     HELP_REQUIRING_PASSPHRASE,
                 {
-                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The qtum address to split utxos."},
+                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The lux address to split utxos."},
                     {"minValue", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "Select utxo which value is smaller than value (minimum 0.1 COIN)"},
                     {"maxValue", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "Select utxo which value is greater than value (minimum 0.1 COIN)"},
                     {"maxOutputs", RPCArg::Type::NUM, /* default */ "100", "Maximum outputs to create"},
@@ -753,7 +753,7 @@ static UniValue splitutxosforaddress(const JSONRPCRequest& request)
     CTxDestination address = DecodeDestination(request.params[0].get_str());
 
     if (!IsValidDestination(address)) {
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Qtum address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid lux address");
     }
     CScript scriptPubKey = GetScriptForDestination(address);
     if (!pwallet->IsMine(scriptPubKey)) {
@@ -902,8 +902,8 @@ static UniValue createcontract(const JSONRPCRequest& request){
                 {
                     {"bytecode", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "contract bytcode."},
                     {"gasLimit", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "gasLimit, default: "+i64tostr(DEFAULT_GAS_LIMIT_OP_CREATE)+", max: "+i64tostr(blockGasLimit)},
-                    {"gasPrice", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "gasPrice QTUM price per gas unit, default: "+FormatMoney(nGasPrice)+", min:"+FormatMoney(minGasPrice)},
-                    {"senderaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::OMITTED, "The qtum address that will be used to create the contract."},
+                    {"gasPrice", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "gasPrice lux price per gas unit, default: "+FormatMoney(nGasPrice)+", min:"+FormatMoney(minGasPrice)},
+                    {"senderaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::OMITTED, "The lux address that will be used to create the contract."},
                     {"broadcast", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Whether to broadcast the transaction or not."},
                     {"changeToSender", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Return the change to the sender."},
                     {"psbt", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Create partially signed transaction."},
@@ -960,7 +960,7 @@ static UniValue createcontract(const JSONRPCRequest& request){
     if (request.params.size() > 3){
         senderAddress = DecodeDestination(request.params[3].get_str());
         if (!IsValidDestination(senderAddress))
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Qtum address to send from");
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid lux address to send from");
         if (!IsValidContractSenderAddress(senderAddress))
             throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid contract sender address. Only P2PK and P2PKH allowed");
         else
@@ -1231,7 +1231,7 @@ UniValue SendToContract(interfaces::Chain::Lock& locked_chain, CWallet* const pw
     if (params.size() > 5){
         senderAddress = DecodeDestination(params[5].get_str());
         if (!IsValidDestination(senderAddress))
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Qtum address to send from");
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid lux address to send from");
         if (!IsValidContractSenderAddress(senderAddress))
             throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid contract sender address. Only P2PK and P2PKH allowed");
         else
@@ -1615,8 +1615,8 @@ static UniValue sendtocontract(const JSONRPCRequest& request){
                         {"datahex", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "data to send."},
                         {"amount", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "The amount in " + CURRENCY_UNIT + " to send. eg 0.1, default: 0"},
                         {"gasLimit", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "gasLimit, default: "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+", max: "+i64tostr(blockGasLimit)},
-                        {"gasPrice", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "gasPrice Qtum price per gas unit, default: "+FormatMoney(nGasPrice)+", min:"+FormatMoney(minGasPrice)},
-                        {"senderaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::OMITTED, "The qtum address that will be used as sender."},
+                        {"gasPrice", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "gasPrice lux price per gas unit, default: "+FormatMoney(nGasPrice)+", min:"+FormatMoney(minGasPrice)},
+                        {"senderaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::OMITTED, "The lux address that will be used as sender."},
                         {"broadcast", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Whether to broadcast the transaction or not."},
                         {"changeToSender", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Return the change to the sender."},
                         {"psbt", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Create partially signed transaction."},
@@ -1663,9 +1663,9 @@ static UniValue removedelegationforaddress(const JSONRPCRequest& request){
                     "\nRemove delegation for address." +
                     HELP_REQUIRING_PASSPHRASE,
                     {
-                        {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The qtum address to remove delegation, the address will be used as sender too."},
+                        {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The lux address to remove delegation, the address will be used as sender too."},
                         {"gasLimit", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "gasLimit, default: "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+", max: "+i64tostr(blockGasLimit)},
-                        {"gasPrice", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "gasPrice Qtum price per gas unit, default: "+FormatMoney(nGasPrice)+", min:"+FormatMoney(minGasPrice)},
+                        {"gasPrice", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "gasPrice lux price per gas unit, default: "+FormatMoney(nGasPrice)+", min:"+FormatMoney(minGasPrice)},
                     },
                     RPCResult{
                         RPCResult::Type::ARR, "", "",
@@ -1726,11 +1726,11 @@ static UniValue setdelegateforaddress(const JSONRPCRequest& request){
                     "\nSet delegate for address." +
                     HELP_REQUIRING_PASSPHRASE,
                     {
-                        {"staker", RPCArg::Type::STR, RPCArg::Optional::NO, "The qtum address for the staker."},
+                        {"staker", RPCArg::Type::STR, RPCArg::Optional::NO, "The lux address for the staker."},
                         {"fee", RPCArg::Type::NUM, RPCArg::Optional::NO, "Percentage of the reward that will be paid to the staker."},
-                        {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The qtum address that contain the coins that will be delegated to the staker, the address will be used as sender too."},
+                        {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The lux address that contain the coins that will be delegated to the staker, the address will be used as sender too."},
                         {"gasLimit", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "gasLimit, default: "+i64tostr(DEFAULT_GAS_LIMIT_OP_CREATE)+", max: "+i64tostr(blockGasLimit)},
-                        {"gasPrice", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "gasPrice Qtum price per gas unit, default: "+FormatMoney(nGasPrice)+", min:"+FormatMoney(minGasPrice)},
+                        {"gasPrice", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "gasPrice lux price per gas unit, default: "+FormatMoney(nGasPrice)+", min:"+FormatMoney(minGasPrice)},
                     },
                     RPCResult{
                         RPCResult::Type::ARR, "", "",
@@ -2079,7 +2079,7 @@ static UniValue listsuperstakervaluesforaddress(const JSONRPCRequest& request){
                     "\nList super staker configuration values for address." +
                     HELP_REQUIRING_PASSPHRASE,
                     {
-                        {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The super staker Qtum address."},
+                        {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The super staker lux address."},
                     },
                     RPCResult{
                     RPCResult::Type::ARR, "", "",
@@ -2152,7 +2152,7 @@ static UniValue removesuperstakervaluesforaddress(const JSONRPCRequest& request)
                     "\nRemove super staker configuration values for address." +
                     HELP_REQUIRING_PASSPHRASE,
                     {
-                        {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The super staker Qtum address."},
+                        {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The super staker lux address."},
                     },
                     RPCResults{},
                     RPCExamples{
@@ -2224,7 +2224,7 @@ static UniValue listaddressgroupings(const JSONRPCRequest& request)
                         {
                             {RPCResult::Type::ARR, "", "",
                             {
-                                {RPCResult::Type::STR, "address", "The qtum address"},
+                                {RPCResult::Type::STR, "address", "The lux address"},
                                 {RPCResult::Type::STR_AMOUNT, "amount", "The amount in " + CURRENCY_UNIT},
                                 {RPCResult::Type::STR, "label", /* optional */ true, "The label"},
                             }},
@@ -2279,7 +2279,7 @@ static UniValue signmessage(const JSONRPCRequest& request)
                 "\nSign a message with the private key of an address" +
         HELP_REQUIRING_PASSPHRASE,
                 {
-                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The qtum address to use for the private key."},
+                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The lux address to use for the private key."},
                     {"message", RPCArg::Type::STR, RPCArg::Optional::NO, "The message to create a signature of."},
                 },
                 RPCResult{
@@ -2338,7 +2338,7 @@ static UniValue getreceivedbyaddress(const JSONRPCRequest& request)
             RPCHelpMan{"getreceivedbyaddress",
                 "\nReturns the total amount received by the given address in transactions with at least minconf confirmations.\n",
                 {
-                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The qtum address for transactions."},
+                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The lux address for transactions."},
                     {"minconf", RPCArg::Type::NUM, /* default */ "1", "Only include transactions confirmed at least this many times."},
                 },
                 RPCResult{
@@ -2366,7 +2366,7 @@ static UniValue getreceivedbyaddress(const JSONRPCRequest& request)
     // Bitcoin address
     CTxDestination dest = DecodeDestination(request.params[0].get_str());
     if (!IsValidDestination(dest)) {
-        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid Qtum address");
+        throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "Invalid lux address");
     }
     CScript scriptPubKey = GetScriptForDestination(dest);
     if (!pwallet->IsMine(scriptPubKey)) {
@@ -2565,14 +2565,14 @@ static UniValue sendmany(const JSONRPCRequest& request)
                     {"dummy", RPCArg::Type::STR, RPCArg::Optional::NO, "Must be set to \"\" for backwards compatibility.", "\"\""},
                     {"amounts", RPCArg::Type::OBJ, RPCArg::Optional::NO, "The addresses and amounts",
                         {
-                            {"address", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "The qtum address is the key, the numeric amount (can be string) in " + CURRENCY_UNIT + " is the value"},
+                            {"address", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "The lux address is the key, the numeric amount (can be string) in " + CURRENCY_UNIT + " is the value"},
                         },
                     },
                     {"minconf", RPCArg::Type::NUM, RPCArg::Optional::OMITTED_NAMED_ARG, "Ignored dummy value"},
                     {"comment", RPCArg::Type::STR, RPCArg::Optional::OMITTED_NAMED_ARG, "A comment"},
                     {"subtractfeefrom", RPCArg::Type::ARR, RPCArg::Optional::OMITTED_NAMED_ARG, "The addresses.\n"
             "                           The fee will be equally deducted from the amount of each selected address.\n"
-            "                           Those recipients will receive less qtums than you enter in their corresponding amount field.\n"
+            "                           Those recipients will receive less luxs than you enter in their corresponding amount field.\n"
             "                           If no addresses are specified here, the sender pays the fee.",
                         {
                             {"address", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "Subtract fee from this address"},
@@ -2643,7 +2643,7 @@ static UniValue sendmany(const JSONRPCRequest& request)
     for (const std::string& name_ : keys) {
         CTxDestination dest = DecodeDestination(name_);
         if (!IsValidDestination(dest)) {
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Qtum address: ") + name_);
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid lux address: ") + name_);
         }
 
         if (destinations.count(dest)) {
@@ -2700,14 +2700,14 @@ static UniValue sendmanywithdupes(const JSONRPCRequest& request)
                     {"dummy", RPCArg::Type::STR, RPCArg::Optional::NO, "Must be set to \"\" for backwards compatibility.", "\"\""},
                     {"amounts", RPCArg::Type::OBJ, RPCArg::Optional::NO, "A json object with addresses and amounts",
                         {
-                            {"address", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "The qtum address is the key, the numeric amount (can be string) in " + CURRENCY_UNIT + " is the value"},
+                            {"address", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "The lux address is the key, the numeric amount (can be string) in " + CURRENCY_UNIT + " is the value"},
                         },
                     },
                     {"minconf", RPCArg::Type::NUM, RPCArg::Optional::OMITTED_NAMED_ARG, "Ignored dummy value"},
                     {"comment", RPCArg::Type::STR, RPCArg::Optional::OMITTED_NAMED_ARG, "A comment"},
                     {"subtractfeefrom", RPCArg::Type::ARR, RPCArg::Optional::OMITTED_NAMED_ARG, "A json array with addresses.\n"
             "                           The fee will be equally deducted from the amount of each selected address.\n"
-            "                           Those recipients will receive less qtums than you enter in their corresponding amount field.\n"
+            "                           Those recipients will receive less luxs than you enter in their corresponding amount field.\n"
             "                           If no addresses are specified here, the sender pays the fee.",
                         {
                             {"address", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "Subtract fee from this address"},
@@ -2779,7 +2779,7 @@ static UniValue sendmanywithdupes(const JSONRPCRequest& request)
     for (const std::string& name_ : keys) {
         CTxDestination dest = DecodeDestination(name_);
         if (!IsValidDestination(dest)) {
-            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Qtum address: ") + name_);
+            throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid lux address: ") + name_);
         }
 
         destinations.insert(dest);
@@ -2830,15 +2830,15 @@ static UniValue addmultisigaddress(const JSONRPCRequest& request)
 
             RPCHelpMan{"addmultisigaddress",
                 "\nAdd an nrequired-to-sign multisignature address to the wallet. Requires a new wallet backup.\n"
-                "Each key is a Qtum address or hex-encoded public key.\n"
+                "Each key is a lux address or hex-encoded public key.\n"
                 "This functionality is only intended for use with non-watchonly addresses.\n"
                 "See `importaddress` for watchonly p2sh address support.\n"
                 "If 'label' is specified, assign address to that label.\n",
                 {
                     {"nrequired", RPCArg::Type::NUM, RPCArg::Optional::NO, "The number of required signatures out of the n keys or addresses."},
-                    {"keys", RPCArg::Type::ARR, RPCArg::Optional::NO, "A json array of qtum addresses or hex-encoded public keys",
+                    {"keys", RPCArg::Type::ARR, RPCArg::Optional::NO, "A json array of lux addresses or hex-encoded public keys",
                         {
-                            {"key", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "qtum address or hex-encoded public key"},
+                            {"key", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "lux address or hex-encoded public key"},
                         },
                         },
                     {"label", RPCArg::Type::STR, RPCArg::Optional::OMITTED_NAMED_ARG, "A label to assign the addresses to."},
@@ -3313,7 +3313,7 @@ UniValue listtransactions(const JSONRPCRequest& request)
                         {RPCResult::Type::OBJ, "", "", Cat(Cat<std::vector<RPCResult>>(
                         {
                             {RPCResult::Type::BOOL, "involvesWatchonly", "Only returns true if imported addresses were involved in transaction."},
-                            {RPCResult::Type::STR, "address", "The qtum address of the transaction."},
+                            {RPCResult::Type::STR, "address", "The lux address of the transaction."},
                             {RPCResult::Type::STR, "category", "The transaction category.\n"
                                 "\"send\"                  Transactions sent.\n"
                                 "\"receive\"               Non-coinbase and non-coinstake transactions received.\n"
@@ -3430,7 +3430,7 @@ static UniValue listsinceblock(const JSONRPCRequest& request)
                             {RPCResult::Type::OBJ, "", "", Cat(Cat<std::vector<RPCResult>>(
                             {
                                 {RPCResult::Type::BOOL, "involvesWatchonly", "Only returns true if imported addresses were involved in transaction."},
-                                {RPCResult::Type::STR, "address", "The qtum address of the transaction."},
+                                {RPCResult::Type::STR, "address", "The lux address of the transaction."},
                                 {RPCResult::Type::STR, "category", "The transaction category.\n"
                                     "\"send\"                  Transactions sent.\n"
                                     "\"receive\"               Non-coinbase transactions received.\n"
@@ -3580,7 +3580,7 @@ static UniValue gettransaction(const JSONRPCRequest& request_)
                             {RPCResult::Type::OBJ, "", "",
                             {
                                 {RPCResult::Type::BOOL, "involvesWatchonly", "Only returns true if imported addresses were involved in transaction."},
-                                {RPCResult::Type::STR, "address", "The qtum address involved in the transaction."},
+                                {RPCResult::Type::STR, "address", "The lux address involved in the transaction."},
                                 {RPCResult::Type::STR, "category", "The transaction category.\n"
                                     "\"send\"                  Transactions sent.\n"
                                     "\"receive\"               Non-coinbase and non-coinstake transactions received.\n"
@@ -3657,7 +3657,7 @@ static UniValue gettransaction(const JSONRPCRequest& request_)
 
     } else {
         if(!request.req)
-            throw JSONRPCError(RPC_INTERNAL_ERROR, "No HTTP connection. Waitconf is available from qtum-cli, not qtum-qt");
+            throw JSONRPCError(RPC_INTERNAL_ERROR, "No HTTP connection. Waitconf is available from lux-cli, not lux-qt");
 
         request.PollStart();
         while (true) {
@@ -3863,7 +3863,7 @@ static UniValue walletpassphrase(const JSONRPCRequest& request)
 
             RPCHelpMan{"walletpassphrase",
                 "\nStores the wallet decryption key in memory for 'timeout' seconds.\n"
-                "This is needed prior to performing transactions related to private keys such as sending QTUM and staking\n"
+                "This is needed prior to performing transactions related to private keys such as sending lux and staking\n"
             "\nNote:\n"
             "Issuing the walletpassphrase command while the wallet is already unlocked will set a new unlock\n"
             "time that overrides the old one.\n",
@@ -4084,7 +4084,7 @@ static UniValue encryptwallet(const JSONRPCRequest& request)
                 RPCExamples{
             "\nEncrypt your wallet\n"
             + HelpExampleCli("encryptwallet", "\"my pass phrase\"") +
-            "\nNow set the passphrase to use the wallet, such as for signing or sending qtum\n"
+            "\nNow set the passphrase to use the wallet, such as for signing or sending lux\n"
             + HelpExampleCli("walletpassphrase", "\"my pass phrase\"") +
             "\nNow we can do something like sign\n"
             + HelpExampleCli("signmessage", "\"address\" \"test message\"") +
@@ -4193,7 +4193,7 @@ static UniValue lockunspent(const JSONRPCRequest& request)
                 "\nUpdates list of temporarily unspendable outputs.\n"
                 "Temporarily lock (unlock=false) or unlock (unlock=true) specified transaction outputs.\n"
                 "If no transaction outputs are specified when unlocking then all current locked transaction outputs are unlocked.\n"
-                "A locked transaction output will not be chosen by automatic coin selection, when spending qtums.\n"
+                "A locked transaction output will not be chosen by automatic coin selection, when spending luxs.\n"
                 "Locks are stored in memory only. Nodes start with zero locked outputs, and the locked output list\n"
                 "is always cleared (by virtue of process exit) when a node stops or fails.\n"
                 "Also see the listunspent call\n",
@@ -4648,7 +4648,7 @@ static UniValue loadwallet(const JSONRPCRequest& request)
 {
             RPCHelpMan{"loadwallet",
                 "\nLoads a wallet from a wallet file or directory."
-                "\nNote that all wallet command-line options used when starting qtumd will be"
+                "\nNote that all wallet command-line options used when starting luxd will be"
                 "\napplied to the new wallet (eg -zapwallettxes, upgradewallet, rescan, etc).\n",
                 {
                     {"filename", RPCArg::Type::STR, RPCArg::Optional::NO, "The wallet directory or .dat file."},
@@ -4884,9 +4884,9 @@ static UniValue listunspent(const JSONRPCRequest& request)
                 {
                     {"minconf", RPCArg::Type::NUM, /* default */ "1", "The minimum confirmations to filter"},
                     {"maxconf", RPCArg::Type::NUM, /* default */ "9999999", "The maximum confirmations to filter"},
-                    {"addresses", RPCArg::Type::ARR, /* default */ "empty array", "A json array of qtum addresses to filter",
+                    {"addresses", RPCArg::Type::ARR, /* default */ "empty array", "A json array of lux addresses to filter",
                         {
-                            {"address", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "qtum address"},
+                            {"address", RPCArg::Type::STR, RPCArg::Optional::OMITTED, "lux address"},
                         },
                     },
                     {"include_unsafe", RPCArg::Type::BOOL, /* default */ "true", "Include outputs that are not safe to spend\n"
@@ -4907,7 +4907,7 @@ static UniValue listunspent(const JSONRPCRequest& request)
                         {
                             {RPCResult::Type::STR_HEX, "txid", "the transaction id"},
                             {RPCResult::Type::NUM, "vout", "the vout value"},
-                            {RPCResult::Type::STR, "address", "the qtum address"},
+                            {RPCResult::Type::STR, "address", "the lux address"},
                             {RPCResult::Type::STR, "label", "The associated label, or \"\" for the default label"},
                             {RPCResult::Type::STR, "scriptPubKey", "the script key"},
                             {RPCResult::Type::STR_AMOUNT, "amount", "the transaction output amount in " + CURRENCY_UNIT},
@@ -4953,7 +4953,7 @@ static UniValue listunspent(const JSONRPCRequest& request)
             const UniValue& input = inputs[idx];
             CTxDestination dest = DecodeDestination(input.get_str());
             if (!IsValidDestination(dest)) {
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid Qtum address: ") + input.get_str());
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, std::string("Invalid lux address: ") + input.get_str());
             }
             if (!destinations.insert(dest).second) {
                 throw JSONRPCError(RPC_INVALID_PARAMETER, std::string("Invalid parameter, duplicated address: ") + input.get_str());
@@ -5121,7 +5121,7 @@ void FundTransaction(CWallet* const pwallet, CMutableTransaction& tx, CAmount& f
             CTxDestination dest = DecodeDestination(options["changeAddress"].get_str());
 
             if (!IsValidDestination(dest)) {
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "changeAddress must be a valid qtum address");
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, "changeAddress must be a valid lux address");
             }
 
             coinControl.destChange = dest;
@@ -5226,7 +5226,7 @@ static UniValue fundrawtransaction(const JSONRPCRequest& request)
                     {"hexstring", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The hex string of the raw transaction"},
                     {"options", RPCArg::Type::OBJ, RPCArg::Optional::OMITTED_NAMED_ARG, "for backward compatibility: passing in a true instead of an object will result in {\"includeWatching\":true}",
                         {
-                            {"changeAddress", RPCArg::Type::STR, /* default */ "pool address", "The qtum address to receive the change"},
+                            {"changeAddress", RPCArg::Type::STR, /* default */ "pool address", "The lux address to receive the change"},
                             {"changePosition", RPCArg::Type::NUM, /* default */ "random", "The index of the change output"},
                             {"change_type", RPCArg::Type::STR, /* default */ "set by -changetype", "The output type to use. Only valid if changeAddress is not specified. Options are \"legacy\", \"p2sh-segwit\", and \"bech32\"."},
                             {"includeWatching", RPCArg::Type::BOOL, /* default */ "true for watch-only wallets, otherwise false", "Also select inputs which are watch only.\n"
@@ -5236,7 +5236,7 @@ static UniValue fundrawtransaction(const JSONRPCRequest& request)
                             {"feeRate", RPCArg::Type::AMOUNT, /* default */ "not set: makes wallet determine the fee", "Set a specific fee rate in " + CURRENCY_UNIT + "/kB"},
                             {"subtractFeeFromOutputs", RPCArg::Type::ARR, /* default */ "empty array", "The integers.\n"
                             "                              The fee will be equally deducted from the amount of each specified output.\n"
-                            "                              Those recipients will receive less qtums than you enter in their corresponding amount field.\n"
+                            "                              Those recipients will receive less luxs than you enter in their corresponding amount field.\n"
                             "                              If no outputs are specified here, the sender pays the fee.",
                                 {
                                     {"vout_index", RPCArg::Type::NUM, RPCArg::Optional::OMITTED, "The zero-based output index, before a change output is added."},
@@ -5852,15 +5852,15 @@ UniValue getaddressinfo(const JSONRPCRequest& request)
     }
 
             RPCHelpMan{"getaddressinfo",
-                "\nReturn information about the given qtum address.\n"
+                "\nReturn information about the given lux address.\n"
                 "Some of the information will only be present if the address is in the active wallet.\n",
                 {
-                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The qtum address for which to get information."},
+                    {"address", RPCArg::Type::STR, RPCArg::Optional::NO, "The lux address for which to get information."},
                 },
                 RPCResult{
                     RPCResult::Type::OBJ, "", "",
                     {
-                        {RPCResult::Type::STR, "address", "The qtum address validated."},
+                        {RPCResult::Type::STR, "address", "The lux address validated."},
                         {RPCResult::Type::STR_HEX, "scriptPubKey", "The hex-encoded scriptPubKey generated by the address."},
                         {RPCResult::Type::BOOL, "ismine", "If the address is yours."},
                         {RPCResult::Type::BOOL, "iswatchonly", "If the address is watchonly."},
@@ -5897,7 +5897,7 @@ UniValue getaddressinfo(const JSONRPCRequest& request)
                             "as an array to keep the API stable if multiple labels are enabled in the future.",
                         {
                             {RPCResult::Type::STR, "label name", "The label name. Defaults to \"\"."},
-                            {RPCResult::Type::OBJ, "", "label data, DEPRECATED, will be removed in 0.21. To re-enable, launch qtumd with `-deprecatedrpc=labelspurpose`",
+                            {RPCResult::Type::OBJ, "", "label data, DEPRECATED, will be removed in 0.21. To re-enable, launch luxd with `-deprecatedrpc=labelspurpose`",
                             {
                                 {RPCResult::Type::STR, "name", "The label name. Defaults to \"\"."},
                                 {RPCResult::Type::STR, "purpose", "The purpose of the associated address (send or receive)."},
@@ -6277,7 +6277,7 @@ UniValue walletcreatefundedpsbt(const JSONRPCRequest& request)
                         {
                             {"", RPCArg::Type::OBJ, RPCArg::Optional::OMITTED, "",
                                 {
-                                    {"address", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "A key-value pair. The key (string) is the qtum address, the value (float or string) is the amount in " + CURRENCY_UNIT + ""},
+                                    {"address", RPCArg::Type::AMOUNT, RPCArg::Optional::NO, "A key-value pair. The key (string) is the lux address, the value (float or string) is the amount in " + CURRENCY_UNIT + ""},
                                 },
                                 },
                             {"", RPCArg::Type::OBJ, RPCArg::Optional::OMITTED, "",
@@ -6290,7 +6290,7 @@ UniValue walletcreatefundedpsbt(const JSONRPCRequest& request)
                     {"locktime", RPCArg::Type::NUM, /* default */ "0", "Raw locktime. Non-0 value also locktime-activates inputs"},
                     {"options", RPCArg::Type::OBJ, RPCArg::Optional::OMITTED_NAMED_ARG, "",
                         {
-                            {"changeAddress", RPCArg::Type::STR_HEX, /* default */ "pool address", "The qtum address to receive the change"},
+                            {"changeAddress", RPCArg::Type::STR_HEX, /* default */ "pool address", "The lux address to receive the change"},
                             {"changePosition", RPCArg::Type::NUM, /* default */ "random", "The index of the change output"},
                             {"change_type", RPCArg::Type::STR, /* default */ "set by -changetype", "The output type to use. Only valid if changeAddress is not specified. Options are \"legacy\", \"p2sh-segwit\", and \"bech32\"."},
                             {"includeWatching", RPCArg::Type::BOOL, /* default */ "true for watch-only wallets, otherwise false", "Also select inputs which are watch only"},
@@ -6298,7 +6298,7 @@ UniValue walletcreatefundedpsbt(const JSONRPCRequest& request)
                             {"feeRate", RPCArg::Type::AMOUNT, /* default */ "not set: makes wallet determine the fee", "Set a specific fee rate in " + CURRENCY_UNIT + "/kB"},
                             {"subtractFeeFromOutputs", RPCArg::Type::ARR, /* default */ "empty array", "The outputs to subtract the fee from.\n"
                             "                              The fee will be equally deducted from the amount of each specified output.\n"
-                            "                              Those recipients will receive less qtums than you enter in their corresponding amount field.\n"
+                            "                              Those recipients will receive less luxs than you enter in their corresponding amount field.\n"
                             "                              If no outputs are specified here, the sender pays the fee.",
                                 {
                                     {"vout_index", RPCArg::Type::NUM, RPCArg::Optional::OMITTED, "The zero-based output index, before a change output is added."},
@@ -6390,15 +6390,15 @@ static UniValue qrc20approve(const JSONRPCRequest& request)
     uint64_t nGasLimit=DEFAULT_GAS_LIMIT_OP_SEND;
     bool fCheckOutputs = true;
 
-            RPCHelpMan{"qrc20approve",
+            RPCHelpMan{"lrc20approve",
                 "\nOwner approves an address to spend some amount of tokens.\n",
                 {
                     {"contractaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The contract address."},
-                    {"owneraddress", RPCArg::Type::STR, RPCArg::Optional::NO, "The token owner qtum address."},
-                    {"spenderaddress", RPCArg::Type::STR, RPCArg::Optional::NO,  "The token spender qtum address."},
+                    {"owneraddress", RPCArg::Type::STR, RPCArg::Optional::NO, "The token owner lux address."},
+                    {"spenderaddress", RPCArg::Type::STR, RPCArg::Optional::NO,  "The token spender lux address."},
                     {"amount", RPCArg::Type::STR, RPCArg::Optional::NO,  "The amount of tokens. eg 0.1"},
                     {"gasLimit", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "The gas limit, default: "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+", max: "+i64tostr(blockGasLimit)},
-                    {"gasPrice", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "The qtum price per gas unit, default: "+FormatMoney(nGasPrice)+", min:"+FormatMoney(minGasPrice)},
+                    {"gasPrice", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "The lux price per gas unit, default: "+FormatMoney(nGasPrice)+", min:"+FormatMoney(minGasPrice)},
                     {"checkOutputs", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Check outputs before send, default: true"},
                 },
                 RPCResult{
@@ -6409,10 +6409,10 @@ static UniValue qrc20approve(const JSONRPCRequest& request)
                     }
                 },
                 RPCExamples{
-                    HelpExampleCli("qrc20approve", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1")
-            + HelpExampleCli("qrc20approve", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
-            + HelpExampleRpc("qrc20approve", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1")
-            + HelpExampleRpc("qrc20approve", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
+                    HelpExampleCli("lrc20approve", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1")
+            + HelpExampleCli("lrc20approve", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
+            + HelpExampleRpc("lrc20approve", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1")
+            + HelpExampleRpc("lrc20approve", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
                 },
             }.Check(request);
 
@@ -6499,15 +6499,15 @@ static UniValue qrc20transfer(const JSONRPCRequest& request)
     uint64_t nGasLimit=DEFAULT_GAS_LIMIT_OP_SEND;
     bool fCheckOutputs = true;
 
-            RPCHelpMan{"qrc20transfer",
+            RPCHelpMan{"lrc20transfer",
                 "\nSend token amount to a given address.\n",
                 {
                     {"contractaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The contract address."},
-                    {"owneraddress", RPCArg::Type::STR, RPCArg::Optional::NO, "The token owner qtum address."},
-                    {"addressto", RPCArg::Type::STR, RPCArg::Optional::NO,  "The qtum address to send funds to."},
+                    {"owneraddress", RPCArg::Type::STR, RPCArg::Optional::NO, "The token owner lux address."},
+                    {"addressto", RPCArg::Type::STR, RPCArg::Optional::NO,  "The lux address to send funds to."},
                     {"amount", RPCArg::Type::STR, RPCArg::Optional::NO,  "The amount of tokens to send. eg 0.1"},
                     {"gasLimit", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "The gas limit, default: "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+", max: "+i64tostr(blockGasLimit)},
-                    {"gasPrice", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "The qtum price per gas unit, default: "+FormatMoney(nGasPrice)+", min:"+FormatMoney(minGasPrice)},
+                    {"gasPrice", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "The lux price per gas unit, default: "+FormatMoney(nGasPrice)+", min:"+FormatMoney(minGasPrice)},
                     {"checkOutputs", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Check outputs before send, default: true"},
                 },
                 RPCResult{
@@ -6518,10 +6518,10 @@ static UniValue qrc20transfer(const JSONRPCRequest& request)
                     }
                 },
                 RPCExamples{
-                    HelpExampleCli("qrc20transfer", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1")
-            + HelpExampleCli("qrc20transfer", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
-            + HelpExampleRpc("qrc20transfer", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1")
-            + HelpExampleRpc("qrc20transfer", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
+                    HelpExampleCli("lrc20transfer", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1")
+            + HelpExampleCli("lrc20transfer", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
+            + HelpExampleRpc("lrc20transfer", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1")
+            + HelpExampleRpc("lrc20transfer", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
                 },
             }.Check(request);
 
@@ -6618,16 +6618,16 @@ static UniValue qrc20transferfrom(const JSONRPCRequest& request)
     uint64_t nGasLimit=DEFAULT_GAS_LIMIT_OP_SEND;
     bool fCheckOutputs = true;
 
-            RPCHelpMan{"qrc20transferfrom",
+            RPCHelpMan{"lrc20transferfrom",
                 "\nSend token amount from selected address to a given address.\n",
                 {
                     {"contractaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The contract address."},
-                    {"owneraddress", RPCArg::Type::STR, RPCArg::Optional::NO, "The token owner qtum address."},
-                    {"spenderaddress", RPCArg::Type::STR, RPCArg::Optional::NO,  "The token spender qtum address."},
-                    {"receiveraddress", RPCArg::Type::STR, RPCArg::Optional::NO,  "The token receiver qtum address."},
+                    {"owneraddress", RPCArg::Type::STR, RPCArg::Optional::NO, "The token owner lux address."},
+                    {"spenderaddress", RPCArg::Type::STR, RPCArg::Optional::NO,  "The token spender lux address."},
+                    {"receiveraddress", RPCArg::Type::STR, RPCArg::Optional::NO,  "The token receiver lux address."},
                     {"amount", RPCArg::Type::STR, RPCArg::Optional::NO,  "The amount of token to send. eg 0.1"},
                     {"gasLimit", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "The gas limit, default: "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+", max: "+i64tostr(blockGasLimit)},
-                    {"gasPrice", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "The qtum price per gas unit, default: "+FormatMoney(nGasPrice)+", min:"+FormatMoney(minGasPrice)},
+                    {"gasPrice", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "The lux price per gas unit, default: "+FormatMoney(nGasPrice)+", min:"+FormatMoney(minGasPrice)},
                     {"checkOutputs", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Check outputs before send, default: true"},
                  },
                 RPCResult{
@@ -6638,10 +6638,10 @@ static UniValue qrc20transferfrom(const JSONRPCRequest& request)
                     }
                 },
                 RPCExamples{
-                    HelpExampleCli("qrc20transferfrom", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QhZThdumK8EFRX8MziWzvjCdiQWRt7Mxdz\" 0.1")
-            + HelpExampleCli("qrc20transferfrom", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QhZThdumK8EFRX8MziWzvjCdiQWRt7Mxdz\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
-            + HelpExampleRpc("qrc20transferfrom", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QhZThdumK8EFRX8MziWzvjCdiQWRt7Mxdz\" 0.1")
-            + HelpExampleRpc("qrc20transferfrom", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QhZThdumK8EFRX8MziWzvjCdiQWRt7Mxdz\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
+                    HelpExampleCli("lrc20transferfrom", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QhZThdumK8EFRX8MziWzvjCdiQWRt7Mxdz\" 0.1")
+            + HelpExampleCli("lrc20transferfrom", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QhZThdumK8EFRX8MziWzvjCdiQWRt7Mxdz\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
+            + HelpExampleRpc("lrc20transferfrom", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QhZThdumK8EFRX8MziWzvjCdiQWRt7Mxdz\" 0.1")
+            + HelpExampleRpc("lrc20transferfrom", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QhZThdumK8EFRX8MziWzvjCdiQWRt7Mxdz\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
                 },
             }.Check(request);
 
@@ -6739,14 +6739,14 @@ static UniValue qrc20burn(const JSONRPCRequest& request)
     uint64_t nGasLimit=DEFAULT_GAS_LIMIT_OP_SEND;
     bool fCheckOutputs = true;
 
-            RPCHelpMan{"qrc20burn",
+            RPCHelpMan{"lrc20burn",
                 "\nBurns token amount from owner address.\n",
                 {
                     {"contractaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The contract address."},
-                    {"owneraddress", RPCArg::Type::STR, RPCArg::Optional::NO, "The token owner qtum address."},
+                    {"owneraddress", RPCArg::Type::STR, RPCArg::Optional::NO, "The token owner lux address."},
                     {"amount", RPCArg::Type::STR, RPCArg::Optional::NO,  "The amount of tokens to burn. eg 0.1"},
                     {"gasLimit", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "The gas limit, default: "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+", max: "+i64tostr(blockGasLimit)},
-                    {"gasPrice", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "The qtum price per gas unit, default: "+FormatMoney(nGasPrice)+", min:"+FormatMoney(minGasPrice)},
+                    {"gasPrice", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "The lux price per gas unit, default: "+FormatMoney(nGasPrice)+", min:"+FormatMoney(minGasPrice)},
                     {"checkOutputs", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Check outputs before send, default: true"},
                 },
                 RPCResult{
@@ -6757,10 +6757,10 @@ static UniValue qrc20burn(const JSONRPCRequest& request)
                     }
                 },
                 RPCExamples{
-                    HelpExampleCli("qrc20burn", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1")
-            + HelpExampleCli("qrc20burn", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
-            + HelpExampleRpc("qrc20burn", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1")
-            + HelpExampleRpc("qrc20burn", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
+                    HelpExampleCli("lrc20burn", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1")
+            + HelpExampleCli("lrc20burn", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
+            + HelpExampleRpc("lrc20burn", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1")
+            + HelpExampleRpc("lrc20burn", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
                 },
             }.Check(request);
 
@@ -6856,15 +6856,15 @@ static UniValue qrc20burnfrom(const JSONRPCRequest& request)
     uint64_t nGasLimit=DEFAULT_GAS_LIMIT_OP_SEND;
     bool fCheckOutputs = true;
 
-            RPCHelpMan{"qrc20burnfrom",
+            RPCHelpMan{"lrc20burnfrom",
                 "\nBurns token amount from a given address.\n",
                 {
                     {"contractaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The contract address."},
-                    {"owneraddress", RPCArg::Type::STR, RPCArg::Optional::NO, "The token owner qtum address."},
-                    {"spenderaddress", RPCArg::Type::STR, RPCArg::Optional::NO,  "The token spender qtum address."},
+                    {"owneraddress", RPCArg::Type::STR, RPCArg::Optional::NO, "The token owner lux address."},
+                    {"spenderaddress", RPCArg::Type::STR, RPCArg::Optional::NO,  "The token spender lux address."},
                     {"amount", RPCArg::Type::STR, RPCArg::Optional::NO,  "The amount of token to burn. eg 0.1"},
                     {"gasLimit", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "The gas limit, default: "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+", max: "+i64tostr(blockGasLimit)},
-                    {"gasPrice", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "The qtum price per gas unit, default: "+FormatMoney(nGasPrice)+", min:"+FormatMoney(minGasPrice)},
+                    {"gasPrice", RPCArg::Type::AMOUNT, RPCArg::Optional::OMITTED, "The lux price per gas unit, default: "+FormatMoney(nGasPrice)+", min:"+FormatMoney(minGasPrice)},
                     {"checkOutputs", RPCArg::Type::BOOL, RPCArg::Optional::OMITTED, "Check outputs before send, default: true"},
                  },
                 RPCResult{
@@ -6875,10 +6875,10 @@ static UniValue qrc20burnfrom(const JSONRPCRequest& request)
                     }
                 },
                 RPCExamples{
-                    HelpExampleCli("qrc20burnfrom", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1")
-            + HelpExampleCli("qrc20burnfrom", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
-            + HelpExampleRpc("qrc20burnfrom", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1")
-            + HelpExampleRpc("qrc20burnfrom", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
+                    HelpExampleCli("lrc20burnfrom", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1")
+            + HelpExampleCli("lrc20burnfrom", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
+            + HelpExampleRpc("lrc20burnfrom", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1")
+            + HelpExampleRpc("lrc20burnfrom", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\" 0.1 "+i64tostr(DEFAULT_GAS_LIMIT_OP_SEND)+" "+FormatMoney(minGasPrice)+" true")
                 },
             }.Check(request);
 
@@ -7041,11 +7041,11 @@ static const CRPCCommand commands[] =
     { "wallet",             "listsuperstakercustomvalues",             &listsuperstakercustomvalues,          {} },
     { "wallet",             "listsuperstakervaluesforaddress",         &listsuperstakervaluesforaddress,      {"address"} },
     { "wallet",             "removesuperstakervaluesforaddress",       &removesuperstakervaluesforaddress,    {"address"} },
-    { "wallet",             "qrc20approve",                    &qrc20approve,                   {"contractaddress", "owneraddress", "spenderaddress", "amount", "gasLimit", "gasPrice", "checkOutputs"} },
-    { "wallet",             "qrc20transfer",                   &qrc20transfer,                  {"contractaddress", "owneraddress", "addressto", "amount", "gasLimit", "gasPrice", "checkOutputs"} },
-    { "wallet",             "qrc20transferfrom",               &qrc20transferfrom,              {"contractaddress", "owneraddress", "spenderaddress", "receiveraddress", "amount", "gasLimit", "gasPrice", "checkOutputs"} },
-    { "wallet",             "qrc20burn",                       &qrc20burn,                      {"contractaddress", "owneraddress", "amount", "gasLimit", "gasPrice", "checkOutputs"} },
-    { "wallet",             "qrc20burnfrom",                   &qrc20burnfrom,                  {"contractaddress", "owneraddress", "spenderaddress", "amount", "gasLimit", "gasPrice", "checkOutputs"} },
+    { "wallet",             "lrc20approve",                    &qrc20approve,                   {"contractaddress", "owneraddress", "spenderaddress", "amount", "gasLimit", "gasPrice", "checkOutputs"} },
+    { "wallet",             "lrc20transfer",                   &qrc20transfer,                  {"contractaddress", "owneraddress", "addressto", "amount", "gasLimit", "gasPrice", "checkOutputs"} },
+    { "wallet",             "lrc20transferfrom",               &qrc20transferfrom,              {"contractaddress", "owneraddress", "spenderaddress", "receiveraddress", "amount", "gasLimit", "gasPrice", "checkOutputs"} },
+    { "wallet",             "lrc20burn",                       &qrc20burn,                      {"contractaddress", "owneraddress", "amount", "gasLimit", "gasPrice", "checkOutputs"} },
+    { "wallet",             "lrc20burnfrom",                   &qrc20burnfrom,                  {"contractaddress", "owneraddress", "spenderaddress", "amount", "gasLimit", "gasPrice", "checkOutputs"} },
 };
 // clang-format on
 

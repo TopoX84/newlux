@@ -1,5 +1,5 @@
 ---
-name: "qtum-core-linux-0.20"
+name: "luxcore-linux-0.20"
 enable_cache: true
 distro: "ubuntu"
 suites:

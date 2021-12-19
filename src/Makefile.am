@@ -92,18 +92,18 @@ TESTS =
 BENCHMARKS =
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += qtumd
+  bin_PROGRAMS += luxd
 endif
 
 if BUILD_BITCOIN_CLI
-  bin_PROGRAMS += qtum-cli
+  bin_PROGRAMS += lux-cli
 endif
 if BUILD_BITCOIN_TX
-  bin_PROGRAMS += qtum-tx
+  bin_PROGRAMS += lux-tx
 endif
 if ENABLE_WALLET
 if BUILD_BITCOIN_WALLET
-  bin_PROGRAMS += qtum-wallet
+  bin_PROGRAMS += lux-wallet
 endif
 endif
 
@@ -199,6 +199,7 @@ BITCOIN_CORE_H = \
   rpc/server.h \
   rpc/util.h \
   rpc/contract_util.h \
+  rx2_helper.h \
   scheduler.h \
   script/descriptor.h \
   script/keyorigin.h \
@@ -332,6 +333,7 @@ libbitcoin_server_a_SOURCES = \
   rpc/net.cpp \
   rpc/rawtransaction.cpp \
   rpc/server.cpp \
+  rx2_helper.cpp \
   script/sigcache.cpp \
   shutdown.cpp \
   timedata.cpp \
@@ -426,6 +428,34 @@ crypto_libbitcoin_crypto_base_a_SOURCES = \
   crypto/sha512.h \
   crypto/siphash.cpp \
   crypto/siphash.h \
+  crypto/RandomX/aes_hash.cpp \
+  crypto/RandomX/argon2_ref.c \
+  crypto/RandomX/argon2_ssse3.c \
+  crypto/RandomX/argon2_avx2.c \
+  crypto/RandomX/bytecode_machine.cpp \
+  crypto/RandomX/cpu.cpp \
+  crypto/RandomX/dataset.cpp \
+  crypto/RandomX/soft_aes.cpp \
+  crypto/RandomX/virtual_memory.cpp \
+  crypto/RandomX/vm_interpreted.cpp \
+  crypto/RandomX/allocator.cpp \
+  crypto/RandomX/assembly_generator_x86.cpp \
+  crypto/RandomX/instruction.cpp \
+  crypto/RandomX/randomx.cpp \
+  crypto/RandomX/superscalar.cpp \
+  crypto/RandomX/vm_compiled.cpp \
+  crypto/RandomX/vm_interpreted_light.cpp \
+  crypto/RandomX/argon2_core.c \
+  crypto/RandomX/blake2_generator.cpp \
+  crypto/RandomX/instructions_portable.cpp \
+  crypto/RandomX/reciprocal.c \
+  crypto/RandomX/virtual_machine.cpp \
+  crypto/RandomX/vm_compiled_light.cpp \
+  crypto/RandomX/blake2/blake2b.c \
+  crypto/RandomX/jit_compiler_x86.cpp \
+  crypto/RandomX/jit_compiler_x86_static.S \
+  crypto/rx2.h \
+  crypto/rx2.cpp \
   cpp-ethereum/utils/libscrypt/b64.c \
   cpp-ethereum/utils/libscrypt/b64.h \
   cpp-ethereum/utils/libscrypt/crypto-mcf.c \
@@ -856,16 +886,16 @@ nodist_libbitcoin_util_a_SOURCES = $(srcdir)/obj/build.h
 #
 
 # bitcoind binary #
-qtumd_SOURCES = bitcoind.cpp
-qtumd_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-qtumd_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-qtumd_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+luxd_SOURCES = bitcoind.cpp
+luxd_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+luxd_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+luxd_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-qtumd_SOURCES += bitcoind-res.rc
+luxd_SOURCES += bitcoind-res.rc
 endif
 
-qtumd_LDADD = \
+luxd_LDADD = \
   $(LIBBITCOIN_SERVER) \
   $(LIBBITCOIN_WALLET) \
   $(LIBBITCOIN_SERVER) \
@@ -882,19 +912,19 @@ qtumd_LDADD = \
   $(LIBFF) \
   $(LIBSECP256K1)
 
-qtumd_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(GMP_LIBS) $(GMPXX_LIBS)
+luxd_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(MINIUPNPC_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(ZMQ_LIBS) $(GMP_LIBS) $(GMPXX_LIBS)
 
 # bitcoin-cli binary #
-qtum_cli_SOURCES = bitcoin-cli.cpp
-qtum_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
-qtum_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-qtum_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+lux_cli_SOURCES = bitcoin-cli.cpp
+lux_cli_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES) $(EVENT_CFLAGS)
+lux_cli_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+lux_cli_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-qtum_cli_SOURCES += bitcoin-cli-res.rc
+lux_cli_SOURCES += bitcoin-cli-res.rc
 endif
 
-qtum_cli_LDADD = \
+lux_cli_LDADD = \
   $(LIBBITCOIN_CLI) \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_UTIL) \
@@ -905,20 +935,20 @@ qtum_cli_LDADD = \
   $(LIBCRYPTOPP) \
   $(LIBSECP256K1)
 
-qtum_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
+lux_cli_LDADD += $(BOOST_LIBS) $(SSL_LIBS) $(CRYPTO_LIBS) $(EVENT_LIBS)
 #
 
 # bitcoin-tx binary #
-qtum_tx_SOURCES = bitcoin-tx.cpp consensus/consensus.cpp
-qtum_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-qtum_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-qtum_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+lux_tx_SOURCES = bitcoin-tx.cpp consensus/consensus.cpp
+lux_tx_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+lux_tx_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+lux_tx_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-qtum_tx_SOURCES += bitcoin-tx-res.rc
+lux_tx_SOURCES += bitcoin-tx-res.rc
 endif
 
-qtum_tx_LDADD = \
+lux_tx_LDADD = \
   $(LIBUNIVALUE) \
   $(LIBBITCOIN_COMMON) \
   $(LIBBITCOIN_UTIL) \
@@ -930,20 +960,20 @@ qtum_tx_LDADD = \
   $(LIBCRYPTOPP) \
   $(LIBSECP256K1)
 
-qtum_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
+lux_tx_LDADD += $(BOOST_LIBS) $(CRYPTO_LIBS)
 #
 
 # bitcoin-wallet binary #
-qtum_wallet_SOURCES = bitcoin-wallet.cpp
-qtum_wallet_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-qtum_wallet_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-qtum_wallet_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
+lux_wallet_SOURCES = bitcoin-wallet.cpp
+lux_wallet_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+lux_wallet_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+lux_wallet_LDFLAGS = $(RELDFLAGS) $(AM_LDFLAGS) $(LIBTOOL_APP_LDFLAGS)
 
 if TARGET_WINDOWS
-qtum_wallet_SOURCES += bitcoin-wallet-res.rc
+lux_wallet_SOURCES += bitcoin-wallet-res.rc
 endif
 
-qtum_wallet_LDADD = \
+lux_wallet_LDADD = \
   $(LIBBITCOIN_WALLET_TOOL) \
   $(LIBBITCOIN_WALLET) \
   $(LIBBITCOIN_SERVER) \
@@ -960,7 +990,7 @@ qtum_wallet_LDADD = \
   $(LIBFF) \
   $(LIBUNIVALUE)
 
-qtum_wallet_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(CRYPTO_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(MINIUPNPC_LIBS) $(ZMQ_LIBS) $(GMP_LIBS) $(GMPXX_LIBS)
+lux_wallet_LDADD += $(BOOST_LIBS) $(BDB_LIBS) $(CRYPTO_LIBS) $(EVENT_PTHREADS_LIBS) $(EVENT_LIBS) $(MINIUPNPC_LIBS) $(ZMQ_LIBS) $(GMP_LIBS) $(GMPXX_LIBS)
 #
 
 # bitcoinconsensus library #

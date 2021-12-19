@@ -19,11 +19,33 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
 
-///////////////////////////////////////////// // qtum
+///////////////////////////////////////////// // lux
 #include <libdevcore/SHA3.h>
 #include <libdevcore/RLP.h>
 #include "arith_uint256.h"
 /////////////////////////////////////////////
+
+
+bool CheckProof(uint256 hash, unsigned int nBits)
+{
+    bool fNegative;
+    bool fOverflow;
+    arith_uint256 bnTarget;
+    arith_uint256 hashCalc = UintToArith256(hash);
+
+
+    bnTarget.SetCompact(nBits, &fNegative, &fOverflow);
+
+    // Check range
+    if (fNegative || bnTarget == 0 || fOverflow)
+        return false; //error("CheckProofOfWork() : nBits below minimum work");
+
+    // Check proof of work matches claimed amount
+    if (hashCalc > bnTarget)
+        return false; //error("CheckProofOfWork() : hash doesn't match nBits");
+
+    return true;
+}
 
 static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesisOutputScript, uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
@@ -43,8 +65,18 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
     genesis.vtx.push_back(MakeTransactionRef(std::move(txNew)));
     genesis.hashPrevBlock.SetNull();
     genesis.hashMerkleRoot = BlockMerkleRoot(genesis);
-    genesis.hashStateRoot = uint256(h256Touint(dev::h256("e965ffd002cd6ad0e2dc402b8044de833e06b23127ea8c3d80aec91410771495"))); // qtum
-    genesis.hashUTXORoot = uint256(h256Touint(dev::sha3(dev::rlp("")))); // qtum
+    genesis.hashStateRoot = uint256(h256Touint(dev::h256("e965ffd002cd6ad0e2dc402b8044de833e06b23127ea8c3d80aec91410771495"))); // lux
+    genesis.hashUTXORoot = uint256(h256Touint(dev::sha3(dev::rlp("")))); // lux
+
+/*
+    while (!CheckProof(genesis.GetHash(), genesis.nBits)) {
+        genesis.nNonce ++;
+    }
+
+    std::cout << genesis.nNonce << std::endl;
+    std::cout << genesis.GetHash().GetHex() << std::endl;
+    std::cout << genesis.hashMerkleRoot.GetHex() << std::endl;
+*/
     return genesis;
 }
 
@@ -61,7 +93,7 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
  */
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
-    const char* pszTimestamp = "Sep 02, 2017 Bitcoin breaks $5,000 in latest price frenzy";
+    const char* pszTimestamp = "Times, November 29 2021 - Fragmented Reactions Hinder Global Fight Against Omicron Variant";
     const CScript genesisOutputScript = CScript() << ParseHex("040d61d8653448c98731ee5fffd303c15e71ec2057b77f11ab3601979728cdaff2d68afbba14e4fa0bc44f2072b0b23ef63717f8cdfbe58dcd33f32b6afe98741a") << OP_CHECKSIG;
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);
 }
@@ -73,7 +105,7 @@ class CMainParams : public CChainParams {
 public:
     CMainParams() {
         strNetworkID = CBaseChainParams::MAIN;
-        consensus.nSubsidyHalvingInterval = 985500; // qtum halving every 4 years
+        consensus.nSubsidyHalvingInterval = 985500; // lux halving every 4 years
         consensus.BIP16Exception = uint256S("0x000075aef83cf2853580f8ae8ce6f8c3096cfa21d98334d6e3f95e5582ed986c");
         consensus.BIP34Height = 0;
         consensus.BIP34Hash = uint256S("0x000075aef83cf2853580f8ae8ce6f8c3096cfa21d98334d6e3f95e5582ed986c");
@@ -82,24 +114,25 @@ public:
         consensus.CSVHeight = 6048; // 000000000000000004a1b34462cb8aeebd5799177f7a29cf28f2d1961716b5b5
         consensus.SegwitHeight = 6048; // 0000000000000000001c8018d9cb3b742ef25114f27563e3fc4a1902167f9893
         consensus.MinBIP9WarningHeight = 8064; // segwit activation height + miner confirmation window
-        consensus.QIP5Height = 466600;
-        consensus.QIP6Height = 466600;
-        consensus.QIP7Height = 466600;
-        consensus.QIP9Height = 466600;
-        consensus.nOfflineStakeHeight = 680000;
-        consensus.nReduceBlocktimeHeight = 845000;
-        consensus.nMuirGlacierHeight = 845000;
-        consensus.powLimit = uint256S("0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.QIP5Height = 10000;
+        consensus.QIP6Height = 10000;
+        consensus.QIP7Height = 10000;
+        consensus.QIP9Height = 10000;
+        consensus.nOfflineStakeHeight = 10000;
+        consensus.nReduceBlocktimeHeight = 99999999;
+        consensus.nMuirGlacierHeight = 10000;
+        //consensus.powLimit = uint256S("0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        consensus.powLimit = uint256S("0x7fff000000000000000000000000000000000000000000000000000000000000");
         consensus.posLimit = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.QIP9PosLimit = uint256S("0000000000001fffffffffffffffffffffffffffffffffffffffffffffffffff"); // The new POS-limit activated after QIP9
         consensus.RBTPosLimit = uint256S("0000000000003fffffffffffffffffffffffffffffffffffffffffffffffffff");
         consensus.nPowTargetTimespan = 16 * 60; // 16 minutes
         consensus.nPowTargetTimespanV2 = 4000;
         consensus.nRBTPowTargetTimespan = 1000;
-        consensus.nPowTargetSpacing = 2 * 64;
+        consensus.nPowTargetSpacing = 2 * 60;
         consensus.nRBTPowTargetSpacing = 32;
         consensus.fPowAllowMinDifficultyBlocks = false;
-        consensus.fPowNoRetargeting = true;
+        consensus.fPowNoRetargeting = false;
         consensus.fPoSNoRetargeting = false;
         consensus.nRuleChangeActivationThreshold = 1916; // 95% of 2016
         consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
@@ -107,48 +140,53 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
 
+        //RX2
+        consensus.RX2SeedHeight = 1000;
+        consensus.RX2SeedInterval = 340; //seed changes every 6 hours (based on mainnet)
+
+        //LWMAPoW/PoS vars
+        consensus.lwmaAveragingWindow = 96;
+
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000002ee39fbaf66506e5c57"); // qtum
+        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000000000000000000000"); // lux
 
         // By default assume that the signatures in ancestors of this block are valid.
-        consensus.defaultAssumeValid = uint256S("0x8ef924fb7d2a28e0420c8731fb34301c204d15fe8d1e68461e5ebe959df011f2"); // 1405000
+        consensus.defaultAssumeValid = uint256S("0x0000404ba2a30fa91c0090a9c32489b0d880ba308f7ab32d1fef1bf0ccfa5e0c"); // 1405000
 
         /**
          * The message start string is designed to be unlikely to occur in normal data.
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 32-bit integer with any alignment.
          */
-        pchMessageStart[0] = 0xf1;
-        pchMessageStart[1] = 0xcf;
-        pchMessageStart[2] = 0xa6;
-        pchMessageStart[3] = 0xd3;
-        nDefaultPort = 3888;
+        pchMessageStart[0] = 0x7a;
+        pchMessageStart[1] = 0xb4;
+        pchMessageStart[2] = 0xc9;
+        pchMessageStart[3] = 0xa0;
+        nDefaultPort = 27969;
         nPruneAfterHeight = 100000;
         m_assumed_blockchain_size = 14;
         m_assumed_chain_state_size = 1;
 
-        genesis = CreateGenesisBlock(1504695029, 8026361, 0x1f00ffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1638284000, 51248, 0x1f00ffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x000075aef83cf2853580f8ae8ce6f8c3096cfa21d98334d6e3f95e5582ed986c"));
-        assert(genesis.hashMerkleRoot == uint256S("0xed34050eb5909ee535fcb07af292ea55f3d2f291187617b44d3282231405b96d"));
+        assert(consensus.hashGenesisBlock == uint256S("0x0000404ba2a30fa91c0090a9c32489b0d880ba308f7ab32d1fef1bf0ccfa5e0c"));
+        assert(genesis.hashMerkleRoot == uint256S("0xb75cb728f3e3309cf45eda889df730fd2a3a99e5deda9950a7f1fc8082070ed8"));
 
         // Note that of those which support the service bits prefix, most only support a subset of
         // possible options.
         // This is fine at runtime as we'll fall back to using them as a oneshot if they don't support the
         // service bits we want, but we should get them updated to support all service bits wanted by any
         // release ASAP to avoid it where possible.
-        vSeeds.emplace_back("qtum3.dynu.net"); // Qtum mainnet
-        vSeeds.emplace_back("qtum5.dynu.net"); // Qtum mainnet
-        vSeeds.emplace_back("qtum6.dynu.net"); // Qtum mainnet
-        vSeeds.emplace_back("qtum7.dynu.net"); // Qtum mainnet
+        vSeeds.emplace_back("seed.luxcore.tech"); // Lux mainnet
+        vSeeds.emplace_back("seed.luxseeds.nl"); // Lux mainnet 2 
 
-        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,58);
-        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,50);
-        base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,128);
-        base58Prefixes[EXT_PUBLIC_KEY] = {0x04, 0x88, 0xB2, 0x1E};
-        base58Prefixes[EXT_SECRET_KEY] = {0x04, 0x88, 0xAD, 0xE4};
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,48);
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,63);
+        base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,155);
+        base58Prefixes[EXT_PUBLIC_KEY] = {0x07, 0x28, 0xA2, 0x4E};
+        base58Prefixes[EXT_SECRET_KEY] = {0x03, 0x08, 0xA1, 0xE5};
 
-        bech32_hrp = "qc";
+        bech32_hrp = "lc";
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
 
@@ -161,24 +199,13 @@ public:
 
         checkpointData = {
             {
-                { 0, uint256S("000075aef83cf2853580f8ae8ce6f8c3096cfa21d98334d6e3f95e5582ed986c")},
-                { 5000, uint256S("00006a5338e5647872bd91de1d291365e941e14dff1939b5f16d1804d1ce61cd")}, //last PoW block
-                { 45000, uint256S("060c6af680f6975184c7a17059f2ff4970544fcfd4104e73744fe7ab7be14cfc")},
-                { 90000, uint256S("66fcf426b0aa6f2c9e3330cb2775e9e13c4a2b8ceedb50f8931ae0e12078ad50")},
-                { 245000, uint256S("ed79607feeadcedf5b94f1c43df684af5106e79b0989a008a88f9dc2221cc12a")},
-                { 353000, uint256S("d487896851fed42b07771f950fcc4469fbfa79211cfefed800f6d7806255e23f")},
-                { 367795, uint256S("1209326b73e38e44ec5dc210f51dc5d8c3494e9c698521032dd754747d4c1685")},
-                { 445709, uint256S("814e7d91aac6c577e4589b76918f44cf80020212159d39709fbad3f219725c9f")},
-                { 498000, uint256S("497f28fd4b1dadc9ff6dd2ac771483acfd16e4c4664eb45d0a6008dc33811418")},
-                { 708000, uint256S("23c66194def65cfea20d32a71f23807a93a0b207b3d7251246e2c351204fe9d3")},
-                { 888000, uint256S("02caf7a26b995e5054462715a4d31e1a7ff220c53fead7c06de720ac54510433")},
-                { 1405000, uint256S("8ef924fb7d2a28e0420c8731fb34301c204d15fe8d1e68461e5ebe959df011f2")},
+                { 0, uint256S("0000404ba2a30fa91c0090a9c32489b0d880ba308f7ab32d1fef1bf0ccfa5e0c")},
             }
         };
 
         chainTxData = ChainTxData{
             // Data as of block 87ee4ec601b335d411e01378936e21044b1a47a3d989feaaaed0e8eaa2929e4b (height 1407838)
-            1637774408, // * UNIX timestamp of last known number of transactions
+            1638284000, // * UNIX timestamp of last known number of transactions
             6434923, // * total number of transactions between genesis and that timestamp
             //   (the tx=... number in the SetBestChain debug.log lines)
             0.0842613440826197 // * estimated number of transactions per second after that timestamp
@@ -187,19 +214,15 @@ public:
         consensus.nBlocktimeDownscaleFactor = 4;
         consensus.nCoinbaseMaturity = 500;
         consensus.nRBTCoinbaseMaturity = consensus.nBlocktimeDownscaleFactor*500;
-        consensus.nSubsidyHalvingIntervalV2 = consensus.nBlocktimeDownscaleFactor*985500; // qtum halving every 4 years (nSubsidyHalvingInterval * nBlocktimeDownscaleFactor)
+        consensus.nSubsidyHalvingIntervalV2 = consensus.nBlocktimeDownscaleFactor*985500; // lux halving every 4 years (nSubsidyHalvingInterval * nBlocktimeDownscaleFactor)
 
-        consensus.nLastPOWBlock = 5000;
-        consensus.nLastBigReward = 5000;
         consensus.nMPoSRewardRecipients = 10;
-        consensus.nFirstMPoSBlock = consensus.nLastPOWBlock + 
-                                    consensus.nMPoSRewardRecipients + 
-                                    consensus.nCoinbaseMaturity;
-        consensus.nLastMPoSBlock = 679999;
+        consensus.nFirstMPoSBlock = 0;
+        consensus.nLastMPoSBlock = 2;
 
 
-        consensus.nFixUTXOCacheHFHeight = 100000;
-        consensus.nEnableHeaderSignatureHeight = 399100;
+        consensus.nFixUTXOCacheHFHeight = 0;
+        consensus.nEnableHeaderSignatureHeight = 0;
         consensus.nCheckpointSpan = consensus.nCoinbaseMaturity;
         consensus.nRBTCheckpointSpan = consensus.nRBTCoinbaseMaturity;
         consensus.delegationsAddress = uint160(ParseHex("0000000000000000000000000000000000000086")); // Delegations contract for offline staking
@@ -215,7 +238,7 @@ class CTestNetParams : public CChainParams {
 public:
     CTestNetParams() {
         strNetworkID = CBaseChainParams::TESTNET;
-        consensus.nSubsidyHalvingInterval = 985500; // qtum halving every 4 years
+        consensus.nSubsidyHalvingInterval = 985500; // lux halving every 4 years
         consensus.BIP16Exception = uint256S("0x0000e803ee215c0684ca0d2f9220594d3f828617972aad66feb2ba51f5e14222");
         consensus.BIP34Height = 0;
         consensus.BIP34Hash = uint256S("0x0000e803ee215c0684ca0d2f9220594d3f828617972aad66feb2ba51f5e14222");
@@ -238,7 +261,7 @@ public:
         consensus.nPowTargetTimespan = 16 * 60; // 16 minutes
         consensus.nPowTargetTimespanV2 = 4000;
         consensus.nRBTPowTargetTimespan = 1000;
-        consensus.nPowTargetSpacing = 2 * 64;
+        consensus.nPowTargetSpacing = 2 * 60;
         consensus.nRBTPowTargetSpacing = 32;
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = true;
@@ -249,8 +272,15 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 1199145601; // January 1, 2008
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = 1230767999; // December 31, 2008
 
+        //RX2
+        consensus.RX2SeedHeight = 1000;
+        consensus.RX2SeedInterval = 340; //seed changes every 6 hours (based on mainnet)
+
+        //LWMAPoW/PoS vars
+        consensus.lwmaAveragingWindow = 96;
+
         // The best chain should have at least this much work.
-        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000f64ad2ae9a92bd2de8"); // qtum
+        consensus.nMinimumChainWork = uint256S("0x0000000000000000000000000000000000000000000000f64ad2ae9a92bd2de8"); // lux
 
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S("0xaff1f9c768e83f90d10a55306993e9042b5740251abc1afdde1429d09e95fa66"); // 1405000
@@ -264,15 +294,15 @@ public:
         m_assumed_blockchain_size = 6;
         m_assumed_chain_state_size = 1;
 
-        genesis = CreateGenesisBlock(1504695029, 7349697, 0x1f00ffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1638301090, 22010, 0x1f00ffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x0000e803ee215c0684ca0d2f9220594d3f828617972aad66feb2ba51f5e14222"));
-        assert(genesis.hashMerkleRoot == uint256S("0xed34050eb5909ee535fcb07af292ea55f3d2f291187617b44d3282231405b96d"));
+        assert(consensus.hashGenesisBlock == uint256S("0x00009428ce2bf04dc5108b791424e0ea5a934864816e7b9f83b5a5b7ef4b74e1"));
+        assert(genesis.hashMerkleRoot == uint256S("0xb75cb728f3e3309cf45eda889df730fd2a3a99e5deda9950a7f1fc8082070ed8"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
         // nodes with support for servicebits filtering should be at the top
-        vSeeds.emplace_back("qtum4.dynu.net"); // Qtum testnet
+        vSeeds.emplace_back("lux4.dynu.net"); // lux testnet
 
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,120);
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,110);
@@ -316,15 +346,11 @@ public:
         consensus.nBlocktimeDownscaleFactor = 4;
         consensus.nCoinbaseMaturity = 500;
         consensus.nRBTCoinbaseMaturity = consensus.nBlocktimeDownscaleFactor*500;
-        consensus.nSubsidyHalvingIntervalV2 = consensus.nBlocktimeDownscaleFactor*985500; // qtum halving every 4 years (nSubsidyHalvingInterval * nBlocktimeDownscaleFactor)
+        consensus.nSubsidyHalvingIntervalV2 = consensus.nBlocktimeDownscaleFactor*985500; // lux halving every 4 years (nSubsidyHalvingInterval * nBlocktimeDownscaleFactor)
 
-        consensus.nLastPOWBlock = 5000;
-        consensus.nLastBigReward = 5000;
         consensus.nMPoSRewardRecipients = 10;
-        consensus.nFirstMPoSBlock = consensus.nLastPOWBlock + 
-                                    consensus.nMPoSRewardRecipients + 
-                                    consensus.nCoinbaseMaturity;
-        consensus.nLastMPoSBlock = 624999;
+        consensus.nFirstMPoSBlock = 0;
+        consensus.nLastMPoSBlock = 2;
 
         consensus.nFixUTXOCacheHFHeight = 84500;
         consensus.nEnableHeaderSignatureHeight = 391993;
@@ -377,6 +403,13 @@ public:
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nStartTime = 0;
         consensus.vDeployments[Consensus::DEPLOYMENT_TESTDUMMY].nTimeout = Consensus::BIP9Deployment::NO_TIMEOUT;
 
+        //RX2
+        consensus.RX2SeedHeight = 1000;
+        consensus.RX2SeedInterval = 340; //seed changes every 6 hours (based on mainnet)
+
+        //LWMAPoW/PoS vars
+        consensus.lwmaAveragingWindow = 96;
+
         // The best chain should have at least this much work.
         consensus.nMinimumChainWork = uint256S("0x00");
 
@@ -394,10 +427,10 @@ public:
 
         UpdateActivationParametersFromArgs(args);
 
-        genesis = CreateGenesisBlock(1504695029, 17, 0x207fffff, 1, 50 * COIN);
+        genesis = CreateGenesisBlock(1638301090, 0, 0x207fffff, 1, 50 * COIN);
         consensus.hashGenesisBlock = genesis.GetHash();
-        assert(consensus.hashGenesisBlock == uint256S("0x665ed5b402ac0b44efc37d8926332994363e8a7278b7ee9a58fb972efadae943"));
-        assert(genesis.hashMerkleRoot == uint256S("0xed34050eb5909ee535fcb07af292ea55f3d2f291187617b44d3282231405b96d"));
+        assert(consensus.hashGenesisBlock == uint256S("0x489766fddbc6257efdc79acb4697779e79f555e84608254c20e8f90b8b7a6e43"));
+        assert(genesis.hashMerkleRoot == uint256S("0xb75cb728f3e3309cf45eda889df730fd2a3a99e5deda9950a7f1fc8082070ed8"));
 
         vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();      //!< Regtest mode doesn't have any DNS seeds.
@@ -424,10 +457,8 @@ public:
         consensus.nBlocktimeDownscaleFactor = 4;
         consensus.nCoinbaseMaturity = 500;
         consensus.nRBTCoinbaseMaturity = consensus.nBlocktimeDownscaleFactor*500;
-        consensus.nSubsidyHalvingIntervalV2 = consensus.nBlocktimeDownscaleFactor*985500; // qtum halving every 4 years (nSubsidyHalvingInterval * nBlocktimeDownscaleFactor)
+        consensus.nSubsidyHalvingIntervalV2 = consensus.nBlocktimeDownscaleFactor*985500; // lux halving every 4 years (nSubsidyHalvingInterval * nBlocktimeDownscaleFactor)
 
-        consensus.nLastPOWBlock = 0x7fffffff;
-        consensus.nLastBigReward = 5000;
         consensus.nMPoSRewardRecipients = 10;
         consensus.nFirstMPoSBlock = 5000;
         consensus.nLastMPoSBlock = 0;
@@ -522,7 +553,7 @@ public:
         consensus.QIP6Height = consensus.nBlocktimeDownscaleFactor*500 + 500;
         consensus.QIP7Height = 0; // QIP7 activated on regtest
 
-        // QTUM have 500 blocks of maturity, increased values for regtest in unit tests in order to correspond with it
+        // lux have 500 blocks of maturity, increased values for regtest in unit tests in order to correspond with it
         consensus.nSubsidyHalvingInterval = 750;
         consensus.nSubsidyHalvingIntervalV2 = consensus.nBlocktimeDownscaleFactor*750;
         consensus.nRuleChangeActivationThreshold = consensus.nBlocktimeDownscaleFactor*558; // 75% for testchains
@@ -618,8 +649,8 @@ void UpdateConstantinopleBlockHeight(int nHeight)
 
 void CChainParams::UpdateDifficultyChangeBlockHeight(int nHeight)
 {
-    consensus.nSubsidyHalvingInterval = 985500; // qtum halving every 4 years
-    consensus.nSubsidyHalvingIntervalV2 = consensus.nBlocktimeDownscaleFactor*985500; // qtum halving every 4 years (nSubsidyHalvingInterval * nBlocktimeDownscaleFactor)
+    consensus.nSubsidyHalvingInterval = 985500; // lux halving every 4 years
+    consensus.nSubsidyHalvingIntervalV2 = consensus.nBlocktimeDownscaleFactor*985500; // lux halving every 4 years (nSubsidyHalvingInterval * nBlocktimeDownscaleFactor)
     consensus.posLimit = uint256S("00000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
     consensus.QIP9PosLimit = uint256S("0000000000001fffffffffffffffffffffffffffffffffffffffffffffffffff");
     consensus.RBTPosLimit = uint256S("0000000000003fffffffffffffffffffffffffffffffffffffffffffffffffff");
@@ -627,12 +658,9 @@ void CChainParams::UpdateDifficultyChangeBlockHeight(int nHeight)
     consensus.fPowAllowMinDifficultyBlocks = false;
     consensus.fPowNoRetargeting = true;
     consensus.fPoSNoRetargeting = false;
-    consensus.nLastPOWBlock = 5000;
     consensus.nMPoSRewardRecipients = 10;
-    consensus.nFirstMPoSBlock = consensus.nLastPOWBlock + 
-                                consensus.nMPoSRewardRecipients + 
-                                consensus.nCoinbaseMaturity;
-    consensus.nLastMPoSBlock = 0;
+    consensus.nFirstMPoSBlock = 0;
+    consensus.nLastMPoSBlock = 2;
 }
 
 void UpdateDifficultyChangeBlockHeight(int nHeight)

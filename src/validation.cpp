@@ -30,6 +30,7 @@
 #include <primitives/transaction.h>
 #include <random.h>
 #include <reverse_iterator.h>
+#include <rx2_helper.h>
 #include <script/script.h>
 #include <script/sigcache.h>
 #include <shutdown.h>
@@ -72,7 +73,7 @@
 #define MICRO 0.000001
 #define MILLI 0.001
 
- ////////////////////////////// qtum
+ ////////////////////////////// lux
 #include <iostream>
 #include <bitset>
 #include "pubkey.h"
@@ -138,7 +139,7 @@ uint256 g_best_block;
 bool g_parallel_script_checks{false};
 std::atomic_bool fImporting(false);
 std::atomic_bool fReindex(false);
-bool fAddressIndex = false; // qtum
+bool fAddressIndex = false; // lux
 bool fLogEvents = false;
 bool fHavePruned = false;
 bool fPruneMode = false;
@@ -732,7 +733,7 @@ bool MemPoolAccept::PreChecks(ATMPArgs& args, Workspace& ws)
 
     dev::u256 txMinGasPrice = 0;
 
-    //////////////////////////////////////////////////////////// // qtum
+    //////////////////////////////////////////////////////////// // lux
     if(!CheckOpSender(tx, chainparams, GetSpendHeight(m_view))){
         return state.Invalid(TxValidationResult::TX_CONSENSUS, "bad-txns-invalid-sender");
     }
@@ -1118,7 +1119,7 @@ bool MemPoolAccept::Finalize(ATMPArgs& args, Workspace& ws)
     // Remove conflicting transactions from the mempool
     for (CTxMemPool::txiter it : allConflicting)
     {
-        LogPrint(BCLog::MEMPOOL, "replacing tx %s with %s for %s QTUM additional fees, %d delta bytes\n",
+        LogPrint(BCLog::MEMPOOL, "replacing tx %s with %s for %s lux additional fees, %d delta bytes\n",
                 it->GetTx().GetHash().ToString(),
                 hash.ToString(),
                 FormatMoney(nModifiedFees - nConflictingFees),
@@ -1135,7 +1136,7 @@ bool MemPoolAccept::Finalize(ATMPArgs& args, Workspace& ws)
     // - the transaction is not dependent on any other transactions in the mempool
     bool validForFeeEstimation = !fReplacementTransaction && !bypass_limits && IsCurrentForFeeEstimation() && m_pool.HasNoInputsOf(tx);
 
-    //////////////////////////////////////////////////////////////// // qtum
+    //////////////////////////////////////////////////////////////// // lux
     // Add memory address index
     if (fAddressIndex)
     {
@@ -1274,10 +1275,15 @@ bool GetTransaction(const uint256& hash, CTransactionRef& txOut, const Consensus
     return false;
 }
 
-bool CheckHeaderPoW(const CBlockHeader& block, const Consensus::Params& consensusParams)
+bool CheckHeaderPoW(const CBlockHeader& block, const Consensus::Params& consensusParams, int nHeight = 0)
 {
     // Check for proof of work block header
-    return CheckProofOfWork(block.GetHash(), block.nBits, consensusParams);
+    if (nHeight != 0) {
+        uint256 seed = GetRandomXSeed(nHeight);
+        return CheckProofOfWork(block.GetHash(&seed), block.nBits, consensusParams);
+    } else {
+        return CheckProofOfWork(block.GetHash(), block.nBits, consensusParams);
+    }
 }
 
 bool CheckHeaderPoS(const CBlockHeader& block, const Consensus::Params& consensusParams)
@@ -1306,20 +1312,6 @@ bool CheckHeaderProof(const CBlockHeader& block, const Consensus::Params& consen
         return CheckHeaderPoS(block, consensusParams);
     }
     return false;
-}
-
-bool CheckIndexProof(const CBlockIndex& block, const Consensus::Params& consensusParams)
-{
-    // Get the hash of the proof
-    // After validating the PoS block the computed hash proof is saved in the block index, which is used to check the index
-    uint256 hashProof = block.IsProofOfWork() ? block.GetBlockHash() : block.hashProof;
-    // Check for proof after the hash proof is computed
-    if(block.IsProofOfStake()){
-        //blocks are loaded out of order, so checking PoS kernels here is not practical
-        return true; //CheckKernel(block.pprev, block.nBits, block.nTime, block.prevoutStake);
-    }else{
-        return CheckProofOfWork(hashProof, block.nBits, consensusParams, false);
-    }
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1366,13 +1358,15 @@ bool ReadBlockFromDisk(Block& block, const FlatFilePos& pos, const Consensus::Pa
         return error("%s: Deserialize or I/O error - %s at %s", __func__, e.what(), pos.ToString());
     }
 
+/*
     // Check the header
-    if(!block.IsProofOfStake()) {
+    if(!block.IsProofOfStake() || ) {
         //PoS blocks can be loaded out of order from disk, which makes PoS impossible to validate. So, do not validate their headers
         //they will be validated later in CheckBlock and ConnectBlock anyway
         if (!CheckHeaderProof(block, consensusParams))
             return error("ReadBlockFromDisk: Errors in block header at %s", pos.ToString());
     }
+*/
     return true;
 }
 
@@ -1440,9 +1434,8 @@ bool ReadRawBlockFromDisk(std::vector<uint8_t>& block, const CBlockIndex* pindex
 
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
 {
-    if(nHeight <= consensusParams.nLastBigReward)
-        return 20000 * COIN;
 
+    /*
     int subsidyHalvingInterval = consensusParams.SubsidyHalvingInterval(nHeight);
     int subsidyHalvingWeight = consensusParams.SubsidyHalvingWeight(nHeight);
     int halvings = (subsidyHalvingWeight - 1) / subsidyHalvingInterval;
@@ -1454,6 +1447,13 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams)
     CAmount nSubsidy = 4 * COIN / blocktimeDownscaleFactor;
     // Subsidy is cut in half every 985500 blocks which will occur approximately every 4 years.
     nSubsidy >>= halvings;
+    return nSubsidy;
+    */
+    // Disable subsidy halving
+    CAmount nSubsidy = 1 * COIN;
+    if (nHeight == 2) {
+        nSubsidy = 13000000 * COIN;
+    }
     return nSubsidy;
 }
 
@@ -1954,7 +1954,7 @@ DisconnectResult CChainState::DisconnectBlock(const CBlock& block, const CBlockI
         return DISCONNECT_FAILED;
     }
 
-    /////////////////////////////////////////////////////////// // qtum
+    /////////////////////////////////////////////////////////// // lux
     std::vector<std::pair<CAddressIndexKey, CAmount> > addressIndex;
     std::vector<std::pair<CAddressUnspentKey, CAddressUnspentValue> > addressUnspentIndex;
     ///////////////////////////////////////////////////////////
@@ -1979,7 +1979,7 @@ DisconnectResult CChainState::DisconnectBlock(const CBlock& block, const CBlockI
             }
         }
 
-        /////////////////////////////////////////////////////////// // qtum
+        /////////////////////////////////////////////////////////// // lux
         if (pfClean == NULL && fAddressIndex) {
 
             for (unsigned int k = tx.vout.size(); k-- > 0;) {
@@ -2043,8 +2043,8 @@ DisconnectResult CChainState::DisconnectBlock(const CBlock& block, const CBlockI
     // move best block pointer to prevout block
     view.SetBestBlock(pindex->pprev->GetBlockHash());
 
-    globalState->setRoot(uintToh256(pindex->pprev->hashStateRoot)); // qtum
-    globalState->setRootUTXO(uintToh256(pindex->pprev->hashUTXORoot)); // qtum
+    globalState->setRoot(uintToh256(pindex->pprev->hashStateRoot)); // lux
+    globalState->setRootUTXO(uintToh256(pindex->pprev->hashUTXORoot)); // lux
 
     if(pfClean == NULL && fLogEvents){
         pstorageresult->deleteResults(block.vtx);
@@ -2060,7 +2060,7 @@ DisconnectResult CChainState::DisconnectBlock(const CBlock& block, const CBlockI
             pblocktree->EraseDelegateIndex(pindex->nHeight);
     }
 
-    //////////////////////////////////////////////////// // qtum
+    //////////////////////////////////////////////////// // lux
     if (pfClean == NULL && fAddressIndex) {
         if (!pblocktree->EraseAddressIndex(addressIndex)) {
             error("Failed to delete address index");
@@ -2244,7 +2244,7 @@ static int64_t nTimeCallbacks = 0;
 static int64_t nTimeTotal = 0;
 static int64_t nBlocksTotal = 0;
 
-/////////////////////////////////////////////////////////////////////// qtum
+/////////////////////////////////////////////////////////////////////// lux
 bool GetSpentCoinFromBlock(const CBlockIndex* pindex, COutPoint prevout, Coin* coin) {
     std::shared_ptr<CBlock> pblock = std::make_shared<CBlock>();
     CBlock& block = *pblock;
@@ -2922,7 +2922,7 @@ bool CChainState::ConnectBlock(const CBlock& block, BlockValidationState& state,
     assert(*pindex->phashBlock == block.GetHash());
     int64_t nTimeStart = GetTimeMicros();
 
-    ///////////////////////////////////////////////// // qtum
+    ///////////////////////////////////////////////// // lux
     QtumDGP qtumDGP(globalState.get(), fGettingValuesDGP);
     globalSealEngine->setQtumSchedule(qtumDGP.getGasSchedule(pindex->nHeight + (pindex->nHeight+1 >= chainparams.GetConsensus().QIP7Height ? 0 : 1) ));
     uint32_t sizeBlockDGP = qtumDGP.getBlockSize(pindex->nHeight + (pindex->nHeight+1 >= chainparams.GetConsensus().QIP7Height ? 0 : 1));
@@ -2941,7 +2941,7 @@ bool CChainState::ConnectBlock(const CBlock& block, BlockValidationState& state,
 
 
     // Move this check from CheckBlock to ConnectBlock as it depends on DGP values
-    if (block.vtx.empty() || block.vtx.size() > dgpMaxBlockSize || ::GetSerializeSize(block, PROTOCOL_VERSION | SERIALIZE_TRANSACTION_NO_WITNESS) > dgpMaxBlockSize) // qtum
+    if (block.vtx.empty() || block.vtx.size() > dgpMaxBlockSize || ::GetSerializeSize(block, PROTOCOL_VERSION | SERIALIZE_TRANSACTION_NO_WITNESS) > dgpMaxBlockSize) // lux
         return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "bad-blk-length", "size limits failed");
 
     // Move this check from ContextualCheckBlock to ConnectBlock as it depends on DGP values
@@ -3147,7 +3147,7 @@ bool CChainState::ConnectBlock(const CBlock& block, BlockValidationState& state,
     int64_t nSigOpsCost = 0;
     blockundo.vtxundo.reserve(block.vtx.size() - 1);
 
-    ///////////////////////////////////////////////////////// // qtum
+    ///////////////////////////////////////////////////////// // lux
     std::vector<std::pair<CAddressIndexKey, CAmount> > addressIndex;
     std::vector<std::pair<CAddressUnspentKey, CAddressUnspentValue> > addressUnspentIndex;
     std::vector<std::pair<CSpentIndexKey, CSpentIndexValue> > spentIndex;
@@ -3206,7 +3206,7 @@ bool CChainState::ConnectBlock(const CBlock& block, BlockValidationState& state,
                 return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "bad-txns-nonfinal");
             }
 
-            ////////////////////////////////////////////////////////////////// // qtum
+            ////////////////////////////////////////////////////////////////// // lux
             if (fAddressIndex)
             {
                 for (size_t j = 0; j < tx.vin.size(); j++) {
@@ -3282,7 +3282,7 @@ bool CChainState::ConnectBlock(const CBlock& block, BlockValidationState& state,
             nValueOut += nTxValueOut;
         }
 
-///////////////////////////////////////////////////////////////////////////////////////// qtum
+///////////////////////////////////////////////////////////////////////////////////////// lux
         if(!CheckOpSender(tx, chainparams, pindex->nHeight)){
             return state.Invalid(BlockValidationResult::BLOCK_CONSENSUS, "bad-txns-invalid-sender");
         }
@@ -3433,7 +3433,7 @@ bool CChainState::ConnectBlock(const CBlock& block, BlockValidationState& state,
         }
 /////////////////////////////////////////////////////////////////////////////////////////
 
-        /////////////////////////////////////////////////////////////////////////////////// // qtum
+        /////////////////////////////////////////////////////////////////////////////////// // lux
         if (fAddressIndex) {
 
             for (unsigned int k = 0; k < tx.vout.size(); k++) {
@@ -3479,7 +3479,7 @@ bool CChainState::ConnectBlock(const CBlock& block, BlockValidationState& state,
     int64_t nTime4 = GetTimeMicros(); nTimeVerify += nTime4 - nTime2;
     LogPrint(BCLog::BENCH, "    - Verify %u txins: %.2fms (%.3fms/txin) [%.2fs (%.2fms/blk)]\n", nInputs - 1, MILLI * (nTime4 - nTime2), nInputs <= 1 ? 0 : MILLI * (nTime4 - nTime2) / (nInputs-1), nTimeVerify * MICRO, nTimeVerify * MILLI / nBlocksTotal);
 
-////////////////////////////////////////////////////////////////// // qtum
+////////////////////////////////////////////////////////////////// // lux
     if(pindex->nHeight == chainparams.GetConsensus().nOfflineStakeHeight){
         globalState->deployDelegationsContract();
     }
@@ -3608,7 +3608,7 @@ bool CChainState::ConnectBlock(const CBlock& block, BlockValidationState& state,
     }
 
     assert(pindex->phashBlock);
-    ///////////////////////////////////////////////////////////// // qtum
+    ///////////////////////////////////////////////////////////// // lux
     if (fAddressIndex) {
         if (!pblocktree->WriteAddressIndex(addressIndex)) {
             return AbortNode(state, "Failed to write address index");
@@ -4033,8 +4033,8 @@ bool CChainState::ConnectTip(BlockValidationState& state, const CChainParams& ch
     {
         CCoinsViewCache view(&CoinsTip());
 
-        dev::h256 oldHashStateRoot(globalState->rootHash()); // qtum
-        dev::h256 oldHashUTXORoot(globalState->rootHashUTXO()); // qtum
+        dev::h256 oldHashStateRoot(globalState->rootHash()); // lux
+        dev::h256 oldHashUTXORoot(globalState->rootHashUTXO()); // lux
 
         bool rv = ConnectBlock(blockConnecting, state, pindexNew, view, chainparams);
         GetMainSignals().BlockChecked(blockConnecting, state);
@@ -4042,8 +4042,8 @@ bool CChainState::ConnectTip(BlockValidationState& state, const CChainParams& ch
             if (state.IsInvalid())
                 InvalidBlockFound(pindexNew, state);
 
-            globalState->setRoot(oldHashStateRoot); // qtum
-            globalState->setRootUTXO(oldHashUTXORoot); // qtum
+            globalState->setRoot(oldHashStateRoot); // lux
+            globalState->setRootUTXO(oldHashUTXORoot); // lux
             pstorageresult->clearCacheResult();
             return error("%s: ConnectBlock %s failed, %s", __func__, pindexNew->GetBlockHash().ToString(), state.ToString());
         }
@@ -5042,10 +5042,10 @@ bool CheckBlockSignature(const CBlock& block)
     return CPubKey(vchPubKey).Verify(hash, vchBlockSig);
 }
 
-static bool CheckBlockHeader(const CBlockHeader& block, BlockValidationState& state, const Consensus::Params& consensusParams, bool fCheckPOW = true, bool fCheckPOS = true)
+static bool CheckBlockHeader(const CBlockHeader& block, BlockValidationState& state, const Consensus::Params& consensusParams, bool fCheckPOW = true, bool fCheckPOS = true, int nHeight = 0)
 {
     // Check proof of work matches claimed amount
-    if (fCheckPOW && block.IsProofOfWork() && !CheckHeaderPoW(block, consensusParams))
+    if (fCheckPOW && !::ChainstateActive().IsInitialBlockDownload() && block.IsProofOfWork() && !CheckHeaderPoW(block, consensusParams, nHeight))
         return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "high-hash", "proof of work failed");
 
     // Check proof of stake matches claimed amount
@@ -5065,7 +5065,7 @@ bool CheckBlock(const CBlock& block, BlockValidationState& state, const Consensu
 
     // Check that the header is valid (particularly PoW).  This is mostly
     // redundant with the call in AcceptBlockHeader.
-    if (!CheckBlockHeader(block, state, consensusParams, fCheckPOW, false))
+    if (!CheckBlockHeader(block, state, consensusParams, fCheckPOW, false, ::ChainActive().Height() + 1))
         return false;
 
     if (block.IsProofOfStake() &&  block.GetBlockTime() > FutureDrift(GetAdjustedTime(), ::ChainActive().Height() + 1, consensusParams))
@@ -5249,8 +5249,9 @@ static bool ContextualCheckBlockHeader(const CBlockHeader& block, BlockValidatio
 
     // Check proof of work
     const Consensus::Params& consensusParams = params.GetConsensus();
-    if (block.nBits != GetNextWorkRequired(pindexPrev, &block, consensusParams,block.IsProofOfStake()))
-        return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "bad-diffbits", "incorrect difficulty value");
+    unsigned int nextWork = GetNextWorkRequired(pindexPrev, &block, consensusParams,block.IsProofOfStake());
+    if (block.nBits != nextWork)
+        return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "bad-diffbits", strprintf("%s: incorrect difficulty value %s (expected %s)", __func__, block.nBits, nextWork));
 
     // Check against checkpoints
     if (fCheckpointsEnabled) {
@@ -5372,18 +5373,19 @@ bool CChainState::UpdateHashProof(const CBlock& block, BlockValidationState& sta
 {
     int nHeight = pindex->nHeight;
     uint256 hash = block.GetHash();
-
-    //reject proof of work at height consensusParams.nLastPOWBlock
-    if (block.IsProofOfWork() && nHeight > consensusParams.nLastPOWBlock)
-        return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "reject-pow", strprintf("UpdateHashProof() : reject proof-of-work at height %d", nHeight));
     
     // Check coinstake timestamp
     if (block.IsProofOfStake() && !CheckCoinStakeTimestamp(block.GetBlockTime(), nHeight, consensusParams))
         return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "timestamp-invalid", strprintf("UpdateHashProof() : coinstake timestamp violation nTimeBlock=%d", block.GetBlockTime()));
 
-    // Check proof-of-work or proof-of-stake
-    if (block.nBits != GetNextWorkRequired(pindex->pprev, &block, consensusParams,block.IsProofOfStake()))
-        return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "bad-diffbits", strprintf("UpdateHashProof() : incorrect %s", block.IsProofOfWork() ? "proof-of-work" : "proof-of-stake"));
+    // Check proof-of-work or proof-of-stake (not for genesis as genesis isn't rx2)
+    unsigned int nextWork = GetNextWorkRequired(pindex->pprev, &block, consensusParams,block.IsProofOfStake());
+    if (nHeight != 0) {
+        if (block.nBits != nextWork) {
+            LogPrintf("ERROR: %s: wrong diff %s expected %s for block height %s\n", __func__, block.nBits, nextWork, nHeight);
+            return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "bad-diffbits", strprintf("UpdateHashProof() : incorrect %s", block.IsProofOfWork() ? "proof-of-work" : "proof-of-stake"));
+        }
+    }
 
     uint256 hashProof;
     // Verify hash target and signature of coinstake tx
@@ -5529,10 +5531,7 @@ bool BlockManager::AcceptBlockHeader(const CBlockHeader& block, BlockValidationS
             }
         }
 
-        // Reject proof of work at height consensusParams.nLastPOWBlock
         int nHeight = pindexPrev->nHeight + 1;
-        if (block.IsProofOfWork() && nHeight > chainparams.GetConsensus().nLastPOWBlock)
-            return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "reject-pow", strprintf("reject proof-of-work at height %d", nHeight));
 
         if(block.IsProofOfStake())
         {
@@ -5548,7 +5547,7 @@ bool BlockManager::AcceptBlockHeader(const CBlockHeader& block, BlockValidationS
 
         // Check block header
         // if (!CheckBlockHeader(block, state, chainparams.GetConsensus(), true, CheckPOS(block, pindexPrev)))
-        if (!CheckBlockHeader(block, state, chainparams.GetConsensus()))
+        if (!CheckBlockHeader(block, state, chainparams.GetConsensus(), true, true, nHeight))
             return error("%s: Consensus::CheckBlockHeader: %s, %s", __func__, hash.ToString(), state.ToString());
     }
     if (pindex == nullptr)
@@ -5679,10 +5678,6 @@ bool CChainState::AcceptBlock(const std::shared_ptr<const CBlock>& pblock, Block
 
     // Get block height
     int nHeight = pindex->nHeight;
-
-    // Check for the last proof of work block
-    if (block.IsProofOfWork() && nHeight > chainparams.GetConsensus().nLastPOWBlock)
-        return state.Invalid(BlockValidationResult::BLOCK_INVALID_HEADER, "reject-pow", strprintf("%s: reject proof-of-work at height %d", __func__, nHeight));
 
     // Check that the block satisfies synchronized checkpoint
     if (!Checkpoints::CheckSync(nHeight))
@@ -5849,13 +5844,13 @@ bool TestBlockValidity(BlockValidationState& state, const CChainParams& chainpar
     if (!ContextualCheckBlock(block, state, chainparams.GetConsensus(), pindexPrev))
         return error("%s: Consensus::ContextualCheckBlock: %s", __func__, state.ToString());
 
-    dev::h256 oldHashStateRoot(globalState->rootHash()); // qtum
-    dev::h256 oldHashUTXORoot(globalState->rootHashUTXO()); // qtum
+    dev::h256 oldHashStateRoot(globalState->rootHash()); // lux
+    dev::h256 oldHashUTXORoot(globalState->rootHashUTXO()); // lux
     
     if (!::ChainstateActive().ConnectBlock(block, state, &indexDummy, viewNew, chainparams, true)){
         
-        globalState->setRoot(oldHashStateRoot); // qtum
-        globalState->setRootUTXO(oldHashUTXORoot); // qtum
+        globalState->setRoot(oldHashStateRoot); // lux
+        globalState->setRootUTXO(oldHashUTXORoot); // lux
         pstorageresult->clearCacheResult();
         return false;
     }
@@ -6190,7 +6185,7 @@ bool static LoadBlockIndexDB(const CChainParams& chainparams) EXCLUSIVE_LOCKS_RE
     pblocktree->ReadReindexing(fReindexing);
     if(fReindexing) fReindex = true;
 
-    ///////////////////////////////////////////////////////////// // qtum
+    ///////////////////////////////////////////////////////////// // lux
     pblocktree->ReadFlag("addrindex", fAddressIndex);
     LogPrintf("LoadBlockIndexDB(): address index %s\n", fAddressIndex ? "enabled" : "disabled");
     /////////////////////////////////////////////////////////////
@@ -6257,7 +6252,7 @@ bool CVerifyDB::VerifyDB(const CChainParams& chainparams, CCoinsView *coinsview,
     BlockValidationState state;
     int reportDone = 0;
 
-////////////////////////////////////////////////////////////////////////// // qtum
+////////////////////////////////////////////////////////////////////////// // lux
     dev::h256 oldHashStateRoot(globalState->rootHash());
     dev::h256 oldHashUTXORoot(globalState->rootHashUTXO());
     QtumDGP qtumDGP(globalState.get(), fGettingValuesDGP);
@@ -6281,7 +6276,7 @@ bool CVerifyDB::VerifyDB(const CChainParams& chainparams, CCoinsView *coinsview,
             break;
         }
 
-        ///////////////////////////////////////////////////////////////////// // qtum
+        ///////////////////////////////////////////////////////////////////// // lux
         uint32_t sizeBlockDGP = qtumDGP.getBlockSize(pindex->nHeight);
         dgpMaxBlockSize = sizeBlockDGP ? sizeBlockDGP : dgpMaxBlockSize;
         updateBlockSizeParams(dgpMaxBlockSize);
@@ -6344,20 +6339,20 @@ bool CVerifyDB::VerifyDB(const CChainParams& chainparams, CCoinsView *coinsview,
             if (!ReadBlockFromDisk(block, pindex, chainparams.GetConsensus()))
                 return error("VerifyDB(): *** ReadBlockFromDisk failed at %d, hash=%s", pindex->nHeight, pindex->GetBlockHash().ToString());
 
-            dev::h256 oldHashStateRoot(globalState->rootHash()); // qtum
-            dev::h256 oldHashUTXORoot(globalState->rootHashUTXO()); // qtum
+            dev::h256 oldHashStateRoot(globalState->rootHash()); // lux
+            dev::h256 oldHashUTXORoot(globalState->rootHashUTXO()); // lux
 
             if (!::ChainstateActive().ConnectBlock(block, state, pindex, coins, chainparams)){
 
-                globalState->setRoot(oldHashStateRoot); // qtum
-                globalState->setRootUTXO(oldHashUTXORoot); // qtum
+                globalState->setRoot(oldHashStateRoot); // lux
+                globalState->setRootUTXO(oldHashUTXORoot); // lux
                 pstorageresult->clearCacheResult();
                 return error("VerifyDB(): *** found unconnectable block at %d, hash=%s (%s)", pindex->nHeight, pindex->GetBlockHash().ToString(), state.ToString());
             }
         }
     } else {
-        globalState->setRoot(oldHashStateRoot); // qtum
-        globalState->setRootUTXO(oldHashUTXORoot); // qtum
+        globalState->setRoot(oldHashStateRoot); // lux
+        globalState->setRootUTXO(oldHashUTXORoot); // lux
     }
 
     LogPrintf("[DONE].\n");
@@ -6654,7 +6649,7 @@ bool LoadBlockIndex(const CChainParams& chainparams)
         // Use the provided setting for -logevents in the new database
         fLogEvents = gArgs.GetBoolArg("-logevents", DEFAULT_LOGEVENTS);
         pblocktree->WriteFlag("logevents", fLogEvents);
-        /////////////////////////////////////////////////////////////// // qtum
+        /////////////////////////////////////////////////////////////// // lux
         fAddressIndex = gArgs.GetBoolArg("-addrindex", DEFAULT_ADDRINDEX);
         pblocktree->WriteFlag("addrindex", fAddressIndex);
         ///////////////////////////////////////////////////////////////
@@ -7269,7 +7264,7 @@ public:
 };
 static CMainCleanup instance_of_cmaincleanup;
 
-////////////////////////////////////////////////////////////////////////////////// // qtum
+////////////////////////////////////////////////////////////////////////////////// // lux
 bool GetAddressIndex(uint256 addressHash, int type, std::vector<std::pair<CAddressIndexKey, CAmount> > &addressIndex, int start, int end)
 {
     if (!fAddressIndex)
