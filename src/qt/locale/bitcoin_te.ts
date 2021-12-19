@@ -235,8 +235,8 @@
 <context>
     <name>Intro</name>
     <message>
-        <source>Qtum</source>
-        <translation>బిట్కోయిన్</translation>
+        <source>LUX</source>
+        <translation>LUX</translation>
     </message>
     <message>
         <source>Error</source>

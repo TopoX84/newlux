@@ -424,7 +424,7 @@
     </message>
     <message>
         <source>Request payments (generates QR codes and LUX: URIs)</source>
-        <translation>支払いをリクエストする（QRコードと qtum:で始まるURIを生成する）</translation>
+        <translation>支払いをリクエストする（QRコードと LUX:で始まるURIを生成する）</translation>
     </message>
     <message>
         <source>Show the list of used sending addresses and labels</source>
@@ -440,7 +440,7 @@
     </message>
     <message numerus="yes">
         <source>%n active connection(s) to LUX network</source>
-        <translation><numerusform>Qtum ネットワークへのアクティブな接続は %n 個</numerusform></translation>
+        <translation><numerusform>LUX ネットワークへのアクティブな接続は %n 個</numerusform></translation>
     </message>
     <message>
         <source>Indexing blocks on disk...</source>
@@ -632,7 +632,7 @@
     </message>
     <message>
         <source>A fatal error occurred. LUX can no longer continue safely and will quit.</source>
-        <translation>致命的なエラーが発生しました。Qtum を安全に動作し続けることができないため終了します。</translation>
+        <translation>致命的なエラーが発生しました。LUX を安全に動作し続けることができないため終了します。</translation>
     </message>
 </context>
 <context>
@@ -972,7 +972,7 @@
         <translation>カスタムデータディレクトリを使用:</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>

@@ -587,7 +587,7 @@
     </message>
     <message>
         <source>A fatal error occurred. LUX can no longer continue safely and will quit.</source>
-        <translation>發生了致命的錯誤。Qtum 軟體沒辦法再繼續安全執行，只好結束。</translation>
+        <translation>發生了致命的錯誤。LUX 軟體沒辦法再繼續安全執行，只好結束。</translation>
     </message>
 </context>
 <context>
@@ -875,7 +875,7 @@
         <translation>使用自訂的資料目錄:</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>
@@ -1346,7 +1346,7 @@
     </message>
     <message>
         <source>'LUX://' is not a valid URI. Use 'LUX:' instead.</source>
-        <translation>字首為 qtum:// 不是有效的 URI，請改用 LUX: 開頭。</translation>
+        <translation>字首為 LUX:// 不是有效的 URI，請改用 LUX: 開頭。</translation>
     </message>
     <message>
         <source>Invalid payment address %1</source>
@@ -2337,7 +2337,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of "100 satoshis p
     </message>
     <message>
         <source>The fee will be deducted from the amount being sent. The recipient will receive less LUX than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</source>
-        <translation>手續費會從要付款出去的金額中扣掉。因此收款人會收到比輸入的金額還要少的 qtum。如果有多個收款人的話，手續費會平均分配來扣除。</translation>
+        <translation>手續費會從要付款出去的金額中扣掉。因此收款人會收到比輸入的金額還要少的 LUX。如果有多個收款人的話，手續費會平均分配來扣除。</translation>
     </message>
     <message>
         <source>S&amp;ubtract fee from amount</source>

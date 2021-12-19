@@ -723,7 +723,7 @@
         <translation>მითითებული კატალოგის გამოყენება:</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>

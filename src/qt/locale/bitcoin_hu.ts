@@ -169,7 +169,7 @@
     </message>
     <message>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR  LUX&lt;/b&gt;!</source>
-        <translation>Figyelem: Ha titkosítja a tárcáját és elveszíti a jelszavát, akkor &lt;b&gt;AZ ÖSSZES QTUMJA ELVESZIK&lt;/b&gt;!</translation>
+        <translation>Figyelem: Ha titkosítja a tárcáját és elveszíti a jelszavát, akkor &lt;b&gt;AZ ÖSSZES LUXJA ELVESZIK&lt;/b&gt;!</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -423,7 +423,7 @@
     </message>
     <message>
         <source>Request payments (generates QR codes and LUX: URIs)</source>
-        <translation>Fizetési kérelem (QR-kódot és "qtum:" URI azonosítót hoz létre)</translation>
+        <translation>Fizetési kérelem (QR-kódot és "LUX:" URI azonosítót hoz létre)</translation>
     </message>
     <message>
         <source>Show the list of used sending addresses and labels</source>
@@ -950,7 +950,7 @@
         <translation>Saját adatkönyvtár használata:</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>
@@ -998,7 +998,7 @@
     </message>
     <message>
         <source>Attempting to spend LUX that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
-        <translation>A hálózat nem fogadja el azoknak a qtumoknak az elköltését, amelyek érintettek a még nem látszódó tranzakciókban.</translation>
+        <translation>A hálózat nem fogadja el azoknak a LUXoknak az elköltését, amelyek érintettek a még nem látszódó tranzakciókban.</translation>
     </message>
     <message>
         <source>Number of blocks left</source>
@@ -2388,7 +2388,7 @@
     </message>
     <message>
         <source>A message that was attached to the LUX: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the LUX network.</source>
-        <translation>Sporočilo, ki ste ga pripeli na URI tipa qtum:. Shranjeno bo skupaj s podatki o transakciji. Opomba: Sporočilo ne bo poslano preko omrežja LUX.</translation>
+        <translation>Sporočilo, ki ste ga pripeli na URI tipa LUX:. Shranjeno bo skupaj s podatki o transakciji. Opomba: Sporočilo ne bo poslano preko omrežja LUX.</translation>
     </message>
     <message>
         <source>Pay To:</source>

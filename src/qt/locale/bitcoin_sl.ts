@@ -71,7 +71,7 @@
     </message>
     <message>
         <source>These are your LUX addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.</source>
-        <translation>To so vaši naslovi za prejemanje qtumov. Če želite ustvariti nov prejemni naslov, uporabite gumb za ustvarjanje novih naslovov v zavihku "prejemanje".</translation>
+        <translation>To so vaši naslovi za prejemanje LUXov. Če želite ustvariti nov prejemni naslov, uporabite gumb za ustvarjanje novih naslovov v zavihku "prejemanje".</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -169,7 +169,7 @@
     </message>
     <message>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR  LUX&lt;/b&gt;!</source>
-        <translation>Opozorilo: V primeru izgube gesla šifrirane denarnice boste &lt;b&gt;IZGUBILI VSE SVOJE QTUME&lt;/b&gt;!</translation>
+        <translation>Opozorilo: V primeru izgube gesla šifrirane denarnice boste &lt;b&gt;IZGUBILI VSE SVOJE LUXE&lt;/b&gt;!</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -189,7 +189,7 @@
     </message>
     <message>
         <source>Remember that encrypting your wallet cannot fully protect your LUX from being stolen by malware infecting your computer.</source>
-        <translation>Pomnite, da šifriranje denarnice ne more preprečiti kraje qtumov preko morebitnih virusov na vašem računalniku.</translation>
+        <translation>Pomnite, da šifriranje denarnice ne more preprečiti kraje LUXov preko morebitnih virusov na vašem računalniku.</translation>
     </message>
     <message>
         <source>Wallet to be encrypted</source>
@@ -499,7 +499,7 @@
     </message>
     <message>
         <source>Open a LUX: URI</source>
-        <translation>Odpri URI tipa qtum:</translation>
+        <translation>Odpri URI tipa LUX:</translation>
     </message>
     <message>
         <source>Open Wallet</source>
@@ -971,7 +971,7 @@
         <translation>Uporabi to podatkovno mapo:</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>
@@ -1027,7 +1027,7 @@
     </message>
     <message>
         <source>Attempting to spend LUX that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
-        <translation>Poskusa pošiljanja qtumov, na katere vplivajo še ne prikazane transakcije, omrežje ne bo sprejelo.</translation>
+        <translation>Poskusa pošiljanja LUXov, na katere vplivajo še ne prikazane transakcije, omrežje ne bo sprejelo.</translation>
     </message>
     <message>
         <source>Number of blocks left</source>
@@ -1462,7 +1462,7 @@
     </message>
     <message>
         <source>Cannot start LUX: click-to-pay handler</source>
-        <translation>Ni mogoče zagnati rokovalca plačilnih povezav tipa qtum:.</translation>
+        <translation>Ni mogoče zagnati rokovalca plačilnih povezav tipa LUX:.</translation>
     </message>
     <message>
         <source>URI handling</source>

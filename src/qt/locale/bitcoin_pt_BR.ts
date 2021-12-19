@@ -971,7 +971,7 @@
         <translation>Use um diretório de dados personalizado:</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>

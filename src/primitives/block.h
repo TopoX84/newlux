@@ -84,7 +84,7 @@ public:
     }
     
     // ppcoin: two types of block: proof-of-work or proof-of-stake
-    virtual bool IsProofOfStake() const //qtum
+    virtual bool IsProofOfStake() const //lux
     {
         return !prevoutStake.IsNull();
     }
@@ -112,7 +112,7 @@ public:
 
     bool HasProofOfDelegation() const;
 
-    CBlockHeader& operator=(const CBlockHeader& other) //qtum
+    CBlockHeader& operator=(const CBlockHeader& other) //lux
     {
         if (this != &other)
         {
@@ -167,7 +167,7 @@ public:
         fChecked = false;
     }
 
-    std::pair<COutPoint, unsigned int> GetProofOfStake() const //qtum
+    std::pair<COutPoint, unsigned int> GetProofOfStake() const //lux
     {
         return IsProofOfStake()? std::make_pair(prevoutStake, nTime) : std::make_pair(COutPoint(), (unsigned int)0);
     }

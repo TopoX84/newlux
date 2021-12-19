@@ -967,8 +967,8 @@
         <translation>Користите прилагођени директоријум података:</translation>
     </message>
     <message>
-        <source>Qtum</source>
-        <translation>Биткоин</translation>
+        <source>LUX</source>
+        <translation>LUX</translation>
     </message>
     <message>
         <source>Discard blocks after verification, except most recent %1 GB (prune)</source>

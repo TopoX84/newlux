@@ -165,7 +165,7 @@
     </message>
     <message>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR  LUX&lt;/b&gt;!</source>
-        <translation>Dėmesio: jei užšifruosite savo piniginę ir pamesite slaptafrazę, jūs&lt;b&gt;PRARASITE VISUS SAVO QTUMUS&lt;/b&gt;!</translation>
+        <translation>Dėmesio: jei užšifruosite savo piniginę ir pamesite slaptafrazę, jūs&lt;b&gt;PRARASITE VISUS SAVO LUXUS&lt;/b&gt;!</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -863,7 +863,7 @@
         <translation>Naudoti kitą duomenų katalogą:</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>
@@ -911,7 +911,7 @@
     </message>
     <message>
         <source>Attempting to spend LUX that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
-        <translation>Tinklas nepriims bandymų išleisti qtumus, kurie yra vis dar nematomi.</translation>
+        <translation>Tinklas nepriims bandymų išleisti LUXus, kurie yra vis dar nematomi.</translation>
     </message>
     <message>
         <source>Number of blocks left</source>
@@ -1104,7 +1104,7 @@
     </message>
     <message>
         <source>Connect to the LUX network through a SOCKS5 proxy.</source>
-        <translation>Prisijunkite prie „Qtum“ tinklo per SOCKS5 proxy.</translation>
+        <translation>Prisijunkite prie „LUX“ tinklo per SOCKS5 proxy.</translation>
     </message>
     <message>
         <source>&amp;Connect through SOCKS5 proxy (default proxy):</source>
@@ -1140,7 +1140,7 @@
     </message>
     <message>
         <source>Connect to the LUX network through a separate SOCKS5 proxy for Tor hidden services.</source>
-        <translation>Prisijunkite prie „Qtum“ tinklo per atskirą „SOCKS5“ proxy „Tor“ paslėptas paslaugas.</translation>
+        <translation>Prisijunkite prie „LUX“ tinklo per atskirą „SOCKS5“ proxy „Tor“ paslėptas paslaugas.</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -1251,7 +1251,7 @@
     </message>
     <message>
         <source>The displayed information may be out of date. Your wallet automatically synchronizes with the LUX network after a connection is established, but this process has not completed yet.</source>
-        <translation>Rodoma informacija gali būti pasenusi. Piniginė automatiškai sinchronizuojasi su „Qtum“ tinklu po ryšio užmezgimo, tačiau šis procesas dar nebaigtas.</translation>
+        <translation>Rodoma informacija gali būti pasenusi. Piniginė automatiškai sinchronizuojasi su „LUX“ tinklu po ryšio užmezgimo, tačiau šis procesas dar nebaigtas.</translation>
     </message>
     <message>
         <source>Watch-only:</source>
@@ -1334,7 +1334,7 @@
     </message>
     <message>
         <source>'LUX://' is not a valid URI. Use 'LUX:' instead.</source>
-        <translation>„qtum: //“ nėra galiojantis URI. Vietoj to naudokite „qtum:“.</translation>
+        <translation>„LUX: //“ nėra galiojantis URI. Vietoj to naudokite „LUX:“.</translation>
     </message>
     <message>
         <source>Invalid payment address %1</source>
@@ -1342,7 +1342,7 @@
     </message>
     <message>
         <source>URI cannot be parsed! This can be caused by an invalid LUX address or malformed URI parameters.</source>
-        <translation>URI negalima perskaityti! Tai gali sukelti negaliojantys „Qtum“ adresas arba netinkami URI parametrai.</translation>
+        <translation>URI negalima perskaityti! Tai gali sukelti negaliojantys „LUX“ adresas arba netinkami URI parametrai.</translation>
     </message>
     <message>
         <source>Payment request file handling</source>
@@ -1837,7 +1837,7 @@
     </message>
     <message>
         <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the LUX network.</source>
-        <translation>Neprivalomas pranešimas, pridedamas prie mokėjimo prašymo, kuris bus rodomas atidarius užklausą. Pastaba: pranešimas nebus išsiųstas su mokėjimu per „Qtum“ tinklą.</translation>
+        <translation>Neprivalomas pranešimas, pridedamas prie mokėjimo prašymo, kuris bus rodomas atidarius užklausą. Pastaba: pranešimas nebus išsiųstas su mokėjimu per „LUX“ tinklą.</translation>
     </message>
     <message>
         <source>An optional label to associate with the new receiving address.</source>
@@ -2297,7 +2297,7 @@ Pastaba: Kadangi mokestis apskaičiuojamas pagal baitą, mokestis už „100 sat
     </message>
     <message>
         <source>The fee will be deducted from the amount being sent. The recipient will receive less LUX than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</source>
-        <translation>Mokestis bus atimamas iš siunčiamos sumos. Gavėjas gaus mažiau qtumų nei įvesite sumos lauke. Jei pasirenkami keli gavėjai, mokestis padalijamas lygiai.</translation>
+        <translation>Mokestis bus atimamas iš siunčiamos sumos. Gavėjas gaus mažiau LUXų nei įvesite sumos lauke. Jei pasirenkami keli gavėjai, mokestis padalijamas lygiai.</translation>
     </message>
     <message>
         <source>S&amp;ubtract fee from amount</source>
@@ -2325,7 +2325,7 @@ Pastaba: Kadangi mokestis apskaičiuojamas pagal baitą, mokestis už „100 sat
     </message>
     <message>
         <source>A message that was attached to the LUX: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the LUX network.</source>
-        <translation>Pranešimas, kuris buvo pridėtas prie LUX: URI, kuris bus saugomas kartu su sandoriu jūsų nuoroda. Pastaba: šis pranešimas nebus išsiųstas per „Qtum“ tinklą.</translation>
+        <translation>Pranešimas, kuris buvo pridėtas prie LUX: URI, kuris bus saugomas kartu su sandoriu jūsų nuoroda. Pastaba: šis pranešimas nebus išsiųstas per „LUX“ tinklą.</translation>
     </message>
     <message>
         <source>Pay To:</source>

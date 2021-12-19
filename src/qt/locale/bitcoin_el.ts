@@ -967,7 +967,7 @@
         <translation>Προσαρμογή του φακέλου δεδομένων:</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>
@@ -1459,7 +1459,7 @@
     </message>
     <message>
         <source>'LUX://' is not a valid URI. Use 'LUX:' instead.</source>
-        <translation>'LUX: //' δεν είναι έγκυρο URI. Χρησιμοποιήστε το "qtum:" αντ 'αυτού.</translation>
+        <translation>'LUX: //' δεν είναι έγκυρο URI. Χρησιμοποιήστε το "LUX:" αντ 'αυτού.</translation>
     </message>
     <message>
         <source>Cannot process payment request because BIP70 is not supported.</source>

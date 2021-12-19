@@ -959,7 +959,7 @@
         <translation>தனிப்பயன் தரவு கோப்பகத்தைப் பயன்படுத்தவும்:</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>

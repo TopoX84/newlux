@@ -1422,10 +1422,10 @@ public:
     /* Remove super staker entry from the wallet */
     bool RemoveSuperStakerEntry(const uint256& superStakerHash, bool fFlushOnClose=true);
 
-    /* Start staking qtums */
+    /* Start staking luxs */
     void StartStake(CConnman* connman = CWallet::defaultConnman);
 
-    /* Stop staking qtums */
+    /* Stop staking luxs */
     void StopStake();
 
     /* Is staking closing */

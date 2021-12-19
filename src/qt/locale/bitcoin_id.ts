@@ -499,7 +499,7 @@
     </message>
     <message>
         <source>Open a LUX: URI</source>
-        <translation>Buka URI qtum:</translation>
+        <translation>Buka URI LUX:</translation>
     </message>
     <message>
         <source>Open Wallet</source>
@@ -971,7 +971,7 @@
         <translation>Gunakan direktori pilihan Anda:</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>
@@ -1078,7 +1078,7 @@
     <name>OpenURIDialog</name>
     <message>
         <source>Open LUX URI</source>
-        <translation>Buka URI qtum:</translation>
+        <translation>Buka URI LUX:</translation>
     </message>
     <message>
         <source>URI:</source>

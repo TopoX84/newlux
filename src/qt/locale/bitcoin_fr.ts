@@ -499,7 +499,7 @@
     </message>
     <message>
         <source>Open a LUX: URI</source>
-        <translation>Ouvrir une URI qtum:</translation>
+        <translation>Ouvrir une URI LUX:</translation>
     </message>
     <message>
         <source>Open Wallet</source>
@@ -971,7 +971,7 @@
         <translation>Utiliser un répertoire de données personnalisé :</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>
@@ -1462,7 +1462,7 @@
     </message>
     <message>
         <source>Cannot start LUX: click-to-pay handler</source>
-        <translation>Impossible de démarrer le gestionnaire de cliquer-pour-payer qtum:</translation>
+        <translation>Impossible de démarrer le gestionnaire de cliquer-pour-payer LUX:</translation>
     </message>
     <message>
         <source>URI handling</source>

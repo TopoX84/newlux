@@ -824,7 +824,7 @@ Exportar los datos en la pestaña actual a un archivo</translation>
         <translation>Use un directorio de datos personalizado:</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>

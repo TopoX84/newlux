@@ -1,12 +1,12 @@
 [Desktop Entry]
 Version=0.17.6
-Name=Qtum Core
-Comment=Connect to the Qtum P2P Network
-Exec=qtum-qt %u
+Name=LUXCORE
+Comment=Connect to the lux P2P Network
+Exec=lux-qt %u
 Terminal=false
 Type=Application
 Icon=qtum128
-MimeType=x-scheme-handler/qtum;
+MimeType=x-scheme-handler/lux;
 Categories=Network;
-StartupWMClass=Qtum-qt
-Name[en_US]=qtum-qt
+StartupWMClass=lux-qt
+Name[en_US]=lux-qt

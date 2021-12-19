@@ -67,7 +67,7 @@
     </message>
     <message>
         <source>These are your LUX addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Disse er dine LUX-adresser til afsendelse af betalinger. Tjek altid beløb og modtagelsesadresse, inden du sender qtums.</translation>
+        <translation>Disse er dine LUX-adresser til afsendelse af betalinger. Tjek altid beløb og modtagelsesadresse, inden du sender LUXs.</translation>
     </message>
     <message>
         <source>These are your LUX addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.</source>
@@ -423,7 +423,7 @@
     </message>
     <message>
         <source>Request payments (generates QR codes and LUX: URIs)</source>
-        <translation>Anmod om betalinger (genererer QR-koder og “qtum:”-URI'er)</translation>
+        <translation>Anmod om betalinger (genererer QR-koder og “LUX:”-URI'er)</translation>
     </message>
     <message>
         <source>Show the list of used sending addresses and labels</source>
@@ -499,7 +499,7 @@
     </message>
     <message>
         <source>Open a LUX: URI</source>
-        <translation>Åbn en qtum:-URI</translation>
+        <translation>Åbn en LUX:-URI</translation>
     </message>
     <message>
         <source>Open Wallet</source>
@@ -971,7 +971,7 @@
         <translation>Brug tilpasset mappe for data:</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>
@@ -1312,7 +1312,7 @@
     </message>
     <message>
         <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
-        <translation>Vælg standard for underopdeling af enhed, som skal vises i brugergrænsefladen og ved afsendelse af qtums.</translation>
+        <translation>Vælg standard for underopdeling af enhed, som skal vises i brugergrænsefladen og ved afsendelse af LUXs.</translation>
     </message>
     <message>
         <source>Whether to show coin control features or not.</source>
@@ -2166,7 +2166,7 @@
     <name>SendCoinsDialog</name>
     <message>
         <source>Send Coins</source>
-        <translation>Send qtums</translation>
+        <translation>Send LUXs</translation>
     </message>
     <message>
         <source>Coin Control Features</source>
@@ -2402,7 +2402,7 @@ Note: Siden gebyret er kalkuleret på en per-byte basis, et gebyr på "100 satos
     </message>
     <message>
         <source>Confirm send coins</source>
-        <translation>Bekræft afsendelse af qtums</translation>
+        <translation>Bekræft afsendelse af LUXs</translation>
     </message>
     <message>
         <source>Confirm transaction proposal</source>
@@ -3214,7 +3214,7 @@ Note: Siden gebyret er kalkuleret på en per-byte basis, et gebyr på "100 satos
     <name>WalletModel</name>
     <message>
         <source>Send Coins</source>
-        <translation>Send qtums</translation>
+        <translation>Send LUXs</translation>
     </message>
     <message>
         <source>Fee bump error</source>
