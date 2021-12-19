@@ -436,8 +436,8 @@
 <context>
     <name>Intro</name>
     <message>
-        <source>Qtum</source>
-        <translation>बीटकोइन</translation>
+        <source>LUX</source>
+        <translation>LUX</translation>
     </message>
     <message>
         <source>Error</source>

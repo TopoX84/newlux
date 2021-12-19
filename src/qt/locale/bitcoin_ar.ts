@@ -888,8 +888,8 @@
         <translation>استخدام دليل بيانات مخصص:</translation>
     </message>
     <message>
-        <source>Qtum</source>
-        <translation>بتكوين</translation>
+        <source>LUX</source>
+        <translation>LUX</translation>
     </message>
     <message>
         <source>At least %1 GB of data will be stored in this directory, and it will grow over time.</source>

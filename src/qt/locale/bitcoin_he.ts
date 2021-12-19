@@ -425,7 +425,7 @@
     </message>
     <message>
         <source>Request payments (generates QR codes and LUX: URIs)</source>
-        <translation>בקשת תשלומים (יצירה של קודים מסוג QR וסכימות כתובות משאב של :qtum)</translation>
+        <translation>בקשת תשלומים (יצירה של קודים מסוג QR וסכימות כתובות משאב של :LUX)</translation>
     </message>
     <message>
         <source>Show the list of used sending addresses and labels</source>
@@ -949,7 +949,7 @@
         <translation>שימוש בתיקיית נתונים מותאמת אישית:</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>קטום</translation>
     </message>
     <message>
@@ -1432,7 +1432,7 @@
     </message>
     <message>
         <source>'LUX://' is not a valid URI. Use 'LUX:' instead.</source>
-        <translation>'//:qtum' אינה כתובת URI תקינה. השתמשו במקום ב ':qtum'.</translation>
+        <translation>'//:LUX' אינה כתובת URI תקינה. השתמשו במקום ב ':LUX'.</translation>
     </message>
     <message>
         <source>Invalid payment address %1</source>

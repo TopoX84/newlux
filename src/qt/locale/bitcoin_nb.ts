@@ -169,7 +169,7 @@
     </message>
     <message>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR  LUX&lt;/b&gt;!</source>
-        <translation>Advarsel: Dersom du krypterer lommeboken og mister passordsetningen vil du &lt;b&gt;MISTE ALLE DINE QTUM&lt;/b&gt;!</translation>
+        <translation>Advarsel: Dersom du krypterer lommeboken og mister passordsetningen vil du &lt;b&gt;MISTE ALLE DINE LUX&lt;/b&gt;!</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -971,7 +971,7 @@
         <translation>Bruk en egendefinert datamappe:</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>
@@ -1308,7 +1308,7 @@
     </message>
     <message>
         <source>Choose the default subdivision unit to show in the interface and when sending coins.</source>
-        <translation>Velg standard delt enhet for visning i grensesnittet og for sending av qtums.</translation>
+        <translation>Velg standard delt enhet for visning i grensesnittet og for sending av LUXs.</translation>
     </message>
     <message>
         <source>Whether to show coin control features or not.</source>
@@ -2150,7 +2150,7 @@
     <name>SendCoinsDialog</name>
     <message>
         <source>Send Coins</source>
-        <translation>Send Qtums</translation>
+        <translation>Send LUXs</translation>
     </message>
     <message>
         <source>Coin Control Features</source>
@@ -2529,7 +2529,7 @@ Merk: Siden avgiften er beregnet per byte-basis, vil et gebyr på "100 satoshis 
     </message>
     <message>
         <source>A message that was attached to the LUX: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the LUX network.</source>
-        <translation>En melding som var tilknyttet qtumen: URI vil bli lagret med transaksjonen for din oversikt. Denne meldingen vil ikke bli sendt over LUX-nettverket.</translation>
+        <translation>En melding som var tilknyttet LUXen: URI vil bli lagret med transaksjonen for din oversikt. Denne meldingen vil ikke bli sendt over LUX-nettverket.</translation>
     </message>
     <message>
         <source>Pay To:</source>

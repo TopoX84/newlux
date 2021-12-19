@@ -1216,8 +1216,8 @@
     </message>
     <message>
         <location filename="../intro.cpp" line="+32"/>
-        <source>Qtum</source>
-        <translation type="unfinished">Qtum</translation>
+        <source>LUX</source>
+        <translation type="unfinished">LUX</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -1858,7 +1858,7 @@
     </message>
     <message>
         <location line="-26"/>
-        <source>&apos;qtum://&apos; is not a valid URI. Use &apos;qtum:&apos; instead.</source>
+        <source>&apos;LUX://&apos; is not a valid URI. Use &apos;LUX:&apos; instead.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

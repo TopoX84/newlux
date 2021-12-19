@@ -656,7 +656,7 @@ Solicitar pagos (genera códigos QR y LUX: URI)
         <translation>Bienvenido</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>

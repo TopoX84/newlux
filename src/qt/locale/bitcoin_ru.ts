@@ -971,7 +971,7 @@
         <translation>Использовать пользовательскую директорию данных</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX Core</translation>
     </message>
     <message>
@@ -1078,7 +1078,7 @@
     <name>OpenURIDialog</name>
     <message>
         <source>Open LUX URI</source>
-        <translation>Открыть URI qtumа</translation>
+        <translation>Открыть URI LUXа</translation>
     </message>
     <message>
         <source>URI:</source>
@@ -2533,7 +2533,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of "100 satoshis p
     </message>
     <message>
         <source>The fee will be deducted from the amount being sent. The recipient will receive less LUX than you enter in the amount field. If multiple recipients are selected, the fee is split equally.</source>
-        <translation>С отправляемой суммы будет удержана комиссия. Получателю придёт меньше qtumов, чем вы вводите в поле количества. Если выбрано несколько получателей, комиссия распределяется поровну.</translation>
+        <translation>С отправляемой суммы будет удержана комиссия. Получателю придёт меньше LUXов, чем вы вводите в поле количества. Если выбрано несколько получателей, комиссия распределяется поровну.</translation>
     </message>
     <message>
         <source>S&amp;ubtract fee from amount</source>

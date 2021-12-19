@@ -617,8 +617,8 @@
         <translation>Вітаем</translation>
     </message>
     <message>
-        <source>Qtum</source>
-        <translation>Біткойн</translation>
+        <source>LUX</source>
+        <translation>LUX</translation>
     </message>
     <message>
         <source>Error</source>

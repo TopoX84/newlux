@@ -515,7 +515,7 @@
     </message>
     <message>
         <source>Show the %1 help message to get a list with possible LUX command-line options</source>
-        <translation>显示%1帮助消息以获得可能包含Qtum命令行选项的列表</translation>
+        <translation>显示%1帮助消息以获得可能包含LUX命令行选项的列表</translation>
     </message>
     <message>
         <source>default wallet</source>
@@ -911,8 +911,8 @@
         <translation>使用自定数据目录</translation>
     </message>
     <message>
-        <source>Qtum</source>
-        <translation>比特币</translation>
+        <source>LUX</source>
+        <translation>LUX</translation>
     </message>
     <message>
         <source>Error</source>

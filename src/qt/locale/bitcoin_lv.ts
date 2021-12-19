@@ -43,11 +43,11 @@
     </message>
     <message>
         <source>Choose the address to send coins to</source>
-        <translation>Izvēlies adresi uz kuru sūtīt qtums</translation>
+        <translation>Izvēlies adresi uz kuru sūtīt LUXs</translation>
     </message>
     <message>
         <source>Choose the address to receive coins with</source>
-        <translation>Izvēlies adresi ar kuru saņemt qtums</translation>
+        <translation>Izvēlies adresi ar kuru saņemt LUXs</translation>
     </message>
     <message>
         <source>C&amp;hoose</source>
@@ -451,7 +451,7 @@
         <translation>Izmantot pielāgotu datu mapi:</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>

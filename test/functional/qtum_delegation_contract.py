@@ -209,8 +209,8 @@ class QtumSimpleDelegationContractTest(BitcoinTestFramework):
 
 
     """
-        - Check that it is not possible to use an input with less value than 100 qtum as the first input to the coinstake.
-        - Check that 100 qtum is just enough for the first input to the coinstake.
+        - Check that it is not possible to use an input with less value than 100 lux as the first input to the coinstake.
+        - Check that 100 lux is just enough for the first input to the coinstake.
     """
     def nas_staker_must_be_100_qtum_test(self):
         use_pos_reward = True if self.staker.getblockcount() > 5000 else False

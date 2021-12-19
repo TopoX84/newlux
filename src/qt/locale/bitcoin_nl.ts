@@ -67,7 +67,7 @@
     </message>
     <message>
         <source>These are your LUX addresses for sending payments. Always check the amount and the receiving address before sending coins.</source>
-        <translation>Dit zijn uw Qtumadressen om betalingen mee te verzenden. Controleer altijd het bedrag en het ontvangstadres voordat u uw LUX verzendt.</translation>
+        <translation>Dit zijn uw LUXadressen om betalingen mee te verzenden. Controleer altijd het bedrag en het ontvangstadres voordat u uw LUX verzendt.</translation>
     </message>
     <message>
         <source>These are your LUX addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.</source>
@@ -363,7 +363,7 @@
     </message>
     <message>
         <source>Send coins to a LUX address</source>
-        <translation>Verstuur munten naar een Qtumadres</translation>
+        <translation>Verstuur munten naar een LUXadres</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -399,11 +399,11 @@
     </message>
     <message>
         <source>Sign messages with your LUX addresses to prove you own them</source>
-        <translation>Onderteken berichten met uw Qtumadressen om te bewijzen dat u deze adressen bezit</translation>
+        <translation>Onderteken berichten met uw LUXadressen om te bewijzen dat u deze adressen bezit</translation>
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified LUX addresses</source>
-        <translation>Verifiëer handtekeningen om zeker te zijn dat de berichten zijn ondertekend met de gespecificeerde Qtumadressen</translation>
+        <translation>Verifiëer handtekeningen om zeker te zijn dat de berichten zijn ondertekend met de gespecificeerde LUXadressen</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -439,7 +439,7 @@
     </message>
     <message numerus="yes">
         <source>%n active connection(s) to LUX network</source>
-        <translation><numerusform>%n actieve verbinding met Qtumnetwerk</numerusform><numerusform>%n actieve verbindingen met Qtumnetwerk</numerusform></translation>
+        <translation><numerusform>%n actieve verbinding met LUXnetwerk</numerusform><numerusform>%n actieve verbindingen met LUXnetwerk</numerusform></translation>
     </message>
     <message>
         <source>Indexing blocks on disk...</source>
@@ -876,7 +876,7 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
     </message>
     <message>
         <source>The entered address "%1" is not a valid LUX address.</source>
-        <translation>Het opgegeven adres "%1" is een ongeldig Qtumadres.</translation>
+        <translation>Het opgegeven adres "%1" is een ongeldig LUXadres.</translation>
     </message>
     <message>
         <source>Address "%1" already exists as a receiving address with label "%2" and so cannot be added as a sending address.</source>
@@ -972,7 +972,7 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
         <translation>Gebruik een aangepaste gegevensmap:</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>
@@ -1225,7 +1225,7 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
     </message>
     <message>
         <source>Automatically open the LUX client port on the router. This only works when your router supports UPnP and it is enabled.</source>
-        <translation>Open de Qtumpoort automatisch op de router. Dit werkt alleen als de router UPnP ondersteunt en het aanstaat.</translation>
+        <translation>Open de LUXpoort automatisch op de router. Dit werkt alleen als de router UPnP ondersteunt en het aanstaat.</translation>
     </message>
     <message>
         <source>Map port using &amp;UPnP</source>
@@ -1241,7 +1241,7 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
     </message>
     <message>
         <source>Connect to the LUX network through a SOCKS5 proxy.</source>
-        <translation>Verbind met het Qtumnetwerk via een SOCKS5 proxy.</translation>
+        <translation>Verbind met het LUXnetwerk via een SOCKS5 proxy.</translation>
     </message>
     <message>
         <source>&amp;Connect through SOCKS5 proxy (default proxy):</source>
@@ -1277,7 +1277,7 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
     </message>
     <message>
         <source>Connect to the LUX network through a separate SOCKS5 proxy for Tor hidden services.</source>
-        <translation>Maak verbinding met Qtumnetwerk door een aparte SOCKS5-proxy voor verborgen diensten van Tor.</translation>
+        <translation>Maak verbinding met LUXnetwerk door een aparte SOCKS5-proxy voor verborgen diensten van Tor.</translation>
     </message>
     <message>
         <source>&amp;Window</source>
@@ -1388,7 +1388,7 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
     </message>
     <message>
         <source>The displayed information may be out of date. Your wallet automatically synchronizes with the LUX network after a connection is established, but this process has not completed yet.</source>
-        <translation>De weergegeven informatie kan verouderd zijn. Uw portemonnee synchroniseert automatisch met het Qtumnetwerk nadat een verbinding is gelegd, maar dit proces is nog niet voltooid.</translation>
+        <translation>De weergegeven informatie kan verouderd zijn. Uw portemonnee synchroniseert automatisch met het LUXnetwerk nadat een verbinding is gelegd, maar dit proces is nog niet voltooid.</translation>
     </message>
     <message>
         <source>Watch-only:</source>
@@ -1533,7 +1533,7 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
     </message>
     <message>
         <source>Enter a LUX address (e.g. %1)</source>
-        <translation>Voer een Qtumadres in (bijv. %1)</translation>
+        <translation>Voer een LUXadres in (bijv. %1)</translation>
     </message>
     <message>
         <source>%1 d</source>
@@ -2002,7 +2002,7 @@ Dit is ideaal voor alleen-lezen portommonees.</translation>
     </message>
     <message>
         <source>An optional message to attach to the payment request, which will be displayed when the request is opened. Note: The message will not be sent with the payment over the LUX network.</source>
-        <translation>Een optioneel bericht om bij te voegen aan het betalingsverzoek, welke zal getoond worden wanneer het verzoek is geopend. Opmerking: Het bericht zal niet worden verzonden met de betaling over het Qtumnetwerk.</translation>
+        <translation>Een optioneel bericht om bij te voegen aan het betalingsverzoek, welke zal getoond worden wanneer het verzoek is geopend. Opmerking: Het bericht zal niet worden verzonden met de betaling over het LUXnetwerk.</translation>
     </message>
     <message>
         <source>An optional label to associate with the new receiving address.</source>
@@ -2283,7 +2283,7 @@ Notitie: Omdat de vergoeding per byte wordt gerekend, zal een vergoeding van "10
     </message>
     <message>
         <source>When there is less transaction volume than space in the blocks, miners as well as relaying nodes may enforce a minimum fee. Paying only this minimum fee is just fine, but be aware that this can result in a never confirming transaction once there is more demand for LUX transactions than the network can process.</source>
-        <translation>De minimale toeslag betalen is prima mits het transactievolume kleiner is dan de ruimte in de blokken. Let wel op dat dit tot gevolg kan hebben dat een transactie nooit wordt bevestigd als er meer vraag is naar qtumtransacties dan het netwerk kan verwerken.</translation>
+        <translation>De minimale toeslag betalen is prima mits het transactievolume kleiner is dan de ruimte in de blokken. Let wel op dat dit tot gevolg kan hebben dat een transactie nooit wordt bevestigd als er meer vraag is naar LUXtransacties dan het netwerk kan verwerken.</translation>
     </message>
     <message>
         <source>A too low fee might result in a never confirming transaction (read the tooltip)</source>
@@ -2471,7 +2471,7 @@ Notitie: Omdat de vergoeding per byte wordt gerekend, zal een vergoeding van "10
     </message>
     <message>
         <source>Warning: Invalid LUX address</source>
-        <translation>Waarschuwing: Ongeldig Qtumadres</translation>
+        <translation>Waarschuwing: Ongeldig LUXadres</translation>
     </message>
     <message>
         <source>Warning: Unknown change address</source>
@@ -2510,7 +2510,7 @@ Notitie: Omdat de vergoeding per byte wordt gerekend, zal een vergoeding van "10
     </message>
     <message>
         <source>The LUX address to send the payment to</source>
-        <translation>Het Qtumadres om betaling aan te versturen</translation>
+        <translation>Het LUXadres om betaling aan te versturen</translation>
     </message>
     <message>
         <source>Alt+A</source>
@@ -2562,7 +2562,7 @@ Notitie: Omdat de vergoeding per byte wordt gerekend, zal een vergoeding van "10
     </message>
     <message>
         <source>A message that was attached to the LUX: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the LUX network.</source>
-        <translation>Een bericht dat werd toegevoegd aan de LUX: URI welke wordt opgeslagen met de transactie ter referentie. Opmerking: Dit bericht zal niet worden verzonden over het Qtumnetwerk.</translation>
+        <translation>Een bericht dat werd toegevoegd aan de LUX: URI welke wordt opgeslagen met de transactie ter referentie. Opmerking: Dit bericht zal niet worden verzonden over het LUXnetwerk.</translation>
     </message>
     <message>
         <source>Pay To:</source>
@@ -2600,7 +2600,7 @@ Notitie: Omdat de vergoeding per byte wordt gerekend, zal een vergoeding van "10
     </message>
     <message>
         <source>The LUX address to sign the message with</source>
-        <translation>Het Qtumadres om bericht mee te ondertekenen</translation>
+        <translation>Het LUXadres om bericht mee te ondertekenen</translation>
     </message>
     <message>
         <source>Choose previously used address</source>
@@ -2632,7 +2632,7 @@ Notitie: Omdat de vergoeding per byte wordt gerekend, zal een vergoeding van "10
     </message>
     <message>
         <source>Sign the message to prove you own this LUX address</source>
-        <translation>Onderteken een bericht om te bewijzen dat u een bepaald Qtumadres bezit</translation>
+        <translation>Onderteken een bericht om te bewijzen dat u een bepaald LUXadres bezit</translation>
     </message>
     <message>
         <source>Sign &amp;Message</source>
@@ -2656,7 +2656,7 @@ Notitie: Omdat de vergoeding per byte wordt gerekend, zal een vergoeding van "10
     </message>
     <message>
         <source>The LUX address the message was signed with</source>
-        <translation>Het Qtumadres waarmee het bericht ondertekend is</translation>
+        <translation>Het LUXadres waarmee het bericht ondertekend is</translation>
     </message>
     <message>
         <source>The signed message to verify</source>
@@ -2668,7 +2668,7 @@ Notitie: Omdat de vergoeding per byte wordt gerekend, zal een vergoeding van "10
     </message>
     <message>
         <source>Verify the message to ensure it was signed with the specified LUX address</source>
-        <translation>Controleer een bericht om te verifiëren dat het gespecificeerde Qtumadres het bericht heeft ondertekend.</translation>
+        <translation>Controleer een bericht om te verifiëren dat het gespecificeerde LUXadres het bericht heeft ondertekend.</translation>
     </message>
     <message>
         <source>Verify &amp;Message</source>

@@ -152,7 +152,7 @@
     </message>
     <message>
         <source>These are your LUX addresses for receiving payments. Use the 'Create new receiving address' button in the receive tab to create new addresses.</source>
-        <translation>지불 수신용 QTUM주소. 신규 주소를 만들려면 'Create new receiving address' 버튼을 사용하세요.</translation>
+        <translation>지불 수신용 LUX주소. 신규 주소를 만들려면 'Create new receiving address' 버튼을 사용하세요.</translation>
     </message>
     <message>
         <source>&amp;Copy Address</source>
@@ -258,7 +258,7 @@
     </message>
     <message>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR  LUX&lt;/b&gt;!</source>
-        <translation>경고: 암호화 이후 비밀번호를 잃어버리면 &lt;b&gt;지갑에 있는 모든 QTUM을 잃게됩니다&lt;/b&gt;！</translation>
+        <translation>경고: 암호화 이후 비밀번호를 잃어버리면 &lt;b&gt;지갑에 있는 모든 LUX을 잃게됩니다&lt;/b&gt;！</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -364,7 +364,7 @@
     </message>
     <message>
         <source>Send coins to a LUX address</source>
-        <translation type="unfinished">QTUM 주소로 LUX 코인 보내기</translation>
+        <translation type="unfinished">LUX 주소로 LUX 코인 보내기</translation>
     </message>
     <message>
         <source>&amp;Receive</source>
@@ -653,7 +653,7 @@
     <message numerus="yes">
         <source>%n active connection(s) to LUX network</source>
         <translation type="unfinished">
-            <numerusform>QTUM네트워크에 대한 활성화된 연결은 %n 개입니다.</numerusform>
+            <numerusform>LUX네트워크에 대한 활성화된 연결은 %n 개입니다.</numerusform>
         </translation>
     </message>
     <message>
@@ -719,8 +719,8 @@
         <translation type="unfinished">해당 지점 이후 거래 내역이 없습니다. </translation>
     </message>
     <message>
-        <source>Qtum</source>
-        <translation type="unfinished">QTUM</translation>
+        <source>LUX</source>
+        <translation type="unfinished">LUX</translation>
     </message>
     <message>
         <source>Error</source>
@@ -1344,7 +1344,7 @@
     </message>
     <message>
         <source>The LUX address that will be used to create the contract.</source>
-        <translation type="unfinished">컨트랙트 생성을 위한 Qtum주소</translation>
+        <translation type="unfinished">컨트랙트 생성을 위한 LUX주소</translation>
     </message>
     <message>
         <source>The Gas Price is too high, are you sure you want to possibly spend a max of %1 for this transaction?</source>
@@ -1551,7 +1551,7 @@
         <translation>사용자 지정 데이터 디렉터리 사용</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>
@@ -2169,8 +2169,8 @@ Please make sure to keep an updated antivirus and operating system. We can not r
         <translation>URI 처리</translation>
     </message>
     <message>
-        <source>&apos;qtum://&apos; is not a valid URI. Use &apos;qtum:&apos; instead.</source>
-        <translation type="vanished">‘qtum://’은 유효한 URI이 아닙니다. &apos;qtum:&apos;로 대체해주세요. </translation>
+        <source>&apos;LUX://&apos; is not a valid URI. Use &apos;LUX:&apos; instead.</source>
+        <translation type="vanished">‘LUX://’은 유효한 URI이 아닙니다. &apos;LUX:&apos;로 대체해주세요. </translation>
     </message>
     <message>
         <source>Cannot process payment request because BIP70 is not supported.</source>
@@ -2201,8 +2201,8 @@ Please make sure to keep an updated antivirus and operating system. We can not r
         <translation>지불 요청 네트워크와 클라이언트 네트워크가 매칭되지 않습니다. </translation>
     </message>
     <message>
-        <source>&apos;qtum://&apos; is not a valid URI. Use &apos;qtum:&apos; instead.</source>
-        <translation type="unfinished">qtum://&apos;은 유효한 URI이 아닙니다. &apos;qtum:&apos;로 대체해주세요.</translation>
+        <source>&apos;LUX://&apos; is not a valid URI. Use &apos;LUX:&apos; instead.</source>
+        <translation type="unfinished">LUX://&apos;은 유효한 URI이 아닙니다. &apos;LUX:&apos;로 대체해주세요.</translation>
     </message>
 </context>
 <context>
@@ -2548,7 +2548,7 @@ Please make sure to keep an updated antivirus and operating system. We can not r
     </message>
     <message>
         <source>Send coins to a LUX address</source>
-        <translation type="vanished">QTUM 주소로 LUX 코인 보내기</translation>
+        <translation type="vanished">LUX 주소로 LUX 코인 보내기</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -2563,8 +2563,8 @@ Please make sure to keep an updated antivirus and operating system. We can not r
         <translation type="vanished">메시지 검증</translation>
     </message>
     <message>
-        <source>Qtum</source>
-        <translation type="vanished">QTUM</translation>
+        <source>LUX</source>
+        <translation type="vanished">LUX</translation>
     </message>
     <message>
         <source>&amp;Send</source>
@@ -2629,7 +2629,7 @@ Please make sure to keep an updated antivirus and operating system. We can not r
     <message numerus="yes">
         <source>%n active connection(s) to LUX network</source>
         <translation type="vanished">
-            <numerusform>QTUM네트워크에 대한 활성화된 연결은 %n 개입니다.</numerusform>
+            <numerusform>LUX네트워크에 대한 활성화된 연결은 %n 개입니다.</numerusform>
         </translation>
     </message>
     <message>
@@ -4066,7 +4066,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of &quot;100 satos
     </message>
     <message>
         <source>You can sign messages/agreements with your addresses to prove you can receive LUX sent to them. Be careful not to sign anything vague or random, as phishing attacks may try to trick you into signing your identity over to them. Only sign fully-detailed statements you agree to.</source>
-        <translation>소유하고 계신 주소로 메시지/협의에 대해 서명하여 해당 주소를 통해 QTUM을 받을 수 있음을 증명할 수 있습니다. 피싱 공격을 예방하기 위해 명확하지 않은 내용 또는 랜덤 메시지에 대한 서명은 삼가 하시고 메시지에 대해 충분히 동의할 경우에만 서명하세요. </translation>
+        <translation>소유하고 계신 주소로 메시지/협의에 대해 서명하여 해당 주소를 통해 LUX을 받을 수 있음을 증명할 수 있습니다. 피싱 공격을 예방하기 위해 명확하지 않은 내용 또는 랜덤 메시지에 대한 서명은 삼가 하시고 메시지에 대해 충분히 동의할 경우에만 서명하세요. </translation>
     </message>
     <message>
         <source>The LUX address to sign the message with</source>
@@ -4243,7 +4243,7 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of &quot;100 satos
         <translation type="unfinished">블록 보상</translation>
     </message>
     <message>
-        <source>4 QTUM/Block</source>
+        <source>4 LUX/Block</source>
         <translation type="unfinished">4 LUX / 블록</translation>
     </message>
     <message>
@@ -5163,8 +5163,8 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of &quot;100 satos
 <context>
     <name>bitcoin-core</name>
     <message>
-        <source>Qtum Core</source>
-        <translation type="unfinished">Qtum Core</translation>
+        <source>LUXCORE</source>
+        <translation type="unfinished">LUXCORE</translation>
     </message>
     <message>
         <source>The %s developers</source>
@@ -5720,8 +5720,8 @@ Note:  Since the fee is calculated on a per-byte basis, a fee of &quot;100 satos
         <translation type="vanished">HTTP 서비스를 활성화하지 못했습니다. 디버그 로그에서 더 많은 정보를 확인하세요. </translation>
     </message>
     <message>
-        <source>Qtum Core</source>
-        <translation type="vanished">Qtum Core</translation>
+        <source>LUXCORE</source>
+        <translation type="vanished">LUXCORE</translation>
     </message>
     <message>
         <source>The %s developers</source>

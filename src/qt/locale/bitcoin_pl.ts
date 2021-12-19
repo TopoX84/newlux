@@ -169,7 +169,7 @@
     </message>
     <message>
         <source>Warning: If you encrypt your wallet and lose your passphrase, you will &lt;b&gt;LOSE ALL OF YOUR  LUX&lt;/b&gt;!</source>
-        <translation>Uwaga: jeśli zaszyfrujesz swój portfel i zgubisz hasło &lt;b&gt;STRACISZ WSZYSTKIE SWOJE QTUMY&lt;/b&gt;!</translation>
+        <translation>Uwaga: jeśli zaszyfrujesz swój portfel i zgubisz hasło &lt;b&gt;STRACISZ WSZYSTKIE SWOJE LUXY&lt;/b&gt;!</translation>
     </message>
     <message>
         <source>Are you sure you wish to encrypt your wallet?</source>
@@ -363,7 +363,7 @@
     </message>
     <message>
         <source>Send coins to a LUX address</source>
-        <translation>Wyślij monety na adres qtumowy</translation>
+        <translation>Wyślij monety na adres LUXowy</translation>
     </message>
     <message>
         <source>Backup wallet to another location</source>
@@ -403,7 +403,7 @@
     </message>
     <message>
         <source>Verify messages to ensure they were signed with specified LUX addresses</source>
-        <translation>Zweryfikuj wiadomość,  aby upewnić się, że została podpisana podanym adresem qtumowym.</translation>
+        <translation>Zweryfikuj wiadomość,  aby upewnić się, że została podpisana podanym adresem LUXowym.</translation>
     </message>
     <message>
         <source>&amp;File</source>
@@ -423,7 +423,7 @@
     </message>
     <message>
         <source>Request payments (generates QR codes and LUX: URIs)</source>
-        <translation>Żądaj płatności (generuje kod QR oraz qtumowe URI)</translation>
+        <translation>Żądaj płatności (generuje kod QR oraz LUXowe URI)</translation>
     </message>
     <message>
         <source>Show the list of used sending addresses and labels</source>
@@ -971,7 +971,7 @@
         <translation>Użyj wybranego folderu dla danych</translation>
     </message>
     <message>
-        <source>Qtum</source>
+        <source>LUX</source>
         <translation>LUX</translation>
     </message>
     <message>
@@ -1027,7 +1027,7 @@
     </message>
     <message>
         <source>Attempting to spend LUX that are affected by not-yet-displayed transactions will not be accepted by the network.</source>
-        <translation>Próba wydania qtumów które nie są jeszcze wyświetlone jako transakcja zostanie odrzucona przez sieć.</translation>
+        <translation>Próba wydania LUXów które nie są jeszcze wyświetlone jako transakcja zostanie odrzucona przez sieć.</translation>
     </message>
     <message>
         <source>Number of blocks left</source>
@@ -1532,7 +1532,7 @@
     </message>
     <message>
         <source>Enter a LUX address (e.g. %1)</source>
-        <translation>Wprowadź adres qtumowy (np. %1)</translation>
+        <translation>Wprowadź adres LUXowy (np. %1)</translation>
     </message>
     <message>
         <source>%1 d</source>
@@ -2562,7 +2562,7 @@ Uwaga: Ponieważ opłata jest naliczana za każdy bajt, opłata "100 satoshi za 
     </message>
     <message>
         <source>A message that was attached to the LUX: URI which will be stored with the transaction for your reference. Note: This message will not be sent over the LUX network.</source>
-        <translation>Wiadomość, która została dołączona do URI qtum:, która będzie przechowywana wraz z transakcją w celach informacyjnych. Uwaga: Ta wiadomość nie będzie rozsyłana w sieci LUX.</translation>
+        <translation>Wiadomość, która została dołączona do URI LUX:, która będzie przechowywana wraz z transakcją w celach informacyjnych. Uwaga: Ta wiadomość nie będzie rozsyłana w sieci LUX.</translation>
     </message>
     <message>
         <source>Pay To:</source>
