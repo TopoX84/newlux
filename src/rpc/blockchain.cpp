@@ -3222,8 +3222,8 @@ static UniValue qrc20name(const JSONRPCRequest& request)
                 RPCResult{
                     RPCResult::Type::STR, "name", "The name of the token"},
                 RPCExamples{
-                    HelpExampleCli("qrc20name", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
-            + HelpExampleRpc("qrc20name", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
+                    HelpExampleCli("lrc20name", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
+            + HelpExampleRpc("lrc20name", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
                 },
             }.Check(request);
 
@@ -3241,7 +3241,7 @@ static UniValue qrc20name(const JSONRPCRequest& request)
 
 static UniValue qrc20symbol(const JSONRPCRequest& request)
 {
-            RPCHelpMan{"qrc20symbol",
+            RPCHelpMan{"lrc20symbol",
                 "\nReturns the symbol of the token\n",
                 {
                     {"contractaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The contract address"},
@@ -3249,8 +3249,8 @@ static UniValue qrc20symbol(const JSONRPCRequest& request)
                 RPCResult{
                     RPCResult::Type::STR, "symbol", "The symbol of the token"},
                 RPCExamples{
-                    HelpExampleCli("qrc20symbol", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
-            + HelpExampleRpc("qrc20symbol", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
+                    HelpExampleCli("lrc20symbol", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
+            + HelpExampleRpc("lrc20symbol", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
                 },
             }.Check(request);
 
@@ -3268,7 +3268,7 @@ static UniValue qrc20symbol(const JSONRPCRequest& request)
 
 static UniValue qrc20totalsupply(const JSONRPCRequest& request)
 {
-            RPCHelpMan{"qrc20totalsupply",
+            RPCHelpMan{"lrc20totalsupply",
                 "\nReturns the total supply of the token\n",
                 {
                     {"contractaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The contract address"},
@@ -3276,8 +3276,8 @@ static UniValue qrc20totalsupply(const JSONRPCRequest& request)
                 RPCResult{
                     RPCResult::Type::STR, "totalSupply", "The total supply of the token"},
                 RPCExamples{
-                    HelpExampleCli("qrc20totalsupply", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
-            + HelpExampleRpc("qrc20totalsupply", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
+                    HelpExampleCli("lrc20totalsupply", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
+            + HelpExampleRpc("lrc20totalsupply", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
                 },
             }.Check(request);
 
@@ -3305,7 +3305,7 @@ static UniValue qrc20totalsupply(const JSONRPCRequest& request)
 
 static UniValue qrc20decimals(const JSONRPCRequest& request)
 {
-            RPCHelpMan{"qrc20decimals",
+            RPCHelpMan{"lrc20decimals",
                 "\nReturns the number of decimals of the token\n",
                 {
                     {"contractaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The contract address"},
@@ -3313,8 +3313,8 @@ static UniValue qrc20decimals(const JSONRPCRequest& request)
                 RPCResult{
                     RPCResult::Type::NUM, "decimals", "The number of decimals of the token"},
                 RPCExamples{
-                    HelpExampleCli("qrc20decimals", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
-            + HelpExampleRpc("qrc20decimals", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
+                    HelpExampleCli("lrc20decimals", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
+            + HelpExampleRpc("lrc20decimals", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\"")
                 },
             }.Check(request);
 
@@ -3332,7 +3332,7 @@ static UniValue qrc20decimals(const JSONRPCRequest& request)
 
 static UniValue qrc20balanceof(const JSONRPCRequest& request)
 {
-            RPCHelpMan{"qrc20balanceof",
+            RPCHelpMan{"lrc20balanceof",
                 "\nReturns the token balance for address\n",
                 {
                     {"contractaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The contract address"},
@@ -3341,8 +3341,8 @@ static UniValue qrc20balanceof(const JSONRPCRequest& request)
                 RPCResult{
                     RPCResult::Type::STR, "balance", "The token balance of the chosen address"},
                 RPCExamples{
-                    HelpExampleCli("qrc20balanceof", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\"")
-            + HelpExampleRpc("qrc20balanceof", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\"")
+                    HelpExampleCli("lrc20balanceof", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\"")
+            + HelpExampleRpc("lrc20balanceof", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\"")
                 },
             }.Check(request);
 
@@ -3372,7 +3372,7 @@ static UniValue qrc20balanceof(const JSONRPCRequest& request)
 
 static UniValue qrc20allowance(const JSONRPCRequest& request)
 {
-            RPCHelpMan{"qrc20allowance",
+            RPCHelpMan{"lrc20allowance",
                 "\nReturns remaining tokens allowed to spend for an address\n",
                 {
                     {"contractaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The contract address"},
@@ -3382,8 +3382,8 @@ static UniValue qrc20allowance(const JSONRPCRequest& request)
                 RPCResult{
                     RPCResult::Type::STR, "allowance", "Amount of remaining tokens allowed to spent"},
                 RPCExamples{
-                    HelpExampleCli("qrc20allowance", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\"")
-            + HelpExampleRpc("qrc20allowance", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\"")
+                    HelpExampleCli("lrc20allowance", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\"")
+            + HelpExampleRpc("lrc20allowance", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" \"QM72Sfpbz1BPpXFHz9m3CdqATR44Jvaydd\"")
                 },
             }.Check(request);
 
@@ -3412,7 +3412,7 @@ static UniValue qrc20allowance(const JSONRPCRequest& request)
 
 static UniValue qrc20listtransactions(const JSONRPCRequest& request)
 {
-            RPCHelpMan{"qrc20listtransactions",
+            RPCHelpMan{"lrc20listtransactions",
                 "\nReturns transactions history for a specific address.\n",
                 {
                     {"contractaddress", RPCArg::Type::STR_HEX, RPCArg::Optional::NO, "The contract address."},
@@ -3437,10 +3437,10 @@ static UniValue qrc20listtransactions(const JSONRPCRequest& request)
                     }}
                 },
                 RPCExamples{
-                    HelpExampleCli("qrc20listtransactions", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\"")
-            + HelpExampleCli("qrc20listtransactions", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" 0 6")
-            + HelpExampleRpc("qrc20listtransactions", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\"")
-            + HelpExampleRpc("qrc20listtransactions", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" 0 6")
+                    HelpExampleCli("lrc20listtransactions", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\"")
+            + HelpExampleCli("lrc20listtransactions", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" 0 6")
+            + HelpExampleRpc("lrc20listtransactions", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\"")
+            + HelpExampleRpc("lrc20listtransactions", "\"eb23c0b3e6042821da281a2e2364feb22dd543e3\" \"QX1GkJdye9WoUnrE2v6ZQhQ72EUVDtGXQX\" 0 6")
                 },
             }.Check(request);
 
@@ -3533,13 +3533,13 @@ static const CRPCCommand commands[] =
 
     { "blockchain",         "callcontract",           &callcontract,           {"address","data", "senderAddress", "gasLimit", "amount"} },
 
-    { "blockchain",         "qrc20name",              &qrc20name,              {"address"} },
-    { "blockchain",         "qrc20symbol",            &qrc20symbol,            {"address"} },
-    { "blockchain",         "qrc20totalsupply",       &qrc20totalsupply,       {"address"} },
-    { "blockchain",         "qrc20decimals",          &qrc20decimals,          {"address"} },
-    { "blockchain",         "qrc20balanceof",         &qrc20balanceof,         {"contractaddress", "address"} },
-    { "blockchain",         "qrc20allowance",         &qrc20allowance,         {"contractaddress", "addressFrom", "addressTo"} },
-    { "blockchain",         "qrc20listtransactions",  &qrc20listtransactions,  {"contractaddress", "address", "startblock", "minconf"} },
+    { "blockchain",         "lrc20name",              &qrc20name,              {"address"} },
+    { "blockchain",         "lrc20symbol",            &qrc20symbol,            {"address"} },
+    { "blockchain",         "lrc20totalsupply",       &qrc20totalsupply,       {"address"} },
+    { "blockchain",         "lrc20decimals",          &qrc20decimals,          {"address"} },
+    { "blockchain",         "lrc20balanceof",         &qrc20balanceof,         {"contractaddress", "address"} },
+    { "blockchain",         "lrc20allowance",         &qrc20allowance,         {"contractaddress", "addressFrom", "addressTo"} },
+    { "blockchain",         "lrc20listtransactions",  &qrc20listtransactions,  {"contractaddress", "address", "startblock", "minconf"} },
 
     /* Not shown in help */
     { "hidden",             "invalidateblock",        &invalidateblock,        {"blockhash"} },
